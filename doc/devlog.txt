@@ -1,0 +1,3 @@
+Mos and Friends -- 2020-04-22 16:30
+  - created the design doc
+  - created page skeleton
