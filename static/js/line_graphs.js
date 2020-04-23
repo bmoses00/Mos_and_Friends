@@ -6,11 +6,10 @@ let margin = 50;
 let first_render = true;
 
 svg = d3.select("#graph")
-.attr("width", width)
-.attr("height", height)
-.append("g")
-.attr("transform",
-"translate(50, 0)");
+  .attr("width", width)
+  .attr("height", height)
+  .append("g")
+  .attr("transform", "translate(50, 0)");
 
 const scaleX = d3.scaleTime().range([0, width - margin])
 const scaleY = d3.scaleLinear().range([height - margin, 0]);
