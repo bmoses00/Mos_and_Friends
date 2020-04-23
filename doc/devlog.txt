@@ -3,4 +3,7 @@ Mos and Friends -- 2020-04-22 16:30
   - created page skeleton
 
 Brian Moses -- 2020-04-22 22:00
-  - added 1010_year_treasury_yields csv, hardcoded line graph creation for it in line_graphs.js
+  - added 10_year_treasury_yields csv, hardcoded line graph creation for it in line_graphs.js
+
+Brian Moses -- 2020-04-23 16:30
+  - changed 10_year_treasury_yields to use API call
