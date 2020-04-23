@@ -3,10 +3,17 @@
 </head>
 
 
-10 year treasury yields <br>
-<a href = '/'> Back to homepage</a>
+<div id = "desc"></div> <br>
+<a href = '/'>Back to homepage</a> <br>
 
-<svg id = "graph"> </svg>
+<svg id = "graph"> </svg> <br>
+
+<select id="graph_selector">
+  <option value="gdp">US Real GDP</option>
+  <option value="10_year_treasury_yields">US 10 Year Treasury Yields</option>
+</select>
+
+<button id = "btn" type="button">Render</button>
 
 <script src="http://d3js.org/d3.v5.js" charset="utf-8"></script>
 <script src = "static/js/line_graphs.js"></script>

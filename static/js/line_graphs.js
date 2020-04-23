@@ -3,6 +3,8 @@ let height = 500;
 
 let margin = 50;
 
+let first_render = true;
+
 svg = d3.select("#graph")
 .attr("width", width)
 .attr("height", height)
@@ -15,11 +17,19 @@ const scaleY = d3.scaleLinear().range([height - margin, 0]);
 
 const parseDate = d3.timeParse("%Y-%m-%d");
 
-function draw_graph(dataset) {
+function render_graph(dataset) {
 
   fetch("/" + dataset)
     .then(response => response.json())
     .then(data => {
+
+      if (!first_render) {
+        d3.select("#path").remove();
+        d3.select("#x-axis").remove();
+        d3.select("#y-axis").remove();
+      }
+
+      first_render = false;
 
       for (const entry of data) {
            entry.date = parseDate(entry.date);
@@ -35,6 +45,7 @@ function draw_graph(dataset) {
       // draws line graph
       svg.append("path")
         .data([data])
+        .attr("id", "path")
         .attr("fill", "none")
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
@@ -42,12 +53,23 @@ function draw_graph(dataset) {
 
       // x and y axes
       svg.append("g")
+        .attr("id", "x-axis")
         .attr("transform", "translate(0," + (height - margin) + ")")
         .call(d3.axisBottom(scaleX));
 
       svg.append("g")
+        .attr("id", "y-axis")
         .call(d3.axisLeft(scaleY));
+
+      d3.select("#desc").text(dataset);
   });
 }
 
-draw_graph("10_year_treasury_yields")
+const selector = document.getElementById("graph_selector");
+const button = document.getElementById("btn");
+
+function draw_graph() {
+  render_graph(selector.value);
+}
+
+button.addEventListener('click', draw_graph);
