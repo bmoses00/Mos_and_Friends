@@ -10,6 +10,8 @@ def root():
         return redirect(url_for("home"))
     else:
         return redirect(url_for("login"))
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -25,9 +27,10 @@ def login():
     elif request.method == "GET":
         return render_template("login.html")
 
+
 @app.route("/create-account", methods=["GET", "POST"])
 def create_account():
-    if len(request.form) == 3:
+    if request.method == "POST":
         # User entered create account information
         username = request.form["username"]
         password = request.form["password"]
@@ -48,6 +51,8 @@ def create_account():
             return redirect(url_for("home"))
 
     return render_template("create-account.html")
+
+
 @app.route("/logout")
 def logout():
     flash("You logged out")
