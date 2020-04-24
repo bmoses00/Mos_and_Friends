@@ -55,9 +55,9 @@ def create_account():
 
 @app.route("/logout")
 def logout():
-    flash("You logged out")
     print("Logged out of session (username " + session["username"] + ")")
     session.clear()
+    flash("You logged out")
     return redirect(url_for("login"))
 
 @app.route("/home")
