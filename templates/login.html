@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <form method="POST">
+            Username <br>
+            <input type="text"  name="username" required> <br>
+            Password<br>
+            <input type="password"  name="password" required> <br>
+            <button type="Submit" value="submit">Login</button>
+            {% with errors = get_flashed_messages() %}
+                <p class="text-danger">{{ errors[0] }}</p>
+            {% endwith %}
+        </form>
+        <a href="/create-account">Create An Account</a>
+    </body>
+</html>
