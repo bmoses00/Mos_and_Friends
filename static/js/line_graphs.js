@@ -18,7 +18,7 @@ const parseDate = d3.timeParse("%Y-%m-%d");
 
 function render_graph(dataset) {
 
-  fetch("/" + dataset)
+  fetch("/" + dataset + "/0001-01-01to6969-12-31")
     .then(response => response.json())
     .then(data => {
 
