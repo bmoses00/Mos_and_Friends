@@ -7,3 +7,6 @@ Brian Moses -- 2020-04-22 22:00
 
 Alex Thompson -- 2020-04-23 18:22
   - Updated sitemap to include login and user ability to create case studies
+
+Brian Moses -- 2020-04-24 12:30
+  - updated README.md
