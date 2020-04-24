@@ -34,7 +34,7 @@ def data(data, date_start, date_end):
             if entry_date < date_start or entry_date > date_end or entry[1] == ".":
                 continue
             payload.append({'date': entry[0], 'yield': float(entry[1])})
-    return jsonify(payload)
+    return jsonify(payload), 200
 def date_format(date):
     output = date.split("-")
     return datetime.datetime(int(output[0]), int(output[1]), int(output[2]))
