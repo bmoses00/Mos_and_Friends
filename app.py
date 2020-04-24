@@ -25,6 +25,9 @@ def login():
             flash("Wrong username or password")
             return render_template("login.html")
     elif request.method == "GET":
+        if "username" in session:
+            # Logged in user cannot login again
+            redirect(url_for("home"))
         return render_template("login.html")
 
 
@@ -50,6 +53,9 @@ def create_account():
             session["username"] = username
             return redirect(url_for("home"))
 
+    if "username" in session:
+        # Logged in user cannot create an account
+        return redirect(url_for("home"))
     return render_template("create-account.html")
 
 
