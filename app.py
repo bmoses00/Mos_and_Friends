@@ -12,19 +12,18 @@ def root():
         return redirect(url_for("login"))
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    print(request.form)
-    if len(request.form) == 2:
-        # User entered login information
+    if request.method == "POST":
+        # User is logging in
         username = request.form["username"]
         password = request.form["password"]
         if database_query.is_valid_login(username, password):
             session["username"] = username
-            print("Logged into account with username: " + username)
-            return redirect(url_for("game"))
+            return redirect(url_for("home"))
         else:
             flash("Wrong username or password")
-
-    return render_template("login.html")
+            return render_template("login.html")
+    elif request.method == "GET":
+        return render_template("login.html")
 
 @app.route("/create-account", methods=["GET", "POST"])
 def create_account():
