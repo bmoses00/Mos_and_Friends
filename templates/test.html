@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <title>{% block title %} {% endblock %}</title>
+  <br>
+  <br>
+
+</head>
+
+<body
+  style="background: url('https://images.pexels.com/photos/1025469/pexels-photo-1025469.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500') no-repeat center center fixed; -webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
+  <center>
+    <div class="container-fluid rounded">
+      <div class="col">
+      </div>
+      <div class="col-11">
+        <div class="container-fluid bg-light rounded">
+          <nav class="navbar navbar-light bg-light rounded border-bottom border-dark">
+            <div class="container-fluid">
+
+              <!-- <div class="row flex-nowrap justify-content-between" style="color: black;"> -->
+              <div class="col pt-1">
+                <form class="form-inline">
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  &ensp;&ensp;
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search Public Studies" aria-label="Search">
+                  <a class="button" type="submit" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3">
+                      <circle cx="10.5" cy="10.5" r="7.5"></circle>
+                      <line x1="21" y1="21" x2="15.8" y2="15.8"></line>
+                    </svg>
+                  </a>
+                </form>
+              </div>
+              <div class="col text-center">
+                <a class="blog-header-logo text-dark h2" href="#"> Mos & Friends Economic Analysis Center </a>
+              </div>
+              <div class="col d-flex justify-content-end align-items-center">
+                <form action="/create-account">
+                  <button class="btn btn-sm btn-outline-secondary" type+'suubmit'> Sign up </button>
+                </form>
+                &ensp;&ensp;
+                <form action="/login">
+                  <button class="btn btn-sm btn-outline-secondary" type="submit"> Sign in </button>
+                </form>
+              </div>
+            </div>
+          </nav>
+          <br>
+          <div class="collapse text-dark border-bottom border-dark" id="navbarToggleExternalContent">
+            <nav class="breadcrumb text-dark bg-light rounded">
+              <a class="breadcrumb-item text-dark" href="#"> Home </a>
+              <a class="breadcrumb-item text-dark" href="#"> Create Case Study </a>
+              <a class="breadcrumb-item text-dark" href="#"> View Public Case Studies </a>
+            </nav>
+          </div>
+          <br>
+
+          <div class="pos-f-t">
+
+
+            </nav>
+          </div>
+          <div class="container-fluid">
+            <div class="card shadow" styke="height: 1000px">
+              <div class="card-body p-5">
+                <!-- <ul class="list-group">
+                  <li class="list-group-item">Cras justo odio</li>
+                  <li class="list-group-item">Dapibus ac facilisis in</li>
+                  <li class="list-group-item">Morbi leo risus</li>
+                  <li class="list-group-item">Porta ac consectetur ac</li>
+                  <li class="list-group-item">Vestibulum at eros</li>
+                </ul> -->
+                {% block body %} {% endblock %}
+              </div>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+      <div class - "col">
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
