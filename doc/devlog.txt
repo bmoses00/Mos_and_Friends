@@ -30,3 +30,6 @@ William Cao -- 2020-04-24 17:02
 William Cao -- 2020-04-25 0:44
   - Ported SQL creating tables to Mongo
   - Read all econ data csv files to Mongo collections
+
+William Cao -- 2020-04-25-16:35
+  - Updated design doc to show we are using Mongo for database, and update routes details (what message is flashed).
