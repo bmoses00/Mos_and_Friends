@@ -6,6 +6,7 @@ import datetime
 
 DATABASE_NAME = "mo_and_friends_data"
 LOGIN_COLLECTION = "login"
+DATA_COLLECTION = "data"
 mongo_client = MongoClient("localhost", 27017)
 econ_data_info = [
     {

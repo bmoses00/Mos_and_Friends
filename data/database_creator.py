@@ -1,4 +1,4 @@
-from data import DATABASE_NAME, mongo_client, LOGIN_COLLECTION, econ_data_info
+from data import DATABASE_NAME, mongo_client, LOGIN_COLLECTION, econ_data_info, DATA_COLLECTION
 import csv
 
 # Drop the mongo database if it exists
@@ -41,7 +41,7 @@ def load_econ_data_sets():
         for element in csv_data:
             data.append({"date": element[0], "value": element[1]})
         name = info["name"]
-        database[name].insert({
+        database[DATA_COLLECTION].insert({
             "name": name,
             "start_date": data[0]["date"],
             "end_date": data[len(data) - 1]["date"],
