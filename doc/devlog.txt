@@ -23,13 +23,16 @@ William Cao -- 2020-04-24 17:02
   - Added base.html as a parent jinja file for other files to import. It has all the needed libraries imported.
   - Fixed bug on login where it would redirect to a non-existing url
 
-  Alex Thompson -- 2020-04-24 20:00
-    - created template for app layout with bootstrap + css
-    - Adjusted it to work with jinja
+Alex Thompson -- 2020-04-24 20:00
+  - created template for app layout with bootstrap + css
+  - Adjusted it to work with jinja
 
 William Cao -- 2020-04-25 0:44
   - Ported SQL creating tables to Mongo
   - Read all econ data csv files to Mongo collections
 
-William Cao -- 2020-04-25-16:35
+William Cao -- 2020-04-25 16:35
   - Updated design doc to show we are using Mongo for database, and update routes details (what message is flashed).
+
+Brian Moses -- 2020-04-25 17:45
+  - added viewing line graphs in view-data.html

@@ -1,9 +1,8 @@
-from data import DATABASE_NAME, mongo_client, LOGIN_COLLECTION, econ_data_info, DATA_COLLECTION
+from __init__ import DATABASE_NAME, mongo_client, LOGIN_COLLECTION, econ_data_info, DATA_COLLECTION
 import csv
 
 # Recreate the database
 database = mongo_client[DATABASE_NAME]
-
 
 def load_econ_data_sets():
     """
@@ -72,3 +71,5 @@ def recreate_database():
     # recreate data
     load_econ_data_sets()
     create_users_system()
+
+recreate_database()
