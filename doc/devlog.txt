@@ -9,5 +9,10 @@ Brian Moses -- 2020-04-23 17:00
   - changed 10_year_treasury_yields to use API call
   - made it so that user can select dataset they want to see
 
-  Mohidul Abedin -- 2020-04-24 15:00
+Mohidul Abedin -- 2020-04-24 15:00
   - added ability to select date range for api call
+
+Mos and Friends -- 2020-04-24 20:48
+  - Mohidul and William swap roles
+        - Mohidul- switch to d3
+        - William- switch to backend
