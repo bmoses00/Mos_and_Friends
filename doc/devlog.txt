@@ -26,3 +26,7 @@ William Cao -- 2020-04-24 17:02
   Alex Thompson -- 2020-04-24 20:00
     - created template for app layout with bootstrap + css
     - Adjusted it to work with jinja
+
+William Cao -- 2020-04-25 0:44
+  - Ported SQL creating tables to Mongo
+  - Read all econ data csv files to Mongo collections
