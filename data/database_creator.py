@@ -29,7 +29,7 @@ def load_econ_data_sets():
     }
     """
     for info in econ_data_info:
-        with open(f"data/csv/{info['file_name']}") as csv_file:
+        with open(f"static/csv/{info['file_name']}") as csv_file:
             csv_data = list(csv.reader(csv_file))
         # csv first row is header with name of each row
         column_names = csv_data.pop(0)
