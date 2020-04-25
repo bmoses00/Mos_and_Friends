@@ -8,5 +8,17 @@ Brian Moses -- 2020-04-22 22:00
 Alex Thompson -- 2020-04-23 18:22
   - Updated sitemap to include login and user ability to create case studies
 
+William Cao -- 2020-04-24 0:20
+  - Wrote API routes and Web routes on design doc along with description of how frontend will communicate with backend
+  
+Mohidul Abedin -- 2020-04-24 11:20
+  - Added database for users
+  - login/register system added
+
 Brian Moses -- 2020-04-24 12:30
   - updated README.md
+
+William Cao -- 2020-04-24 17:02
+  - Fixed bug on logout where flash message does not flash on logout
+  - Added base.html as a parent jinja file for other files to import. It has all the needed libraries imported.
+  - Fixed bug on login where it would redirect to a non-existing url

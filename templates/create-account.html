@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Create Account{% endblock title %}
+{% block body %}
+{% with errors = get_flashed_messages() %}
+<p class="text-danger">{{ errors[0] }}</p>
+{% endwith %}
+<form method="POST">
+Username <br>
+<input type="text" name="username" required> <br>
+Password<br>
+<input type="password" name="password" required> <br>
+Confirm Password <br>
+<input type="password" name="password_repeat" required> <br>
+
+<button type="Submit" value="submit">Register</button>
+</form>
+<a href="/login">Already have an account?</a>
+{% endblock body %}
