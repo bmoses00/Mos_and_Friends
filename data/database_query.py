@@ -32,9 +32,7 @@ def get_all_econ_data_basic_info() -> List[dict]:
     """
     basic_data = []
     for econ_data in econ_data_info:
-        print(econ_data)
         query_info = data_collection.find_one({"name": econ_data["name"]}, {"_id": 0, "start_date": 1, "end_date": 1})
-        print(query_info)
         basic_data.append({
             "title": econ_data["common_name"],
             "routing_name": econ_data["name"],
