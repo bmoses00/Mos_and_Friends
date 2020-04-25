@@ -1,10 +1,6 @@
 from data import DATABASE_NAME, mongo_client, LOGIN_COLLECTION, econ_data_info, DATA_COLLECTION
 import csv
 
-# Drop the mongo database if it exists
-if DATABASE_NAME in mongo_client.list_database_names():
-    mongo_client.drop_database(DATABASE_NAME)
-
 # Recreate the database
 database = mongo_client[DATABASE_NAME]
 
@@ -68,5 +64,11 @@ def create_users_system():
     database[LOGIN_COLLECTION].insert({"username": "admin", "password": "admin"})
 
 
-load_econ_data_sets()
-create_users_system()
+def recreate_database():
+    # Drop the mongo database if it exists
+    if DATABASE_NAME in mongo_client.list_database_names():
+        mongo_client.drop_database(DATABASE_NAME)
+
+    # recreate data
+    load_econ_data_sets()
+    create_users_system()
