@@ -55,18 +55,17 @@ def create_users_system():
     User system formatted as:
     {
         _id: ObjectId
-        name: string,
+        username: string,
         password: string
     }
     {
         _id: ObjectId
-        name: string,
+        username: string,
         password: string
     }
     ...
     """
-    database[LOGIN_COLLECTION].insert({"name": "admin", "password": "apples"})
-    database[LOGIN_COLLECTION].insert({"name": "william", "password": "will"})
+    database[LOGIN_COLLECTION].insert({"username": "admin", "password": "admin"})
 
 
 load_econ_data_sets()
