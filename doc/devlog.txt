@@ -10,7 +10,7 @@ Alex Thompson -- 2020-04-23 18:22
 
 William Cao -- 2020-04-24 0:20
   - Wrote API routes and Web routes on design doc along with description of how frontend will communicate with backend
-  
+
 Mohidul Abedin -- 2020-04-24 11:20
   - Added database for users
   - login/register system added
@@ -22,3 +22,11 @@ William Cao -- 2020-04-24 17:02
   - Fixed bug on logout where flash message does not flash on logout
   - Added base.html as a parent jinja file for other files to import. It has all the needed libraries imported.
   - Fixed bug on login where it would redirect to a non-existing url
+
+  Alex Thompson -- 2020-04-24 20:00
+    - created template for app layout with bootstrap + css
+    - Adjusted it to work with jinja
+
+William Cao -- 2020-04-25 0:44
+  - Ported SQL creating tables to Mongo
+  - Read all econ data csv files to Mongo collections

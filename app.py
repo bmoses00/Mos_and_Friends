@@ -1,6 +1,7 @@
 import os, random
 from flask import Flask, session, render_template, redirect, url_for, request, flash
 from data import database_query
+import json
 app = Flask(__name__)
 app.secret_key = "2"
 
@@ -57,6 +58,12 @@ def create_account():
         # Logged in user cannot create an account
         return redirect(url_for("home"))
     return render_template("create-account.html")
+
+
+@app.route("/view-data", methods=["GET"])
+def view_data():
+    econ_data = database_query.get_all_econ_data_basic_info()
+    return render_template("view-data.html", data_sets=econ_data, data_sets_json=json.dumps(econ_data))
 
 
 @app.route("/logout")
