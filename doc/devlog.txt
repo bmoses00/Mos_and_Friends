@@ -15,6 +15,9 @@ Mohidul Abedin -- 2020-04-24 11:20
   - Added database for users
   - login/register system added
 
+Brian Moses -- 2020-04-24 12:30
+  - updated README.md
+
 William Cao -- 2020-04-24 17:02
   - Fixed bug on logout where flash message does not flash on logout
   - Added base.html as a parent jinja file for other files to import. It has all the needed libraries imported.
