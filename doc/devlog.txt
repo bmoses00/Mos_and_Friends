@@ -39,3 +39,6 @@ Brian Moses -- 2020-04-25 17:45
 
 William Cao -- 2020-04-26 15:15
   - Updated design doc with all the web routes and app.py to reflect changes
+
+Mohidul Abedin and Brian Moses -- 2020-04-26 20:00
+  - Added view-studies route and added viewing dates to view-data

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %} View Data {% endblock %}
+{% block body %}
+
+
+  <ul id = "case_study_container" class = "list-group">
+
+  </ul>
+
+
+  <script>
+    var content = {{case_study['content']|safe }};
+  </script>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src = "../static/js/view-study.js"> </script>
+
+{% endblock %}

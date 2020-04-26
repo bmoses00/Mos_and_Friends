@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %} View Data {% endblock %}
+{% block body %}
+
+  Hello, {{session['username']}}! <hr>
+
+  <b> Your cases </b> <br>
+  {% for case in user_cases %}
+    <a href = "/view-study/{{case['id']}}"> {{case['title']}} </a> <br>
+    {{case['description']}}<br>
+    <hr>
+  {% endfor %} <br>
+
+  <b> Public cases </b> <br>
+  {% for case in public_cases %}
+    <a href = "/view-study/{{case['id']}}"> {{case['title']}} </a> <br>
+    {{case['description']}}<br>
+    <hr>
+  {% endfor %}
+
+{% endblock %}

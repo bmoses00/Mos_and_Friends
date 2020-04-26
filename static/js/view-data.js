@@ -17,21 +17,22 @@ const scaleY = d3.scaleLinear().range([height - margin, 0]);
 
 const parseTime = d3.timeParse("%Y-%m-%d");
 
-function render_graph(dataset) {
-  d3.csv("static/csv/" + dataset + ".csv").then(function(data) {
+function render_graph(dataset, year_start, year_end) {
 
-    const date = data.columns[0];
-    const value = data.columns[1];
+  d3.csv("static/csv/" + dataset + ".csv").then(function(raw_data) {
 
-    data.forEach(function(d, index) {
+    data = []
 
-      d[date] = parseTime(d[date]);
-      // some quarters have no data, for these, we set the yield to that of the previous quarter
-      if (d[value] == ".") {
-        d[value] = +data[index - 1][value];
-      }
-      else {
+    const date = raw_data.columns[0];
+    const value = raw_data.columns[1];
+
+    raw_data.forEach(function(d, index) {
+      const current_year = d[date].substring(0, 4)
+
+      if (d[value] != "." && current_year >= year_start && current_year <= year_end ) {
         d[value] = +d[value];
+        d[date] = parseTime(d[date]);
+        data.push(d);
       }
     });
 
@@ -72,19 +73,60 @@ function render_graph(dataset) {
   });
 }
 
-// const selector = document.getElementById("graph_selector");
-// const button = document.getElementById("btn");
-
 const selector = d3.select("#graph_selector")
+const year_start_selector = d3.select("#year_start")
+const year_end_selector = d3.select("#year_end")
+
 
 function draw_graph() {
+
   if (selector.node().value == "none") {
     svg.selectAll("*").remove();
+    return;
   }
 
-  else {
-    render_graph(selector.node().value);
+  var graph_selected;
+  econ_data.forEach(function(graph) {
+    if (graph['routing_name'] == selector.node().value) {
+      graph_selected = graph;
+    }
+  });
+
+  const year_start = graph_selected['start_date'].substring(0, 4);
+  const year_end = graph_selected['end_date'].substring(0, 4);
+
+  year_start_selector.selectAll("*").remove()
+  year_end_selector.selectAll("*").remove()
+
+
+  for (let i = year_start; i <= year_end; i++) {
+    year_start_selector
+      .append("option")
+      .attr("value", i)
+      .html(i)
+    year_end_selector
+      .append("option")
+      .attr("value", i)
+      .html(i)
   }
+
+  year_end_selector.node().selectedIndex = year_end_selector.node().options.length-1;
+
+  render_graph(selector.node().value,
+              d3.select("#year_start").node().value,
+              d3.select("#year_end").node().value);
+
+}
+
+function change_year() {
+  if (d3.select("#year_start").node().value > d3.select("#year_end").node().value) {
+    return;
+  }
+  render_graph(selector.node().value,
+              d3.select("#year_start").node().value,
+              d3.select("#year_end").node().value);
 }
 
 selector.on('change', draw_graph);
+year_start_selector.on('change', change_year);
+year_end_selector.on('change', change_year);

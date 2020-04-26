@@ -1,5 +1,11 @@
-Hello World! <br>
-<a href = '/adventure0'> Go to adventure 0 </a> <br>
-<a href = '/adventure1'> Go to adventure 1 </a> <br>
+
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+{% block body %}
+
+<a href = '/view-studies'> Go to view-studies </a> <br>
+<a href = '/create-study'> Go to create-study </a> <br>
 <a href = '/view-data'> Go to view data </a> <br>
 <a href="/logout">Logout</a>
+
+{% endblock %}
