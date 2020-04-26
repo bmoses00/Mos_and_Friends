@@ -22,13 +22,14 @@
 
     <svg id = "graph"> </svg>
     <select id="graph_selector">
+      <option value = "none" selected></option>
 
       {% for data_set in data_sets %}
           <option value= {{data_set['routing_name']}}> {{data_set['title']}} </option>
       {% endfor %}
     </select>
 
-    <button id = "btn" type="button">Render</button>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
 
     <script src = "static/js/view-data.js"> </script>
 

@@ -1,5 +1,5 @@
-let width = 1000;
-let height = 500;
+let width = .8 * d3.select("#graph-container").node().getBoundingClientRect().width;
+let height = d3.select("#graph-container").node().getBoundingClientRect().height;
 
 let margin = 50;
 
@@ -9,8 +9,8 @@ svg = d3.select("#graph")
   .attr("width", width)
   .attr("height", height)
   .append("g")
-  .attr("transform",
-  "translate(50, 0)");
+    .attr("id", "group")
+    .attr("transform", "translate(50, 0)");
 
 const scaleX = d3.scaleTime().range([0, width - margin - 10])
 const scaleY = d3.scaleLinear().range([height - margin, 0]);
@@ -76,10 +76,15 @@ function render_graph(dataset) {
 // const button = document.getElementById("btn");
 
 const selector = d3.select("#graph_selector")
-const button = d3.select("#btn")
 
 function draw_graph() {
-  render_graph(selector.node().value);
+  if (selector.node().value == "none") {
+    svg.selectAll("*").remove();
+  }
+
+  else {
+    render_graph(selector.node().value);
+  }
 }
 
-button.on('click', draw_graph);
+selector.on('change', draw_graph);
