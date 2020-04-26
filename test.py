@@ -1,28 +1,38 @@
 import unittest
-from data import database_creator, database_query
+from app import app
+from data import database_creator
+
+class Test(unittest.TestCase):
+    def setUp(self) -> None:
+        # run every time we run a test case
+        app.testing = True
+        self.app = app.test_client()
+        database_creator.recreate_database()
+
+    def login(self, username: str, password: str):
+        return self.app.post("/login", data={
+            "username": username,
+            "password": password
+        }, follow_redirects=True)
+
+    def logout(self):
+        return self.app.get("/logout", follow_redirects=True)
+
+    def test_login(self):
+        # create account
+        username = "username123"
+        password = "password123"
+        self.app.post("/create-account", data={
+            "username": username,
+            "password": password,
+            "password_repeat": password,
+        })
+        self.login(username, password)
+        with self.app as c:
+            with c.session_transaction() as session:
+                # make sure session knows you are logged in
+                self.assertEqual(session["username"], username)
 
 
-database_creator.recreate_database()
-
-class TestLogin(unittest.TestCase):
-    def testNonExistingAccount(self):
-        self.assertFalse(database_query.is_valid_login("does not exist", "nope"))
-
-    def testDefaultAccount(self):
-        self.assertTrue(database_query.is_valid_login("admin", "admin"))
-
-    def testAccountCreation(self):
-        self.assertFalse(database_query.does_username_exist("newAccount"))
-        database_query.create_account("newAccount", "account")
-        self.assertTrue(database_query.is_valid_login("newAccount", "account"))
-
-
-class TestEconData(unittest.TestCase):
-    def testGetAllEconData(self):
-        data = database_query.get_all_econ_data_basic_info()
-        # make sure data is returned
-        self.assertNotEqual(data, [])
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
