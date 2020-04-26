@@ -76,13 +76,22 @@ def logout():
 @app.route("/home")
 def home():
     return render_template("home.html")
-@app.route('/adventure0')
-def adventure0():
-    return render_template("adventure0.html")
 
-@app.route('/adventure1')
-def adventure1():
-    return render_template("adventure1.html")
+
+@app.route("/view-studies")
+def view_studies():
+    return render_template("view-studies.html")
+
+
+@app.route("/view-study/<string:id>")
+def view_study(id: str):
+    return render_template("view_study.html")
+
+
+@app.route("/create-study")
+def create_study():
+    return render_template("create-study.html")
+
 
 if __name__ == "__main__":
         app.debug = True
