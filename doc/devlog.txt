@@ -36,3 +36,6 @@ William Cao -- 2020-04-25 16:35
 
 Brian Moses -- 2020-04-25 17:45
   - added viewing line graphs in view-data.html
+
+William Cao -- 2020-04-26 15:15
+  - Updated design doc with all the web routes and app.py to reflect changes
