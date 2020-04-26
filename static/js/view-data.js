@@ -72,11 +72,14 @@ function render_graph(dataset) {
   });
 }
 
-const selector = document.getElementById("graph_selector");
-const button = document.getElementById("btn");
+// const selector = document.getElementById("graph_selector");
+// const button = document.getElementById("btn");
+
+const selector = d3.select("#graph_selector")
+const button = d3.select("#btn")
 
 function draw_graph() {
-  render_graph(selector.value);
+  render_graph(selector.node().value);
 }
 
-button.addEventListener('click', draw_graph);
+button.on('click', draw_graph);
