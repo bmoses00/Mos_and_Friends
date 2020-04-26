@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %} Create a Case Study {% endblock title %}
+{% block body %}
+<ul id = "masterlist" class="list-group list-group-flush">
+  <li class="list-group-item">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Title:</span>
+      </div>
+      <input type="text" class="form-control" placeholder="Enter a Title" aria-label="Title" aria-describedby="basic-addon1">
+    </div>
+  </li>
+  <li id = "item1" class="list-group-item">
+    <button id="textbutton" onclick="addtextinput()" class = "btn btn-secondary"> Add Text </button>
+    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+    <button id="graphbutton" onclick="addgraphinput()" class = "btn btn-secondary"> Add Graph </button>
+  </li>
+</ul>
+
+
+<script src="../static/js/create-study.js"> </script>
+{% endblock %}
