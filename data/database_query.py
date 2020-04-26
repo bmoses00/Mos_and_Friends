@@ -26,19 +26,17 @@ def get_all_econ_data_basic_info() -> List[dict]:
             "name": string,
             "start_date": string,
             "end_date": string,
-            column_names: [string, string]
         },
         ...
     ]
     """
     basic_data = []
     for econ_data in econ_data_info:
-        query_info = data_collection.find_one({"name": econ_data["name"]}, {"_id": 0, "start_date": 1, "end_date": 1, "column_names": 1})
+        query_info = data_collection.find_one({"name": econ_data["name"]}, {"_id": 0, "start_date": 1, "end_date": 1})
         basic_data.append({
             "title": econ_data["title"],
             "name": econ_data["name"],
             "start_date": query_info["start_date"],
             "end_date": query_info["end_date"],
-            "column_names": query_info["column_names"]
         })
     return basic_data
