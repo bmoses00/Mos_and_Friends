@@ -83,11 +83,6 @@ def view_studies():
     return render_template("view-studies.html")
 
 
-@app.route("/view-data")
-def view_data():
-    return render_template("view-data.html")
-
-
 @app.route("/view-study/<string:id>")
 def view_study(id: str):
     return render_template("view_study.html")
