@@ -20,8 +20,8 @@ const parseTime = d3.timeParse("%Y-%m-%d");
 function render_graph(dataset) {
   d3.csv("static/csv/" + dataset + ".csv").then(function(data) {
 
-    const date = data.columns[0]
-    const value = data.columns[1]
+    const date = data.columns[0];
+    const value = data.columns[1];
 
     data.forEach(function(d, index) {
 
@@ -36,10 +36,10 @@ function render_graph(dataset) {
     });
 
     if (!first_render) {
-        d3.select("#path").remove();
-        d3.select("#x-axis").remove();
-        d3.select("#y-axis").remove();
-      }
+      d3.select("#path").remove();
+      d3.select("#x-axis").remove();
+      d3.select("#y-axis").remove();
+    }
 
     first_render = false;
 
