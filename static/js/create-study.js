@@ -151,44 +151,27 @@ var addgraphinput = function() {
   //create col/form for subject
   var subjectCol = structure
     .append("div")
-    .attr("class", "col")
+    .attr("class", "col pr-5")
     .html("Choose Subject:");
 
   subjectCol.node().innerHTML += "<br><br>";
 
   //create select for subject dropdown menu
   var subjectDropdown = subjectCol
-    .append("div")
-    .attr("class", "dropdown");
-
-  var subjectButton = subjectDropdown
-    .append("button")
-    .attr("class", "btn btn-secondary dropdown-toggle")
-    .attr("type", "button")
-    .attr("id", "subjectbutton")
-    .attr("data-toggle", "dropdown")
-    .html("Subject");
-
-  var subjectOptions = subjectDropdown
-    .append("div")
-    .attr("class", "dropdown-menu");
+    .append("select")
+    .attr("class", "custom-select")
+    .attr("required", "true")
+    .attr("onchange", "renderGraph");
 
   //add Options to dropdown
   //will be down with a for loop through list of subjects, but for now j adding samples
-  subjectOptions
-    .append("a")
-    .attr("class", "dropdown-item")
-    .html("option 1");
-  subjectOptions
-    .append("a")
-    .attr("class", "dropdown-item")
-    .html("option 2");
+  var subjectOptions = subjectDropdown
+    .append("option").html("option 1");
 
   //create col/form for dates
   var dateCol = structure
     .append("div")
-    .attr("class", "col");
-
+    .attr("class", "col pl-5");
 
   //create row for start date
   var startRow = dateCol
@@ -200,54 +183,28 @@ var addgraphinput = function() {
 
   //create start date dropdowns
   var startYearDropdown = startRow
-    .append("div")
-    .attr("class", "dropdown");
-
-  var startYearButton = startYearDropdown
-    .append("button")
-    .attr("class", "btn btn-secondary dropdown-toggle")
-    .attr("type", "button")
-    .attr("id", "startyearbutton")
-    .attr("data-toggle", "dropdown")
-    .html("Year");
-
-  var startyearOptions = startYearDropdown
-    .append("div")
-    .attr("class", "dropdown-menu");
+    .append("select")
+    .attr("class", "custom-select w-25")
+    .attr("onchange", "renderGraph()");
 
   //we will add specific years later
-  startyearOptions
-    .append("a")
-    .attr("class", "dropdown-item")
-    .html("option 1");
-  startyearOptions
-    .append("a")
-    .attr("class", "dropdown-item")
-    .html("option 2");
+  var startyearOptions = startYearDropdown
+    .append("option").html("option");
+
 
   startRow.node().innerHTML += "&ensp;&ensp;";
 
   //start month dropdown
   var startMonthDropdown = startRow
-    .append("div")
-    .attr("class", "dropdown");
+    .append("select")
+    .attr("class", "custom-select w-25")
+    .attr("onchange", "renderGraph()");
 
-  var startMonthbutton = startMonthDropdown
-    .append("button")
-    .attr("class", "btn btn-secondary dropdown-toggle")
-    .attr("type", "button")
-    .attr("id", "startmonthbutton")
-    .attr("data-toggle", "dropdown")
-    .html("Month");
 
-  var startmonthOptions = startMonthDropdown
-    .append("div")
-    .attr("class", "dropdown-menu");
   var i = 0;
-
   //month options
   for (i = 0; i < 12; i++) {
-    startmonthOptions.append("a").attr("class", "dropdown-item").html((i + 1) + "");
+    startMonthDropdown.append("option").html((i + 1) + "");
   }
 
   dateCol.node().innerHTML += "<br><br>";
@@ -260,77 +217,44 @@ var addgraphinput = function() {
   endRow.node().innerHTML += "&ensp;&ensp;&ensp;";
   //create start date dropdowns
   var endYearDropdown = endRow
-    .append("div")
-    .attr("class", "dropdown");
-
-  var endYearButton = endYearDropdown
-    .append("button")
-    .attr("class", "btn btn-secondary dropdown-toggle")
-    .attr("type", "button")
-    .attr("id", "endyearbutton")
-    .attr("data-toggle", "dropdown")
-    .html("Year");
-
-  var endyearOptions = endYearDropdown
-    .append("div")
-    .attr("class", "dropdown-menu");
+    .append("select")
+    .attr("class", "custom-select w-25")
+    .attr("onchange", "renderGraph()");
 
   //we will add specific years later
-  endyearOptions
-    .append("a")
-    .attr("class", "dropdown-item")
-    .html("option 1");
-  endyearOptions
-    .append("a")
-    .attr("class", "dropdown-item")
-    .html("option 2");
+  var endyearOptions = endYearDropdown
+    .append("option")
+    .html("option");
 
   endRow.node().innerHTML += "&ensp;&ensp;";
 
   //end month dropdown
   var endMonthDropdown = endRow
-    .append("div")
-    .attr("class", "dropdown");
+    .append("select")
+    .attr("class", "custom-select w-25")
+    .attr("onchange", "renderGraph()");
 
-  var endMonthbutton = endMonthDropdown
-    .append("button")
-    .attr("class", "btn btn-secondary dropdown-toggle")
-    .attr("type", "button")
-    .attr("id", "endmonthbutton")
-    .attr("data-toggle", "dropdown")
-    .html("Month");
 
-  var endmonthOptions = endMonthDropdown
-    .append("div")
-    .attr("class", "dropdown-menu");
   var i = 0;
   for (i = 0; i < 12; i++) {
-    endmonthOptions.append("a").attr("class", "dropdown-item").html((i + 1) + "");
+    endMonthDropdown.append("option").html((i + 1) + "");
   }
-
+  listitem.node().innerHTML += "<br><br>";
   //add render/back buttons
-  var finalCol = structure
+  var belowRow = listitem
     .append("div")
-    .attr("class", "col");
+    .attr("class", "row");
 
-  var backbutton = finalCol
+
+  var backbutton = belowRow
     .append("button")
     .attr("class", "btn btn-secondary")
     .attr("id", "backbutton")
     .attr("onclick", "removeCurrent()")
     .html("Back");
-
-  finalCol.node().innerHTML += "<br><br>";
-
-  var renderbutton = finalCol
-    .append("button")
-    .attr("class", "btn btn-secondary")
-    .attr("id", "renderbutton")
-    .attr("onclick", "renderGraph()")
-    .html("Render Graph");
-
   structure.node().innerHTML += "<br><br>";
+}
 
-
-  console.log(structure.node());
+var renderGraph = function(){
+  
 }
