@@ -32,6 +32,11 @@ class Test(unittest.TestCase):
             with c.session_transaction() as session:
                 # make sure session knows you are logged in
                 self.assertEqual(session["username"], username)
+        self.logout()
+        with self.app as c:
+            with c.session_transaction() as session:
+                # make sure session knows you are logged in
+                self.assertFalse("username" in session)
 
 
 if __name__ == "__main__":
