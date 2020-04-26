@@ -22,10 +22,10 @@ def get_all_econ_data_basic_info() -> List[dict]:
     :return: Data formatted as
     [
         {
-            title: string,
-            "routing name": string,
+            "title": string,
+            "name": string,
             "start_date": string,
-            "end_date": string
+            "end_date": string,
         },
         ...
     ]
@@ -34,9 +34,9 @@ def get_all_econ_data_basic_info() -> List[dict]:
     for econ_data in econ_data_info:
         query_info = data_collection.find_one({"name": econ_data["name"]}, {"_id": 0, "start_date": 1, "end_date": 1})
         basic_data.append({
-            "title": econ_data["common_name"],
-            "routing_name": econ_data["name"],
+            "title": econ_data["title"],
+            "name": econ_data["name"],
             "start_date": query_info["start_date"],
-            "end_date": query_info["end_date"]
+            "end_date": query_info["end_date"],
         })
     return basic_data
