@@ -84,10 +84,6 @@ def adventure0():
 def adventure1():
     return render_template("adventure1.html")
 
-@app.route('/line_graphs')
-def line_graphs():
-    return render_template("line_graphs.html")
-
 if __name__ == "__main__":
         app.debug = True
         app.run()

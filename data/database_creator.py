@@ -4,7 +4,6 @@ import csv
 # Recreate the database
 database = mongo_client[DATABASE_NAME]
 
-
 def load_econ_data_sets():
     """
     Each econ data collection will be formatted as:
