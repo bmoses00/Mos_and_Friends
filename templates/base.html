@@ -48,13 +48,17 @@
                 <a class="blog-header-logo text-dark h2" href="#"> Mos & Friends Economic Analysis Center </a>
               </div>
               <div class="col d-flex justify-content-end align-items-center">
+                {% if "username" in session %}
+                <h4> Logged in as {{session["username"]}} </h4>
+                {% else %}
                 <form action="/create-account">
-                  <button class="btn btn-sm btn-outline-secondary" type+'suubmit'> Sign up </button>
+                  <button class="btn btn-sm btn-outline-secondary" type='submit'> Sign up </button>
                 </form>
                 &ensp;&ensp;
                 <form action="/login">
                   <button class="btn btn-sm btn-outline-secondary" type="submit"> Sign in </button>
                 </form>
+                {% endif %}
               </div>
             </div>
           </nav>

@@ -43,3 +43,12 @@ William Cao -- 2020-04-26 15:15
 Mohidul Abedin and Brian Moses -- 2020-04-26 20:00
   - Added view-studies route and added viewing dates to view-data
   - Added view-study route
+
+William Cao -- 2020-04-26 19:20
+  - Made QAF post on unittest and wrote unittest with Flask testing for logging
+
+William Cao -- 2020-04-26 23:25
+  - Can store and retrieve case studies. Wrote tests for it. Updated design doc to say actions required by frontend
+  after creating an case study (redirect)
+  - Can pass all case studies to /view-studies
+

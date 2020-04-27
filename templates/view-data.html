@@ -7,10 +7,10 @@
          econData formatted as:
          [
             {
-                title: string,
-                "routing name": string,
+                "title": string, // what the user sees
+                "name": string, // name of the corresponding csv file without the ".csv"
                 "start_date": string,
-                "end_date": string
+                "end_date": string,
             },
             ...
          ]
@@ -25,7 +25,7 @@
       <option value = "none" selected>None selected</option>
 
       {% for data_set in data_sets %}
-          <option value = {{data_set['routing_name']}}> {{data_set['title']}} </option>
+          <option value= {{data_set['name']}}> {{data_set['title']}} </option>
       {% endfor %}
     </select>
 

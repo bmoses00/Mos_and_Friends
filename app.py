@@ -60,7 +60,7 @@ def create_account():
 @app.route("/view-data", methods=["GET"])
 def view_data():
     econ_data = database_query.get_all_econ_data_basic_info()
-    return render_template("view-data.html", data_sets=econ_data, data_sets_json=json.dumps(econ_data))
+    return render_template("view-data.html", data_sets=econ_data)
 
 
 @app.route("/logout")
@@ -70,24 +70,54 @@ def logout():
     flash("You logged out")
     return redirect(url_for("login"))
 
+
 @app.route("/home")
 def home():
     return render_template("home.html")
 
+  
 @app.route("/view-studies")
 def view_studies():
-    return render_template("view-studies.html", case_studies = case_studies)
+    case_studies = database_query.get_all_case_studies()
+    return render_template("view-studies.html", case_studies=case_studies)
+
 
 @app.route("/view-study/<string:id>")
 def view_study(id: str):
-    return render_template("view_study.html", case_study = case_study)
+    case_study = database_query.get_case_study(id)
+    return render_template("view_study.html", case_study=case_study)
 
-
-@app.route("/create-study")
+  
+@app.route("/create-study", methods=["GET", "POST"])
 def create_study():
-    return render_template("create-study.html")
+    """
+    If sending POST, need:
+    {
+        title: “title”,
+        description: “random text”,
+        content: [
+            {
+                type: “chart”| “text”
+                // if chart type
+                chart_start: “YYYY-MM-01”,
+                chart_end: “YYYY-MM-01”,
+                chart_name: string,
+                // if text type
+                text: text
+            },
+            …
+        ]
+    }
+    """
+    if request.method == "POST":
+        case_study = request.get_json()
+        case_id = database_query.create_case_study(session["username"], case_study["title"], case_study["description"], case_study["content"])
+        return {"redirect": "view-study/" + case_id}
+    elif request.method == "GET":
+        econ_data = database_query.get_all_econ_data_basic_info()
+        return render_template("create-study.html", data_sets=econ_data)
 
-
+      
 if __name__ == "__main__":
-        app.debug = True
-        app.run()
+    app.debug = True
+    app.run()
