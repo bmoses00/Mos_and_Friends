@@ -87,7 +87,8 @@ def view_study(id: str):
 
 @app.route("/create-study")
 def create_study():
-    return render_template("create-study.html")
+    econ_data = database_query.get_all_econ_data_basic_info()
+    return render_template("create-study.html", data_sets=econ_data, data_sets_json=json.dumps(econ_data))
 
 
 if __name__ == "__main__":
