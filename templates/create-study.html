@@ -7,7 +7,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">Title:</span>
       </div>
-      <input type="text" class="form-control" placeholder="Enter a Title" aria-label="Title" aria-describedby="basic-addon1">
+      <input id = "bigTitle" type="text" class="form-control" placeholder="Enter a Title" aria-label="Title" aria-describedby="basic-addon1">
     </div>
   </li>
   <li id = "item1" class="list-group-item">
@@ -17,7 +17,7 @@
   </li>
 </ul>
 <br>
-<button id="graphbutton" onclick="finalizeStudy()" class = "btn btn-secondary"> Finalize Study </button>
+<button id="finalizeStudy" onclick="finalizeStudy()" class = "btn btn-secondary"> Finalize Study </button>
 <script>
     var econData = JSON.parse('{{ data_sets_json|safe }}');
 </script>

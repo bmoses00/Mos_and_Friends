@@ -1,8 +1,11 @@
 //index of list item currently being modified
 var index = 1;
+var contentList = [];
+var idlist = [];
+var sendThis = {};
 
 var first_render = true;
-console.log(econData);
+
 
 
 var deleteItem = function(r) {
@@ -12,6 +15,11 @@ var deleteItem = function(r) {
         this.remove();
       }
     });
+  console.log(idlist);
+  console.log(r - 1);
+  contentList.splice(r - 1, 1);
+  idlist.splice(r - 1, 1);
+    console.log(idlist);
   index -= 1;
 }
 
@@ -35,6 +43,8 @@ var addtextinput = function() {
   text.appendChild(input);
   var actualinput = document.createElement("textarea");
   actualinput.className += "form-control";
+  actualinput.id = "text" + index;
+  idlist.push("text" + index);
   text.appendChild(actualinput);
   //create the new list item to be added to the page
   var listItem = document.createElement("li");
@@ -69,6 +79,7 @@ var removeCurrent = function() {
         this.remove();
       }
     });
+  idlist.pop();
   //create new list item
   var listItem = document.createElement("li");
   listItem.className += "list-group-item";
@@ -103,6 +114,12 @@ var removeGraphInput = function() {
         this.remove();
       }
     });
+
+  if (contentList[index - 1]["type"] == "chart"){
+    contentList.pop();
+    idlist.pop();
+    //console.log(contentList);
+  }
   first_render = true;
   //create new list item
   var listItem = document.createElement("li");
@@ -168,6 +185,9 @@ var finalizeText = function() {
   //add new list item to list
   var list = document.getElementById("masterlist");
   list.appendChild(listItem);
+
+  var actualText = d3.select("#text" + (index - 1)).node().value;
+  contentList.push({"type" : "text", "text" : actualText});
 }
 
 
@@ -317,6 +337,8 @@ var addgraphinput = function() {
     .html("Finalize Graph");
 
   structure.node().innerHTML += "<br><br>";
+
+  idlist.push("graph" + index);
 }
 
 
@@ -329,7 +351,6 @@ function renderGraph() {
   var year_end = d3.select("#endyeardropdown").node().value;
   var month_start = d3.select("#startmonthdropdown").node().value;
   var month_end = d3.select("#endmonthdropdown").node().value;
-
 
 
   var dataset = "";
@@ -381,7 +402,7 @@ function renderGraph() {
   var list = d3.select("#masterlist");
 
   if (first_render) {
-    list.append("li").attr("class", "list-group-item").append("h2")
+    list.append("li").attr("class", "list-group-item").append("h2").attr("class", "mb-5")
       .html(title + " From " + year_start + " To " + year_end)
       .attr("id", "title" + index);
   }
@@ -415,8 +436,23 @@ function renderGraph() {
 
   var svg = d3.select("#svg" + index);
 
+
+  if (!first_render) {
+    contentList.pop();
+  }
+
+  var contentitem = {}
+  contentitem["type"] = "chart";
+  contentitem["chart_start"] = year_start + "-01-01";
+  contentitem["chart_end"] = year_end + "-01-01";
+  contentitem["chart_name"] = title;
+
+  contentList.push(contentitem);
+
+
   first_render = false;
-  if (!(title == "" || year_start == "" || year_end == "" )){//|| month_start == "" || month_end == "")) {
+
+  if (!(title == "" || year_start == "" || year_end == "")) { //|| month_start == "" || month_end == "")) {
 
     d3.csv("static/csv/" + dataset + ".csv").then(function(raw_data) {
 
@@ -511,4 +547,17 @@ var finalizeGraph = function() {
   //add new list item to list
   var list = document.getElementById("masterlist");
   list.appendChild(listItem);
+}
+
+var finalizeStudy = function(){
+  var i = 0;
+  for (i = 0; i < contentList.length; i++){
+    if (contentList[i]["type"] == "text"){
+      var intext = d3.select("#" + idlist[i]).node().value;
+      contentList[i]["text"] = intext;
+    }
+  }
+  sendThis["title"] = d3.select("#bigTitle").node().value;
+  sendThis["content"] = contentList;
+  console.log(sendThis);
 }
