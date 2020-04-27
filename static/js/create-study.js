@@ -417,9 +417,9 @@ function renderGraph() {
       });
 
       if (!first_render) {
-        d3.select("#path").remove();
-        d3.select("#x-axis").remove();
-        d3.select("#y-axis").remove();
+        d3.select("#path" + index).remove();
+        d3.select("#x-axis" + index).remove();
+        d3.select("#y-axis" + index).remove();
       }
 
       first_render = false;
@@ -438,7 +438,7 @@ function renderGraph() {
       // draws line graph
       svg.append("path")
         .data([data])
-        .attr("id", "path")
+        .attr("id", "path" + index)
         .attr("fill", "none")
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
@@ -446,12 +446,12 @@ function renderGraph() {
 
       // x and y axes
       svg.append("g")
-        .attr("id", "x-axis")
+        .attr("id", "x-axis" + index)
         .attr("transform", "translate(0," + (height - margin) + ")")
         .call(d3.axisBottom(scaleX));
 
       svg.append("g")
-        .attr("id", "y-axis")
+        .attr("id", "y-axis" + index)
         .call(d3.axisLeft(scaleY));
 
     });
