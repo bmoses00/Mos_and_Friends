@@ -110,6 +110,8 @@ def create_study():
     }
     """
     if request.method == "POST":
+        if "username" not in session:
+            return "Login to create case study", 400
         case_study = request.get_json()
         case_id = database_query.create_case_study(session["username"], case_study["title"], case_study["description"], case_study["content"])
         return {"redirect": "view-study/" + case_id}
