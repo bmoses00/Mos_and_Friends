@@ -582,15 +582,15 @@ var finalizeStudy = function() {
 
   console.log(sendThis);
 
-  // fetch("/create-study", {
-  //     method: "POST",
-  //     headers: {
-  //         'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(sendThis)
-  // }).then(res => res.json())
-  //   .then(data => {
-  //   window.location = "/" + data.redirect;
-  //   })
-  // window.location = "/home";
+  fetch("/create-study", {
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sendThis)
+  }).then(res => res.json())
+    .then(data => {
+    window.location = "/" + data.redirect;
+    })
+  window.location = "/home";
 }
