@@ -15,11 +15,22 @@ var deleteItem = function(r) {
         this.remove();
       }
     });
-  console.log(idlist);
-  console.log(r - 1);
+  //console.log(idlist);
+  //console.log(r - 1);
   contentList.splice(r - 1, 1);
   idlist.splice(r - 1, 1);
-  console.log(idlist);
+  var i = r + 1;
+  for (i; i < idlist.length + 2; i++){
+    console.log(i);
+    console.log(d3.select("#delete" + i).node().id[6]);
+    d3.select("#delete" + i)
+      .attr("onclick", "deleteItem(" + (parseInt(d3.select("#delete" + i).node().id[6]) - 1) + ")")
+      .attr("id", "delete" + (parseInt(d3.select("#delete" + i).node().id[6]) - 1));
+    //console.log(d3.select("#delete" + i).node().onclick);
+    //idlist[i] = idlist[i].slice(0, idlist[i].length - 1) + (parseInt(idlist[i][idlist[i].length - 1]) - 1);
+    //console.log(idlist[i])
+  }
+  //console.log(idlist);
   index -= 1;
 }
 
