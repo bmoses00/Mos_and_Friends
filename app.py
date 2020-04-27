@@ -75,7 +75,7 @@ def logout():
 def home():
     return render_template("home.html")
 
-
+  
 @app.route("/view-studies")
 def view_studies():
     case_studies = database_query.get_all_case_studies()
@@ -87,7 +87,7 @@ def view_study(id: str):
     case_study = database_query.get_case_study(id)
     return render_template("view_study.html", case_study=case_study)
 
-
+  
 @app.route("/create-study", methods=["GET", "POST"])
 def create_study():
     """
@@ -117,6 +117,7 @@ def create_study():
         econ_data = database_query.get_all_econ_data_basic_info()
         return render_template("create-study.html", data_sets=econ_data)
 
+      
 if __name__ == "__main__":
     app.debug = True
     app.run()

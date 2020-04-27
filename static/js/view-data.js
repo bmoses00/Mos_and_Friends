@@ -72,19 +72,60 @@ function render_graph(dataset) {
  });
 }
 
-// const selector = document.getElementById("graph_selector");
-// const button = document.getElementById("btn");
-
 const selector = d3.select("#graph_selector")
+const year_start_selector = d3.select("#year_start")
+const year_end_selector = d3.select("#year_end")
+
 
 function draw_graph() {
+
   if (selector.node().value == "none") {
     svg.selectAll("*").remove();
+    return;
   }
 
-  else {
-    render_graph(selector.node().value);
+  var graph_selected;
+  econ_data.forEach(function(graph) {
+    if (graph['routing_name'] == selector.node().value) {
+      graph_selected = graph;
+    }
+  });
+
+  const year_start = graph_selected['start_date'].substring(0, 4);
+  const year_end = graph_selected['end_date'].substring(0, 4);
+
+  year_start_selector.selectAll("*").remove()
+  year_end_selector.selectAll("*").remove()
+
+
+  for (let i = year_start; i <= year_end; i++) {
+    year_start_selector
+      .append("option")
+      .attr("value", i)
+      .html(i)
+    year_end_selector
+      .append("option")
+      .attr("value", i)
+      .html(i)
   }
+
+  year_end_selector.node().selectedIndex = year_end_selector.node().options.length-1;
+
+  render_graph(selector.node().value,
+              d3.select("#year_start").node().value,
+              d3.select("#year_end").node().value);
+
+}
+
+function change_year() {
+  if (d3.select("#year_start").node().value > d3.select("#year_end").node().value) {
+    return;
+  }
+  render_graph(selector.node().value,
+              d3.select("#year_start").node().value,
+              d3.select("#year_end").node().value);
 }
 
 selector.on('change', draw_graph);
+year_start_selector.on('change', change_year);
+year_end_selector.on('change', change_year);
