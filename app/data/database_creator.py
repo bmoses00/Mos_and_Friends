@@ -1,4 +1,4 @@
-from data import DATABASE_NAME, mongo_client, LOGIN_COLLECTION, econ_data_info, DATA_COLLECTION, CASE_STUDIES_COLLECTION
+from data import DATA_COLLECTION, mongo_client, LOGIN_COLLECTION, econ_data_info, DATA_COLLECTION, CASE_STUDIES_COLLECTION, DATABASE_NAME
 import csv
 
 database = mongo_client[DATABASE_NAME]
@@ -62,6 +62,8 @@ def create_users_system():
     ...
     """
     database[LOGIN_COLLECTION].insert({"username": "admin", "password": "admin"})
+
+
 def create_case_studies_collection():
     """
     Case studies formatted as:
@@ -101,6 +103,8 @@ def create_case_studies_collection():
     })
     """
     pass
+
+
 def recreate_database():
     # Drop the mongo database if it exists
     if DATABASE_NAME in mongo_client.list_database_names():
@@ -110,3 +114,7 @@ def recreate_database():
     load_econ_data_sets()
     create_users_system()
     create_case_studies_collection()
+
+
+if __name__ == "__main__":
+    recreate_database()
