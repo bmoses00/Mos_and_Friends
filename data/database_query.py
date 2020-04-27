@@ -93,10 +93,31 @@ def get_case_study(uuid: str) -> dict:
 
 def get_all_case_studies() -> List[dict]:
     """
-    Returns list of case studies. See get_case_study for format of dictionary in this list
+    Return formatted as:
+    [
+        {
+            _id: id
+            title: “title”,
+            username: "username"
+            description: “random text”,
+            content: [
+                {
+                    type: “chart”| “text”
+                    // if chart type
+                    chart_start: “YYYY-MM-01”,
+                    chart_end: “YYYY-MM-01”,
+                    chart_name: string,
+                    // if text type
+                    text: text
+                },
+                …
+            ]
+        },
+        ...
+    ]
     :return:
     """
     case_studies = list(case_study_collection.find({}))
     for case_study in case_studies:
-        del case_study["_id"]
+        case_study["_id"] = str(case_study["_id"])
     return list(case_studies)

@@ -145,6 +145,12 @@ class Test(unittest.TestCase):
             case_study_1["username"] = username
             case_study_2["username"] = username
 
+            # do not check if you have _id field
+            for case in context["case_studies"]:
+                if "_id" not in case:
+                    self.fail("no _id")
+                del case["_id"]
+
             # to compare if the given case_study and the one returned are identical, jsonify both with order and compare
             # create list of json string
             sent_case_studies = [json.dumps(case_study_1, sort_keys=True), json.dumps(case_study_2, sort_keys=True)]
