@@ -70,6 +70,7 @@ def logout():
     flash("You logged out")
     return redirect(url_for("login"))
 
+
 @app.route("/home")
 def home():
     return render_template("home.html")
@@ -82,14 +83,38 @@ def view_studies():
 
 @app.route("/view-study/<string:id>")
 def view_study(id: str):
-    return render_template("view_study.html")
+    case_study = database_query.get_case_study(id)
+    return render_template("view_study.html", case_study=case_study)
 
 
-@app.route("/create-study")
+@app.route("/create-study", methods=["GET", "POST"])
 def create_study():
+    """
+    If sending POST, need:
+    {
+        title: “title”,
+        description: “random text”,
+        content: [
+            {
+                type: “chart”| “text”
+                // if chart type
+                chart_start: “YYYY-MM-01”,
+                chart_end: “YYYY-MM-01”,
+                chart_name: string,
+                // if text type
+                text: text
+            },
+            …
+        ]
+    }
+    """
+    if request.method == "POST":
+        case_study = request.get_json()
+        case_id = database_query.create_case_study(session["username"], case_study["title"], case_study["description"], case_study["content"])
+        return {"redirect": "view-study/" + case_id}
     return render_template("create-study.html")
 
 
 if __name__ == "__main__":
-        app.debug = True
-        app.run()
+    app.debug = True
+    app.run()
