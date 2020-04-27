@@ -19,7 +19,7 @@ var deleteItem = function(r) {
   console.log(r - 1);
   contentList.splice(r - 1, 1);
   idlist.splice(r - 1, 1);
-    console.log(idlist);
+  console.log(idlist);
   index -= 1;
 }
 
@@ -117,7 +117,7 @@ var removeGraphInput = function() {
 
   console.log(index);
   console.log(contentList);
-  if (!first_render && contentList[index - 1]["type"] == "chart"){
+  if (!first_render && contentList[index - 1]["type"] == "chart") {
     contentList.pop();
     console.log(contentList);
   }
@@ -190,7 +190,10 @@ var finalizeText = function() {
   list.appendChild(listItem);
 
   var actualText = d3.select("#text" + (index - 1)).node().value;
-  contentList.push({"type" : "text", "text" : actualText});
+  contentList.push({
+    "type": "text",
+    "text": actualText
+  });
 }
 
 
@@ -525,6 +528,13 @@ var finalizeGraph = function() {
         this.remove();
       }
     });
+  //add delete button
+  d3.select(d3.selectAll("li").nodes()[index])
+    .append("button")
+    .attr("class", "btn btn-secondary")
+    .html("Delete")
+    .attr("id", "delete" + index)
+    .attr("onclick", "deleteItem(" + index + ")");
   index += 1;
   first_render = true;
   //create new list item
@@ -552,10 +562,10 @@ var finalizeGraph = function() {
   list.appendChild(listItem);
 }
 
-var finalizeStudy = function(){
+var finalizeStudy = function() {
   var i = 0;
-  for (i = 0; i < contentList.length; i++){
-    if (contentList[i]["type"] == "text"){
+  for (i = 0; i < contentList.length; i++) {
+    if (contentList[i]["type"] == "text") {
       var intext = d3.select("#" + idlist[i]).node().value;
       contentList[i]["text"] = intext;
     }
