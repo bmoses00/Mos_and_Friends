@@ -115,11 +115,14 @@ var removeGraphInput = function() {
       }
     });
 
-  if (contentList[index - 1]["type"] == "chart"){
+  console.log(index);
+  console.log(contentList);
+  if (!first_render && contentList[index - 1]["type"] == "chart"){
     contentList.pop();
-    idlist.pop();
-    //console.log(contentList);
+    console.log(contentList);
   }
+  idlist.pop();
+
   first_render = true;
   //create new list item
   var listItem = document.createElement("li");
