@@ -60,7 +60,7 @@ def create_account():
 @app.route("/view-data", methods=["GET"])
 def view_data():
     econ_data = database_query.get_all_econ_data_basic_info()
-    return render_template("view-data.html", data_sets=econ_data, data_sets_json=json.dumps(econ_data))
+    return render_template("view-data.html", data_sets=econ_data)
 
 
 @app.route("/logout")
@@ -113,7 +113,9 @@ def create_study():
         case_study = request.get_json()
         case_id = database_query.create_case_study(session["username"], case_study["title"], case_study["description"], case_study["content"])
         return {"redirect": "view-study/" + case_id}
-    return render_template("create-study.html")
+    elif request.method == "GET":
+        econ_data = database_query.get_all_econ_data_basic_info()
+        return render_template("create-study.html", data_sets=econ_data)
 
 
 if __name__ == "__main__":
