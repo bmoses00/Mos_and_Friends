@@ -25,7 +25,7 @@ def login():
     elif request.method == "GET":
         if "username" in session:
             # Logged in user cannot login again
-            redirect(url_for("home"))
+            return redirect(url_for("home"))
         return render_template("login.html")
 
 
@@ -114,6 +114,9 @@ def create_study():
         case_id = database_query.create_case_study(session["username"], case_study["title"], case_study["description"], case_study["content"])
         return {"redirect": "view-study/" + case_id}
     elif request.method == "GET":
+        if "username" not in session:
+            flash("Login to create a case study")
+            return redirect(url_for("home"))
         econ_data = database_query.get_all_econ_data_basic_info()
         return render_template("create-study.html", data_sets=econ_data, data_sets_json = json.dumps(econ_data))
 
