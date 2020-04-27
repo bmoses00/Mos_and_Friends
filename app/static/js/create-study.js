@@ -233,7 +233,7 @@ var addgraphinput = function() {
     .append("select")
     .attr("class", "custom-select")
     .attr("required", "true")
-    .attr("onchange", "renderGraph()")
+    .attr("onchange", "updateDropdowns()")
     .attr("id", "subjectdropdown");
 
   //add Options to dropdown
@@ -259,28 +259,14 @@ var addgraphinput = function() {
   //create start date dropdowns
   var startYearDropdown = startRow
     .append("select")
-    .attr("class", "custom-select w-25")
-    // .attr("onchange", "renderGraph()")
+    .attr("class", "custom-select w-50")
+    .attr("onchange", "renderGraph()")
     .attr("id", "startyeardropdown");
 
   //we will add specific years later
   var startyearOptions = startYearDropdown
     .append("option").html("");
 
-
-  startRow.node().innerHTML += "&ensp;&ensp;";
-
-  //start month dropdown
-  var startMonthDropdown = startRow
-    .append("select")
-    .attr("class", "custom-select w-25")
-    // .attr("onchange", "renderGraph()")
-    .attr("id", "startmonthdropdown");
-
-
-  var i = 0;
-  //month options
-  startMonthDropdown.append("option").html("");
 
   dateCol.node().innerHTML += "<br><br>";
   //create row for end date
@@ -293,8 +279,8 @@ var addgraphinput = function() {
   //create start date dropdowns
   var endYearDropdown = endRow
     .append("select")
-    .attr("class", "custom-select w-25")
-    // .attr("onchange", "renderGraph()")
+    .attr("class", "custom-select w-50")
+    .attr("onchange", "renderGraph()")
     .attr("id", "endyeardropdown");
 
   //we will add specific years later
@@ -302,20 +288,10 @@ var addgraphinput = function() {
     .append("option")
     .html("");
 
-  endRow.node().innerHTML += "&ensp;&ensp;";
-
-  //end month dropdown
-  var endMonthDropdown = endRow
-    .append("select")
-    .attr("class", "custom-select w-25")
-    // .attr("onchange", "renderGraph()")
-    .attr("id", "endmonthdropdown");
 
 
   var i = 0;
-  endMonthDropdown.append("option").html("");
-  //listitem.node().innerHTML += "<br><br>";
-  //add render/back buttons
+
   var finalCol = structure.append("div")
     .attr("class", "col-2");
 
@@ -326,15 +302,6 @@ var addgraphinput = function() {
     .attr("id", "backbutton")
     .attr("onclick", "removeGraphInput()")
     .html("Back");
-
-  finalCol.node().innerHTML += "<br><br>";
-
-  var renderButton = finalCol
-    .append("button")
-    .attr("class", "btn btn-secondary")
-    .attr("id", "renderGraph")
-    .attr("onclick", "renderGraph()")
-    .html("Render Graph");
 
   finalCol.node().innerHTML += "<br><br>";
 
@@ -351,17 +318,62 @@ var addgraphinput = function() {
 }
 
 
+function updateDropdowns(){
+  var title = d3.select("#subjectdropdown").node().value;
+  //get vals
+  var year_start = d3.select("#startyeardropdown");
+  var year_end = d3.select("#endyeardropdown");
+  var month_start = d3.select("#startmonthdropdown");
+  var month_end = d3.select("#endmonthdropdown");
+
+  //get dropdowns and clear them
+  var startmonth = d3.select("#startmonthdropdown");
+  startmonth.selectAll("option").remove();
+  var startyear = d3.select("#startyeardropdown");
+  startyear.selectAll("option").remove();
+  var endmonth = d3.select("#endmonthdropdown");
+  endmonth.selectAll("option").remove();
+  var endyear = d3.select("#endyeardropdown");
+  endyear.selectAll("option").remove();
+
+  //get data index
+  var i = 0;
+  var dataindex = 0;
+  for (i = 0; i < econData.length; i++) {
+    if (econData[i].title == title) {
+      dataset = econData[i].name;
+      dataindex = i;
+    }
+  }
+
+  //get data from dataset
+  var realStartYear = parseInt(econData[dataindex].start_date.slice(0, 4));
+  var realStartMonth = parseInt(econData[dataindex].start_date.slice(5, 7));
+
+  var realEndYear = parseInt(econData[dataindex].end_date.slice(0, 4));
+  var realEndMonth = parseInt(econData[dataindex].end_date.slice(5, 7));
+
+  var maxMonth = Math.max(realEndMonth, realStartMonth);
+
+
+  //add options
+  startyear.append("option").html("");
+  endyear.append("option").html("");
+  for (i = 0; i < realEndYear - realStartYear; i++) {
+    startyear.append("option").html("" + (realStartYear + i));
+    endyear.append("option").html("" + (realStartYear + i));
+  }
+
+}
+
+
 
 function renderGraph() {
-  console.log("renderGraph")
 
   var title = d3.select("#subjectdropdown").node().value;
 
   var year_start = d3.select("#startyeardropdown").node().value;
   var year_end = d3.select("#endyeardropdown").node().value;
-  var month_start = d3.select("#startmonthdropdown").node().value;
-  var month_end = d3.select("#endmonthdropdown").node().value;
-
 
   var dataset = "";
   var i = 0;
@@ -372,43 +384,6 @@ function renderGraph() {
       dataindex = i;
     }
   }
-
-  //for selecting dates
-  var startmonth = d3.select("#startmonthdropdown");
-  startmonth.selectAll("option").remove();
-  var startyear = d3.select("#startyeardropdown");
-  startyear.selectAll("option").remove();
-  var endmonth = d3.select("#endmonthdropdown");
-  endmonth.selectAll("option").remove();
-  var endyear = d3.select("#endyeardropdown");
-  endyear.selectAll("option").remove();
-
-  var realStartYear = parseInt(econData[dataindex].start_date.slice(0, 4));
-  var realStartMonth = parseInt(econData[dataindex].start_date.slice(5, 7));
-
-  var realEndYear = parseInt(econData[dataindex].end_date.slice(0, 4));
-  var realEndMonth = parseInt(econData[dataindex].end_date.slice(5, 7));
-
-  var maxMonth = Math.max(realEndMonth, realStartMonth);
-
-
-
-  console.log(realStartYear);
-
-  startyear.append("option").html("");
-  endyear.append("option").html("");
-  for (i = 0; i < realEndYear - realStartYear; i++) {
-    startyear.append("option").html("" + (realStartYear + i));
-    endyear.append("option").html("" + (realStartYear + i));
-  }
-
-  startmonth.append("option").html("");
-  endmonth.append("option").html("");
-  for (i = 0; i <= maxMonth; i++) {
-    startmonth.append("option").html("" + i);
-    endmonth.append("option").html("" + i);
-  }
-
   var list = d3.select("#masterlist");
 
   if (first_render) {
@@ -464,7 +439,7 @@ function renderGraph() {
 
   first_render = false;
 
-  if (!(title == "" || year_start == "" || year_end == "")) { //|| month_start == "" || month_end == "")) {
+  if (!(title == "" || year_start == "" || year_end == "")) {
 
     d3.csv("static/csv/" + dataset + ".csv").then(function(raw_data) {
 
@@ -592,5 +567,5 @@ var finalizeStudy = function() {
     .then(data => {
     window.location = "/" + data.redirect;
     })
-  window.location = "/home";
+  //window.location = "/home";
 }
