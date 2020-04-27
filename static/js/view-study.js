@@ -20,8 +20,7 @@ content.forEach(function(element) {
   }
 
   else {
-
-    d3.csv("../static/csv/" + element['chart-name'] + ".csv").then(function(raw_data) {
+    d3.csv("../static/csv/" + element['chart_name'] + ".csv").then(function(raw_data) {
       const svg = entry
                     .append("svg")
                     .attr("width", width)
@@ -37,15 +36,12 @@ content.forEach(function(element) {
 
       raw_data.forEach(function(d, index) {
         const current_year = d[date].substring(0, 4)
-
-        if (d[value] != "." && current_year >= element['chart-start'] && current_year <= element['chart-end'] ) {
+        if (d[value] != "." && current_year >= element['chart_start'] && current_year <= element['chart_end'] ) {
           d[value] = +d[value];
           d[date] = parseTime(d[date]);
           data.push(d);
         }
       });
-
-      console.log(data)
 
       scaleX.domain(d3.extent(data, function(d) { return d[date]; }));
       scaleY.domain([0, d3.max(data, function(d) { return d[value]; })]);

@@ -15,12 +15,15 @@
             ...
          ]
          */
-        var econ_data = JSON.parse('{{ data_sets_json|safe }}');
+        // var econ_data = JSON.parse('{{ data_sets_json|safe }}');
+        var econ_data = {{ data_sets|safe }};
+        console.log(econ_data)
+
     </script>
 
     <a href = '/'> Back to homepage</a> <br>
 
-    <svg id = "graph"> </svg>
+    <svg id = "graph"> </svg> <br>
     <select id="graph_selector">
       <option value = "none" selected>None selected</option>
 

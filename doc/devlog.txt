@@ -52,3 +52,5 @@ William Cao -- 2020-04-26 23:25
   after creating an case study (redirect)
   - Can pass all case studies to /view-studies
 
+Mos and Friends -- 2020-04-26 15:45
+  - merged all changes

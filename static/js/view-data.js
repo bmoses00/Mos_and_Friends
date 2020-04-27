@@ -17,7 +17,8 @@ const scaleY = d3.scaleLinear().range([height - margin, 0]);
 
 const parseTime = d3.timeParse("%Y-%m-%d");
 
-function render_graph(dataset) {
+function render_graph(dataset, year_start, year_end) {
+  console.log("static/csv/" + dataset + ".csv")
   d3.csv("static/csv/" + dataset + ".csv").then(function(raw_data) {
 
    data = []
@@ -25,15 +26,21 @@ function render_graph(dataset) {
    const date = raw_data.columns[0];
    const value = raw_data.columns[1];
 
+
    raw_data.forEach(function(d, index) {
      const current_year = d[date].substring(0, 4)
+     console.log(current_year, year_start, year_end);
 
      if (d[value] != "." && current_year >= year_start && current_year <= year_end ) {
+       console.log(d[value])
+
        d[value] = +d[value];
        d[date] = parseTime(d[date]);
        data.push(d);
      }
    });
+
+   console.log(data)
 
    if (!first_render) {
      d3.select("#path").remove();
@@ -86,7 +93,7 @@ function draw_graph() {
 
   var graph_selected;
   econ_data.forEach(function(graph) {
-    if (graph['routing_name'] == selector.node().value) {
+    if (graph['name'] == selector.node().value) {
       graph_selected = graph;
     }
   });

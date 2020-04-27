@@ -350,6 +350,7 @@ var addgraphinput = function() {
 
 
 function renderGraph() {
+  console.log("renderGraph")
 
   var title = d3.select("#subjectdropdown").node().value;
 
@@ -364,7 +365,7 @@ function renderGraph() {
   var dataindex = 0;
   for (i = 0; i < econData.length; i++) {
     if (econData[i].title == title) {
-      dataset = econData[i].routing_name;
+      dataset = econData[i].name;
       dataindex = i;
     }
   }
@@ -451,7 +452,9 @@ function renderGraph() {
   contentitem["type"] = "chart";
   contentitem["chart_start"] = year_start + "-01-01";
   contentitem["chart_end"] = year_end + "-01-01";
-  contentitem["chart_name"] = title;
+  contentitem["chart_name"] = dataset;
+
+  console.log(dataset);
 
   contentList.push(contentitem);
 
@@ -572,6 +575,19 @@ var finalizeStudy = function() {
   }
   sendThis["title"] = d3.select("#bigTitle").node().value;
   sendThis["content"] = contentList;
+  sendThis["description"] = "description";
+
   console.log(sendThis);
-  window.location = "/home";
+
+  // fetch("/create-study", {
+  //     method: "POST",
+  //     headers: {
+  //         'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(sendThis)
+  // }).then(res => res.json())
+  //   .then(data => {
+  //   window.location = "/" + data.redirect;
+  //   })
+  // window.location = "/home";
 }
