@@ -18,9 +18,10 @@ def login():
         password = request.form["password"]
         if database_query.is_valid_login(username, password):
             session["username"] = username
+            flash("You logged in", "success")
             return redirect(url_for("home"))
         else:
-            flash("Wrong username or password")
+            flash("Wrong username or password", "danger")
             return render_template("login.html")
     elif request.method == "GET":
         if "username" in session:
@@ -38,13 +39,13 @@ def create_account():
         password_repeat = request.form["password_repeat"]
 
         if password != password_repeat:
-            flash("Passwords do not match")
+            flash("Passwords do not match", "danger")
         elif len(password.strip()) == 0:
-            flash("Passwords must not be blank")
+            flash("Passwords must not be blank", "danger")
         elif len(username.strip()) == 0:
-            flash("Username must not be blank")
+            flash("Username must not be blank", "danger")
         elif database_query.does_username_exist(username):
-            flash("Username already exists")
+            flash("Username already exists", "danger")
         else:
             database_query.create_account(username, password)
             print("Created account with username: " + username)
@@ -67,7 +68,7 @@ def view_data():
 def logout():
     print("Logged out of session (username " + session["username"] + ")")
     session.clear()
-    flash("You logged out")
+    flash("You logged out", "success")
     return redirect(url_for("login"))
 
 
@@ -117,7 +118,7 @@ def create_study():
         return {"redirect": "view-study/" + case_id}
     elif request.method == "GET":
         if "username" not in session:
-            flash("Login to create a case study")
+            flash("Login to create a case study", "danger")
             return redirect(url_for("home"))
         econ_data = database_query.get_all_econ_data_basic_info()
         return render_template("create-study.html", data_sets=econ_data, data_sets_json = json.dumps(econ_data))
