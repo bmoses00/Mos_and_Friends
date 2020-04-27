@@ -74,68 +74,12 @@ def logout():
 def home():
     return render_template("home.html")
 
-case_studies = [
-                    {
-                        "id": "ab",
-                        "title": "Your mum",
-                        "description": "This has very interesting properties",
-                        "username": "wer",
-                        "content": [
-                                        {
-                                            "type": "chart",
-                                            "chart-start": "2000-01-01",
-                                            "chart-end": "2015-01-01",
-                                            "chart-name": "inflation",
-                                        },
-
-                                        {
-                                            "type": "text",
-                                            "text": "This chart shows inflation",
-                                        },
-
-                                        {
-                                            "type": "chart",
-                                            "chart-start": "2000-01-01",
-                                            "chart-end": "2015-01-01",
-                                            "chart-name": "unemployment",
-                                        },
-
-                                        {
-                                            "type": "text",
-                                            "text": "This chart shows unemployment",
-                                        },
-
-
-                                   ],
-                    },
-                    {
-                        "id": "j75",
-                        "title": "The recession of 1958",
-                        "description": "This was bad",
-                        "username": "bir",
-                        "content": [],
-                    },
-                ]
-
 @app.route("/view-studies")
 def view_studies():
-    user_cases = []
-    public_cases = []
-    for case in case_studies:
-        if (case['username'] == session['username']):
-            user_cases.append(case)
-        else:
-            public_cases.append(case)
-
-    return render_template("view-studies.html", user_cases = user_cases, public_cases = public_cases)
-
+    return render_template("view-studies.html", case_studies = case_studies)
 
 @app.route("/view-study/<string:id>")
 def view_study(id: str):
-
-    for case in case_studies:
-        if (case['id'] == id):
-            case_study = case
     return render_template("view_study.html", case_study = case_study)
 
 

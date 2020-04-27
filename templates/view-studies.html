@@ -5,17 +5,23 @@
   Hello, {{session['username']}}! <hr>
 
   <b> Your cases </b> <br>
-  {% for case in user_cases %}
+
+  {% for case in case_studies %}
+    {% if session['username'] == case['username'] %}
     <a href = "/view-study/{{case['id']}}"> {{case['title']}} </a> <br>
     {{case['description']}}<br>
     <hr>
+    {% endif %}
   {% endfor %} <br>
 
   <b> Public cases </b> <br>
-  {% for case in public_cases %}
+  {% for case in case_studies %}
+    {% if session['username'] != case['username'] %}
     <a href = "/view-study/{{case['id']}}"> {{case['title']}} </a> <br>
     {{case['description']}}<br>
     <hr>
+    {% endif %}
+
   {% endfor %}
 
 {% endblock %}
