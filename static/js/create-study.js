@@ -5,7 +5,7 @@ var first_render = true;
 console.log(econData);
 
 
-var deleteItem = function(r){
+var deleteItem = function(r) {
   d3.selectAll("li")
     .each(function(d, i) {
       if (i == r) {
@@ -231,7 +231,7 @@ var addgraphinput = function() {
   var startYearDropdown = startRow
     .append("select")
     .attr("class", "custom-select w-25")
-    .attr("onchange", "renderGraph()")
+    // .attr("onchange", "renderGraph()")
     .attr("id", "startyeardropdown");
 
   //we will add specific years later
@@ -245,7 +245,7 @@ var addgraphinput = function() {
   var startMonthDropdown = startRow
     .append("select")
     .attr("class", "custom-select w-25")
-    .attr("onchange", "renderGraph()")
+    // .attr("onchange", "renderGraph()")
     .attr("id", "startmonthdropdown");
 
 
@@ -265,7 +265,7 @@ var addgraphinput = function() {
   var endYearDropdown = endRow
     .append("select")
     .attr("class", "custom-select w-25")
-    .attr("onchange", "renderGraph()")
+    // .attr("onchange", "renderGraph()")
     .attr("id", "endyeardropdown");
 
   //we will add specific years later
@@ -279,7 +279,7 @@ var addgraphinput = function() {
   var endMonthDropdown = endRow
     .append("select")
     .attr("class", "custom-select w-25")
-    .attr("onchange", "renderGraph()")
+    // .attr("onchange", "renderGraph()")
     .attr("id", "endmonthdropdown");
 
 
@@ -300,6 +300,15 @@ var addgraphinput = function() {
 
   finalCol.node().innerHTML += "<br><br>";
 
+  var renderButton = finalCol
+    .append("button")
+    .attr("class", "btn btn-secondary")
+    .attr("id", "renderGraph")
+    .attr("onclick", "renderGraph()")
+    .html("Render Graph");
+
+  finalCol.node().innerHTML += "<br><br>";
+
   var finalizeButton = finalCol
     .append("button")
     .attr("class", "btn btn-secondary")
@@ -309,6 +318,8 @@ var addgraphinput = function() {
 
   structure.node().innerHTML += "<br><br>";
 }
+
+
 
 function renderGraph() {
 
@@ -353,11 +364,15 @@ function renderGraph() {
 
   console.log(realStartYear);
 
+  startyear.append("option").html("");
+  endyear.append("option").html("");
   for (i = 0; i < realEndYear - realStartYear; i++) {
     startyear.append("option").html("" + (realStartYear + i));
     endyear.append("option").html("" + (realStartYear + i));
   }
 
+  startmonth.append("option").html("");
+  endmonth.append("option").html("");
   for (i = 0; i <= maxMonth; i++) {
     startmonth.append("option").html("" + i);
     endmonth.append("option").html("" + i);
@@ -372,12 +387,12 @@ function renderGraph() {
   }
 
   var intitle = d3.select("#title" + index).html(title + " From " + year_start + " To " + year_end);
-  var graphcontainer = d3.select(d3.selectAll("li").nodes()[index + 1]);
+  var graphcontainer = d3.select(d3.selectAll("li").nodes()[index + 1]).append("div").attr("class", "container-fluid");
 
 
 
-  let width = 1100;
-  let height = 200;
+  let width = 900;
+  let height = 300;
   let margin = 50;
   const parseTime = d3.timeParse("%Y-%m-%d");
 
@@ -390,6 +405,7 @@ function renderGraph() {
     graphcontainer.append("svg")
       .attr("width", width)
       .attr("height", height)
+      .attr("style", "overflow: visible")
       .attr("id", "svg" + index)
       .append("g")
       .attr("id", "group")
@@ -400,7 +416,7 @@ function renderGraph() {
   var svg = d3.select("#svg" + index);
 
   first_render = false;
-  if (!(title == "" || year_start == "" || year_end == "" || month_start == "" || month_end == "")) {
+  if (!(title == "" || year_start == "" || year_end == "" )){//|| month_start == "" || month_end == "")) {
 
     d3.csv("static/csv/" + dataset + ".csv").then(function(raw_data) {
 
