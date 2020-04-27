@@ -5,6 +5,16 @@ var first_render = true;
 console.log(econData);
 
 
+var deleteItem = function(r){
+  d3.selectAll("li")
+    .each(function(d, i) {
+      if (i == r) {
+        this.remove();
+      }
+    });
+  index -= 1;
+}
+
 var addtextinput = function() {
   //remove previous item in list
   d3.selectAll("li")
@@ -36,13 +46,15 @@ var addtextinput = function() {
   backbutton.className += "btn btn-secondary";
   backbutton.setAttribute("onclick", "removeCurrent()");
   backbutton.innerHTML = "Back";
+  backbutton.id = "backTextButton";
   listItem.appendChild(backbutton);
-  listItem.innerHTML += "&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;";
+  //listItem.innerHTML += "&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;";
   //create a button to finalize the text
   var newbutton = document.createElement("button");
-  newbutton.className += "btn btn-secondary";
+  newbutton.className += "btn btn-secondary ml-5";
   newbutton.setAttribute("onclick", "finalizeText()");
   newbutton.innerHTML = "Finalize this text";
+  newbutton.id = "finalizeTextButton";
   listItem.appendChild(newbutton);
   //add new list item to page
   var list = document.getElementById("masterlist");
@@ -119,32 +131,23 @@ var removeGraphInput = function() {
 }
 
 var finalizeText = function() {
-  //get old
-  var oldItem = document.getElementById("masterlist").children[index];
-  //get text in before removing
-  var textin = oldItem.children[0].children[1].value;
-  //remove old
-  d3.selectAll("li")
-    .each(function(d, i) {
-      if (i == index) {
-        this.remove();
-      }
-    });
-  //create new list item
-  var listItem = document.createElement("li");
-  listItem.className += "list-group-item";
-  //add the text input
-  listItem.innerHTML = textin;
-  //add to list
-  var list = document.getElementById("masterlist")
-  list.appendChild(listItem);
-  //current index increases
+
+  // //remove old
+  d3.select("#backTextButton").remove();
+  d3.select("#finalizeTextButton").remove();
+  //add delete button
+  d3.select(d3.selectAll("li").nodes()[index])
+    .append("button")
+    .attr("class", "btn btn-secondary")
+    .html("Delete")
+    .attr("id", "delete" + index)
+    .attr("onclick", "deleteItem(" + index + ")");
+
   index += 1;
 
   //create new list item
   var listItem = document.createElement("li");
   listItem.className += "list-group-item";
-  listItem.innerHTML += "<br>";
   //Create add text button
   var textbutton = document.createElement("button");
   textbutton.innerHTML = " Add Text ";
@@ -459,6 +462,7 @@ function renderGraph() {
 }
 
 
+
 var finalizeGraph = function() {
   d3.selectAll("li")
     .each(function(d, i) {
@@ -471,7 +475,6 @@ var finalizeGraph = function() {
   //create new list item
   var listItem = document.createElement("li");
   listItem.className += "list-group-item";
-  listItem.innerHTML += "<br>";
   //Create add text button
   var textbutton = document.createElement("button");
   textbutton.innerHTML = " Add Text ";
