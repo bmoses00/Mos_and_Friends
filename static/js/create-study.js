@@ -563,4 +563,5 @@ var finalizeStudy = function(){
   sendThis["title"] = d3.select("#bigTitle").node().value;
   sendThis["content"] = contentList;
   console.log(sendThis);
+  window.location = "/home";
 }
