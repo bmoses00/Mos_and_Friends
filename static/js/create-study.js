@@ -15,11 +15,14 @@ var deleteItem = function(r) {
         this.remove();
       }
     });
-  console.log(idlist);
-  console.log(r - 1);
   contentList.splice(r - 1, 1);
   idlist.splice(r - 1, 1);
-  console.log(idlist);
+  var i = r + 1;
+  for (i; i < idlist.length + 2; i++){
+    d3.select("#delete" + i)
+      .attr("onclick", "deleteItem(" + (parseInt(d3.select("#delete" + i).node().id[6]) - 1) + ")")
+      .attr("id", "delete" + (parseInt(d3.select("#delete" + i).node().id[6]) - 1));
+  }
   index -= 1;
 }
 
@@ -579,15 +582,15 @@ var finalizeStudy = function() {
 
   console.log(sendThis);
 
-  // fetch("/create-study", {
-  //     method: "POST",
-  //     headers: {
-  //         'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(sendThis)
-  // }).then(res => res.json())
-  //   .then(data => {
-  //   window.location = "/" + data.redirect;
-  //   })
-  // window.location = "/home";
+  fetch("/create-study", {
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sendThis)
+  }).then(res => res.json())
+    .then(data => {
+    window.location = "/" + data.redirect;
+    })
+  window.location = "/home";
 }
