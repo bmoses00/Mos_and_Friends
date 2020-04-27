@@ -89,3 +89,14 @@ def get_case_study(uuid: str) -> dict:
     # remove ObjectId
     del query["_id"]
     return query
+
+
+def get_all_case_studies() -> List[dict]:
+    """
+    Returns list of case studies. See get_case_study for format of dictionary in this list
+    :return:
+    """
+    case_studies = list(case_study_collection.find({}))
+    for case_study in case_studies:
+        del case_study["_id"]
+    return list(case_studies)

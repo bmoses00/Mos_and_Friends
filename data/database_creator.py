@@ -88,6 +88,7 @@ def create_case_studies_collection():
     :return:
     """
     # Example entry
+    """
     database[CASE_STUDIES_COLLECTION].insert_one({
         "username": "admin",
         "title": "Getting started with creating your studies!",
@@ -99,6 +100,8 @@ def create_case_studies_collection():
             }
         ]
     })
+    """
+    pass
 
 
 def recreate_database():
