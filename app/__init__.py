@@ -86,7 +86,7 @@ def view_studies():
 @app.route("/view-study/<string:id>")
 def view_study(id: str):
     case_study = database_query.get_case_study(id)
-    return render_template("view_study.html", case_study=case_study)
+    return render_template("view-study.html", case_study=case_study)
 
 
 @app.route("/create-study", methods=["GET", "POST"])

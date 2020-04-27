@@ -90,7 +90,7 @@ class Test(unittest.TestCase):
         with captured_templates(app) as templates:
             self.app.get("/" + redirect_to)
             template, context = templates[0]
-            self.assertEqual(template.name, "view_study.html")
+            self.assertEqual(template.name, "view-study.html")
 
             # to compare if the given case_study and the one returned are identical, jsonify both with order and compare
             # username is added to returned_case_study when handled by /create-study

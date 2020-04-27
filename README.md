@@ -10,4 +10,4 @@ Finally, we will allow users to create their own case studies by combining
 graphs of their choice with their own analysis. They will then be able to
 publish their case studies on the site for others to use.
 
-Note: Run __init__.py and test.py from root
+Note: Run __init__.py and initialize.py from root
