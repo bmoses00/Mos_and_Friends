@@ -54,3 +54,7 @@ William Cao -- 2020-04-26 23:25
 
 Mos and Friends -- 2020-04-26 15:45
   - merged all changes
+
+William Cao -- 2020-04-27 17:39
+  - Fixed bug of being able to login "twice"
+  - Added categories to flashes so we can use Bootstrap alerts
