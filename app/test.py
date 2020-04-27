@@ -1,5 +1,5 @@
 import unittest
-from app import app
+from __init__ import app
 from data import database_creator
 import json
 from flask import template_rendered
