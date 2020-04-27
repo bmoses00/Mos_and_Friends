@@ -2,6 +2,7 @@
 var index = 1;
 
 var first_render = true;
+console.log(econData);
 
 
 var addtextinput = function() {
@@ -90,7 +91,7 @@ var removeGraphInput = function() {
         this.remove();
       }
     });
-    first_render = true;
+  first_render = true;
   //create new list item
   var listItem = document.createElement("li");
   listItem.className += "list-group-item";
@@ -205,9 +206,10 @@ var addgraphinput = function() {
 
   //add Options to dropdown
   //will be down with a for loop through list of subjects, but for now j adding samples
-  subjectDropdown.append("option").html("inflation");
-  subjectDropdown.append("option").html("unemployment");
-  subjectDropdown.append("option").html("10_year_treasury_yields");
+  subjectDropdown.append("option").html("");
+  for (i = 0; i < econData.length; i++) {
+    subjectDropdown.append("option").html(econData[i].title);
+  }
 
   //create col/form for dates
   var dateCol = structure
@@ -231,7 +233,7 @@ var addgraphinput = function() {
 
   //we will add specific years later
   var startyearOptions = startYearDropdown
-    .append("option").html("option");
+    .append("option").html("");
 
 
   startRow.node().innerHTML += "&ensp;&ensp;";
@@ -246,9 +248,7 @@ var addgraphinput = function() {
 
   var i = 0;
   //month options
-  for (i = 0; i < 12; i++) {
-    startMonthDropdown.append("option").html((i + 1) + "");
-  }
+  startMonthDropdown.append("option").html("");
 
   dateCol.node().innerHTML += "<br><br>";
   //create row for end date
@@ -268,7 +268,7 @@ var addgraphinput = function() {
   //we will add specific years later
   var endyearOptions = endYearDropdown
     .append("option")
-    .html("option");
+    .html("");
 
   endRow.node().innerHTML += "&ensp;&ensp;";
 
@@ -281,9 +281,7 @@ var addgraphinput = function() {
 
 
   var i = 0;
-  for (i = 0; i < 12; i++) {
-    endMonthDropdown.append("option").html((i + 1) + "");
-  }
+  endMonthDropdown.append("option").html("");
   //listitem.node().innerHTML += "<br><br>";
   //add render/back buttons
   var finalCol = structure.append("div")
@@ -297,31 +295,82 @@ var addgraphinput = function() {
     .attr("onclick", "removeGraphInput()")
     .html("Back");
 
-finalCol.node().innerHTML += "<br><br>";
+  finalCol.node().innerHTML += "<br><br>";
 
   var finalizeButton = finalCol
-      .append("button")
-      .attr("class", "btn btn-secondary")
-      .attr("id", "finalizeGraph")
-      .attr("onclick", "finalizeGraph()")
-      .html("Finalize Graph");
+    .append("button")
+    .attr("class", "btn btn-secondary")
+    .attr("id", "finalizeGraph")
+    .attr("onclick", "finalizeGraph()")
+    .html("Finalize Graph");
 
   structure.node().innerHTML += "<br><br>";
 }
 
 function renderGraph() {
 
-  var dataset = d3.select("#subjectdropdown").node().value;
-  console.log(dataset);
+  var title = d3.select("#subjectdropdown").node().value;
+
+  var year_start = d3.select("#startyeardropdown").node().value;
+  var year_end = d3.select("#endyeardropdown").node().value;
+  var month_start = d3.select("#startmonthdropdown").node().value;
+  var month_end = d3.select("#endmonthdropdown").node().value;
+
+
+
+  var dataset = "";
+  var i = 0;
+  var dataindex = 0;
+  for (i = 0; i < econData.length; i++) {
+    if (econData[i].title == title) {
+      dataset = econData[i].routing_name;
+      dataindex = i;
+    }
+  }
+
   //for selecting dates
+  var startmonth = d3.select("#startmonthdropdown");
+  startmonth.selectAll("option").remove();
+  var startyear = d3.select("#startyeardropdown");
+  startyear.selectAll("option").remove();
+  var endmonth = d3.select("#endmonthdropdown");
+  endmonth.selectAll("option").remove();
+  var endyear = d3.select("#endyeardropdown");
+  endyear.selectAll("option").remove();
+
+  var realStartYear = parseInt(econData[dataindex].start_date.slice(0, 4));
+  var realStartMonth = parseInt(econData[dataindex].start_date.slice(5, 7));
+
+  var realEndYear = parseInt(econData[dataindex].end_date.slice(0, 4));
+  var realEndMonth = parseInt(econData[dataindex].end_date.slice(5, 7));
+
+  var maxMonth = Math.max(realEndMonth, realStartMonth);
+
+
+
+  console.log(realStartYear);
+
+  for (i = 0; i < realEndYear - realStartYear; i++) {
+    startyear.append("option").html("" + (realStartYear + i));
+    endyear.append("option").html("" + (realStartYear + i));
+  }
+
+  for (i = 0; i <= maxMonth; i++) {
+    startmonth.append("option").html("" + i);
+    endmonth.append("option").html("" + i);
+  }
 
   var list = d3.select("#masterlist");
 
-  if (first_render){
-    list.append("li").attr("class", "list-group-item");
+  if (first_render) {
+    list.append("li").attr("class", "list-group-item").append("h2")
+      .html(title + " From " + year_start + " To " + year_end)
+      .attr("id", "title" + index);
   }
 
+  var intitle = d3.select("#title" + index).html(title + " From " + year_start + " To " + year_end);
   var graphcontainer = d3.select(d3.selectAll("li").nodes()[index + 1]);
+
 
 
   let width = 1100;
@@ -329,116 +378,118 @@ function renderGraph() {
   let margin = 50;
   const parseTime = d3.timeParse("%Y-%m-%d");
 
-  console.log(width);
-  console.log(height);
-
   const scaleX = d3.scaleTime().range([0, width - margin - 10])
   const scaleY = d3.scaleLinear().range([height - margin, 0]);
 
 
 
-  if (first_render){
+  if (first_render) {
     graphcontainer.append("svg")
       .attr("width", width)
       .attr("height", height)
       .attr("id", "svg" + index)
       .append("g")
-        .attr("id", "group")
-        .attr("transform", "translate(50, 0)");
+      .attr("id", "group")
+      .attr("transform", "translate(50, 0)");
 
   }
 
   var svg = d3.select("#svg" + index);
 
-  d3.csv("static/csv/" + dataset + ".csv").then(function(data) {
+  first_render = false;
+  if (!(title == "" || year_start == "" || year_end == "" || month_start == "" || month_end == "")) {
 
-    const date = data.columns[0];
-    const value = data.columns[1];
+    d3.csv("static/csv/" + dataset + ".csv").then(function(raw_data) {
 
-    data.forEach(function(d, index) {
+      data = []
 
-      d[date] = parseTime(d[date]);
-      // some quarters have no data, for these, we set the yield to that of the previous quarter
-      if (d[value] == ".") {
-        d[value] = +data[index - 1][value];
+      const date = raw_data.columns[0];
+      const value = raw_data.columns[1];
+
+      raw_data.forEach(function(d, index) {
+        const current_year = d[date].substring(0, 4)
+
+        if (d[value] != "." && current_year >= year_start && current_year <= year_end) {
+          d[value] = +d[value];
+          d[date] = parseTime(d[date]);
+          data.push(d);
+        }
+      });
+
+      if (!first_render) {
+        d3.select("#path").remove();
+        d3.select("#x-axis").remove();
+        d3.select("#y-axis").remove();
       }
-      else {
-        d[value] = +d[value];
-      }
-    });
-
-    if (!first_render) {
-      d3.select("#path" + index).remove();
-      d3.select("#x-axis" + index).remove();
-      d3.select("#y-axis" + index).remove();
-    }
-
-
-    scaleX.domain(d3.extent(data, function(d) { return d[date]; }));
-    scaleY.domain([0, d3.max(data, function(d) { return d[value]; })]);
-
-    let line = d3.line()
-      .x(d => scaleX(d[date]))
-      .y(d => scaleY(d[value]));
-
-
-    // draws line graph
-    svg.append("path")
-      .data([data])
-      .attr("id", "path" + index)
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
-      .attr("d", line);
-
-    // x and y axes
-    svg.append("g")
-      .attr("id", "x-axis" + index)
-      .attr("transform", "translate(0," + (height - margin) + ")")
-      .call(d3.axisBottom(scaleX));
-
-    svg.append("g")
-      .attr("id", "y-axis" + index)
-      .call(d3.axisLeft(scaleY));
 
       first_render = false;
 
+      scaleX.domain(d3.extent(data, function(d) {
+        return d[date];
+      }));
+      scaleY.domain([0, d3.max(data, function(d) {
+        return d[value];
+      })]);
 
-  });
+      let line = d3.line()
+        .x(d => scaleX(d[date]))
+        .y(d => scaleY(d[value]));
+
+      // draws line graph
+      svg.append("path")
+        .data([data])
+        .attr("id", "path")
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 1.5)
+        .attr("d", line);
+
+      // x and y axes
+      svg.append("g")
+        .attr("id", "x-axis")
+        .attr("transform", "translate(0," + (height - margin) + ")")
+        .call(d3.axisBottom(scaleX));
+
+      svg.append("g")
+        .attr("id", "y-axis")
+        .call(d3.axisLeft(scaleY));
+
+    });
+  }
 }
 
 
-var finalizeGraph = function(){
+var finalizeGraph = function() {
   d3.selectAll("li")
     .each(function(d, i) {
       if (i == index) {
         this.remove();
       }
     });
-    index += 1;
-    first_render = true;
-    //create new list item
-    var listItem = document.createElement("li");
-    listItem.className += "list-group-item";
-    listItem.innerHTML += "<br>";
-    //Create add text button
-    var textbutton = document.createElement("button");
-    textbutton.innerHTML = " Add Text ";
-    textbutton.className += "btn btn-secondary";
-    textbutton.setAttribute("onclick", "addtextinput()");
-    textbutton.id = "textbutton";
-    //add add text button
-    listItem.appendChild(textbutton);
-    listItem.innerHTML += "&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;";
-    //Create add graph button
-    var graphbutton = document.createElement("button");
-    graphbutton.innerHTML = " Add Graph ";
-    graphbutton.className += "btn btn-secondary";
-    graphbutton.setAttribute("onclick", "addgraphinput()");
-    graphbutton.id = "graphbutton";
-    //add the button to the list
-    listItem.appendChild(graphbutton);
-    //add new list item to list
-    var list = document.getElementById("masterlist");
-    list.appendChild(listItem);
+  index += 1;
+  first_render = true;
+  //create new list item
+  var listItem = document.createElement("li");
+  listItem.className += "list-group-item";
+  listItem.innerHTML += "<br>";
+  //Create add text button
+  var textbutton = document.createElement("button");
+  textbutton.innerHTML = " Add Text ";
+  textbutton.className += "btn btn-secondary";
+  textbutton.setAttribute("onclick", "addtextinput()");
+  textbutton.id = "textbutton";
+  //add add text button
+  listItem.appendChild(textbutton);
+  listItem.innerHTML += "&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;";
+  //Create add graph button
+  var graphbutton = document.createElement("button");
+  graphbutton.innerHTML = " Add Graph ";
+  graphbutton.className += "btn btn-secondary";
+  graphbutton.setAttribute("onclick", "addgraphinput()");
+  graphbutton.id = "graphbutton";
+  //add the button to the list
+  listItem.appendChild(graphbutton);
+  //add new list item to list
+  var list = document.getElementById("masterlist");
+  list.appendChild(listItem);
 }

@@ -18,58 +18,58 @@ const scaleY = d3.scaleLinear().range([height - margin, 0]);
 const parseTime = d3.timeParse("%Y-%m-%d");
 
 function render_graph(dataset) {
-  d3.csv("static/csv/" + dataset + ".csv").then(function(data) {
+  d3.csv("static/csv/" + dataset + ".csv").then(function(raw_data) {
 
-    const date = data.columns[0];
-    const value = data.columns[1];
+   data = []
 
-    data.forEach(function(d, index) {
+   const date = raw_data.columns[0];
+   const value = raw_data.columns[1];
 
-      d[date] = parseTime(d[date]);
-      // some quarters have no data, for these, we set the yield to that of the previous quarter
-      if (d[value] == ".") {
-        d[value] = +data[index - 1][value];
-      }
-      else {
-        d[value] = +d[value];
-      }
-    });
+   raw_data.forEach(function(d, index) {
+     const current_year = d[date].substring(0, 4)
 
-    if (!first_render) {
-      d3.select("#path").remove();
-      d3.select("#x-axis").remove();
-      d3.select("#y-axis").remove();
-    }
+     if (d[value] != "." && current_year >= year_start && current_year <= year_end ) {
+       d[value] = +d[value];
+       d[date] = parseTime(d[date]);
+       data.push(d);
+     }
+   });
 
-    first_render = false;
+   if (!first_render) {
+     d3.select("#path").remove();
+     d3.select("#x-axis").remove();
+     d3.select("#y-axis").remove();
+   }
 
-    scaleX.domain(d3.extent(data, function(d) { return d[date]; }));
-    scaleY.domain([0, d3.max(data, function(d) { return d[value]; })]);
+   first_render = false;
 
-    let line = d3.line()
-      .x(d => scaleX(d[date]))
-      .y(d => scaleY(d[value]));
+   scaleX.domain(d3.extent(data, function(d) { return d[date]; }));
+   scaleY.domain([0, d3.max(data, function(d) { return d[value]; })]);
 
-    // draws line graph
-    svg.append("path")
-      .data([data])
-      .attr("id", "path")
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
-      .attr("d", line);
+   let line = d3.line()
+     .x(d => scaleX(d[date]))
+     .y(d => scaleY(d[value]));
 
-    // x and y axes
-    svg.append("g")
-      .attr("id", "x-axis")
-      .attr("transform", "translate(0," + (height - margin) + ")")
-      .call(d3.axisBottom(scaleX));
+   // draws line graph
+   svg.append("path")
+     .data([data])
+     .attr("id", "path")
+     .attr("fill", "none")
+     .attr("stroke", "steelblue")
+     .attr("stroke-width", 1.5)
+     .attr("d", line);
 
-    svg.append("g")
-      .attr("id", "y-axis")
-      .call(d3.axisLeft(scaleY));
+   // x and y axes
+   svg.append("g")
+     .attr("id", "x-axis")
+     .attr("transform", "translate(0," + (height - margin) + ")")
+     .call(d3.axisBottom(scaleX));
 
-  });
+   svg.append("g")
+     .attr("id", "y-axis")
+     .call(d3.axisLeft(scaleY));
+
+ });
 }
 
 // const selector = document.getElementById("graph_selector");
