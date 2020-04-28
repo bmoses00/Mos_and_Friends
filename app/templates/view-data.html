@@ -17,7 +17,6 @@
          */
         // var econ_data = JSON.parse('{{ data_sets_json|safe }}');
         var econ_data = {{ data_sets|safe }};
-        console.log(econ_data)
 
     </script>
 
@@ -41,6 +40,9 @@
     </select>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <script src = "static/js/draw-graph.js"> </script>
     <script src = "static/js/view-data.js"> </script>
+
 
 {% endblock %}

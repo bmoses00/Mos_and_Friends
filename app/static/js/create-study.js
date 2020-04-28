@@ -338,65 +338,59 @@ function renderGraph(r) {
 
 
   if (!(title == "" || year_start == "" || year_end == "")) {
-
-    d3.csv("static/csv/" + dataset + ".csv").then(function(raw_data) {
-
-      data = []
-
-      const date = raw_data.columns[0];
-      const value = raw_data.columns[1];
-
-      raw_data.forEach(function(d, r) {
-        const current_year = d[date].substring(0, 4)
-
-        if (d[value] != "." && current_year >= year_start && current_year <= year_end) {
-          d[value] = +d[value];
-          d[date] = parseTime(d[date]);
-          data.push(d);
-        }
-      });
-
-      if (!first_render) {
-        d3.select("#path" + r).remove();
-        d3.select("#x-axis" + r).remove();
-        d3.select("#y-axis" + r).remove();
-      }
-
-
-
-      scaleX.domain(d3.extent(data, function(d) {
-        return d[date];
-      }));
-      scaleY.domain([0, d3.max(data, function(d) {
-        return d[value];
-      })]);
-
-      let line = d3.line()
-        .x(d => scaleX(d[date]))
-        .y(d => scaleY(d[value]));
-
-      // draws line graph
-      svg.append("path")
-        .data([data])
-        .attr("id", "path" + r)
-        .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-width", 1.5)
-        .attr("d", line);
-
-      // x and y axes
-      svg.append("g")
-        .attr("id", "x-axis" + r)
-        .attr("transform", "translate(0," + (height - margin) + ")")
-        .call(d3.axisBottom(scaleX));
-
-      svg.append("g")
-        .attr("id", "y-axis" + r)
-        .call(d3.axisLeft(scaleY));
-
-    });
+    draw_graph(svg, dataset, year_start, year_end, first_render, r);
+    // d3.csv("../static/csv/" + dataset + ".csv").then(function(raw_data) {
+    //
+    //   data = []
+    //
+    //   const date = raw_data.columns[0];
+    //   const value = raw_data.columns[1];
+    //
+    //   raw_data.forEach(function(d, r) {
+    //     const current_year = d[date].substring(0, 4)
+    //
+    //     if (d[value] != "." && current_year >= year_start && current_year <= year_end) {
+    //       d[value] = +d[value];
+    //       d[date] = parseTime(d[date]);
+    //       data.push(d);
+    //     }
+    //   });
+    //
+    //   if (!first_render) {
+    //     d3.select("#path" + r).remove();
+    //     d3.select("#x-axis" + r).remove();
+    //     d3.select("#y-axis" + r).remove();
+    //   }
+    //
+    //   scaleX.domain(d3.extent(data, function(d) {return d[date]; }));
+    //   scaleY.domain([0, d3.max(data, function(d) {return d[value]; })]);
+    //
+    //   let line = d3.line()
+    //     .x(d => scaleX(d[date]))
+    //     .y(d => scaleY(d[value]));
+    //
+    //   // draws line graph
+    //   svg.append("path")
+    //     .data([data])
+    //     .attr("id", "path" + r)
+    //     .attr("fill", "none")
+    //     .attr("stroke", "steelblue")
+    //     .attr("stroke-width", 1.5)
+    //     .attr("d", line);
+    //
+    //   // x and y axes
+    //   svg.append("g")
+    //     .attr("id", "x-axis" + r)
+    //     .attr("transform", "translate(0," + (height - margin) + ")")
+    //     .call(d3.axisBottom(scaleX));
+    //
+    //   svg.append("g")
+    //     .attr("id", "y-axis" + r)
+    //     .call(d3.axisLeft(scaleY));
+    //
+    // });
   }
-  if (first_render){
+  if (first_render) {
     //index += 1;
     addSelectInput();
     first_render = false;
@@ -407,7 +401,7 @@ function renderGraph(r) {
 
 
 var finalizeStudy = function() {
-  console.log(contentList);
+  // console.log(contentList);
   var i = 0;
   for (i = 0; i < idlist.length; i++) {
     if (idlist[i].charAt(0) == "t") {
@@ -423,7 +417,7 @@ var finalizeStudy = function() {
   sendThis["content"] = contentList;
   sendThis["description"] = "description";
 
-  console.log(sendThis);
+  // console.log(sendThis);
 
   fetch("/create-study", {
       method: "POST",
