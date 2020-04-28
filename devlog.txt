@@ -71,3 +71,6 @@ William Cao -- 2020-04-27 17:39
 
 William Cao -- 2020-04-28 13:50
   - Added route for deleting case study and wrote tests. Updated design doc with documentation
+
+William Cao -- 2020-04-28 14:32
+  - Added mongo document layout to design doc
