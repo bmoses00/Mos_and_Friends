@@ -87,11 +87,11 @@ def view_studies():
 def view_study(id: str):
     if len(id) != 24:
         # ObjectId must be 24 characters long
-        flash("Invalid study id")
+        flash("Invalid study id", "danger")
         return redirect(url_for("view_studies"))
     case_study = database_query.get_case_study(id)
     if case_study is None:
-        flash("Case study does not exist")
+        flash("Case study does not exist", "danger")
         return redirect(url_for("view_studies"))
     return render_template("view-study.html", case_study=case_study)
 
