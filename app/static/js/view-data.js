@@ -1,13 +1,7 @@
 let width = .8 * d3.select("#graph-container").node().getBoundingClientRect().width;
 let height = d3.select("#graph-container").node().getBoundingClientRect().height;
 
-let margin = 50;
 let first_render = true;
-
-const scaleX = d3.scaleTime().range([0, width - margin - 10])
-const scaleY = d3.scaleLinear().range([height - margin, 0]);
-
-const parseTime = d3.timeParse("%Y-%m-%d");
 
 const selector = d3.select("#graph_selector")
 const year_start_selector = d3.select("#year_start")

@@ -9,7 +9,7 @@ function draw_graph(element, dataset, year_start, year_end, first_render, r) {
 
   if (r == null) r = "";
 
-  d3.csv("static/csv/" + dataset + ".csv").then(function(raw_data) {
+  d3.csv("../static/csv/" + dataset + ".csv").then(function(raw_data) {
 
    data = []
 
@@ -19,7 +19,7 @@ function draw_graph(element, dataset, year_start, year_end, first_render, r) {
 
    raw_data.forEach(function(d, index) {
      const current_year = d[date].substring(0, 4)
-     
+
      if (d[value] != "." && current_year >= year_start && current_year <= year_end ) {
 
        d[value] = +d[value];
