@@ -1,5 +1,5 @@
 from data import mongo_client, DATABASE_NAME, LOGIN_COLLECTION, DATA_COLLECTION, econ_data_info, CASE_STUDIES_COLLECTION
-from typing import List
+from typing import List, Optional
 from bson.objectid import ObjectId
 
 database = mongo_client[DATABASE_NAME]
@@ -62,7 +62,7 @@ def create_case_study(username: str, title: str, description: str, content: List
     return str(bson_id)
 
 
-def get_case_study(uuid: str) -> dict:
+def get_case_study(uuid: str) -> Optional[dict]:
     """
     Return formatted as:
     {
@@ -86,6 +86,8 @@ def get_case_study(uuid: str) -> dict:
     :return:
     """
     query = case_study_collection.find_one({"_id": ObjectId(uuid)})
+    if query is None:
+        return None
     # remove ObjectId
     del query["_id"]
     return query
@@ -121,3 +123,12 @@ def get_all_case_studies() -> List[dict]:
     for case_study in case_studies:
         case_study["_id"] = str(case_study["_id"])
     return list(case_studies)
+
+
+def delete_case_study(id: str):
+    """
+    Deletes a case study
+    :param id:
+    :return:
+    """
+    case_study_collection.remove({"_id": ObjectId(id)})

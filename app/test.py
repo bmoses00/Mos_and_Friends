@@ -103,7 +103,7 @@ class Test(unittest.TestCase):
         self.create_account(username, password)
         self.login(username, password)
         case_study_1 = {
-            "title": "this is the title",
+            "title": "this is the title all1",
             "description": "this is the description",
             "content": [
                 {
@@ -119,7 +119,7 @@ class Test(unittest.TestCase):
             ]
         }
         case_study_2 = {
-            "title": "this is the title 2",
+            "title": "this is the title 2 all 2",
             "description": "this is the description 2",
             "content": [
                 {
@@ -156,6 +156,50 @@ class Test(unittest.TestCase):
             sent_case_studies = [json.dumps(case_study_1, sort_keys=True), json.dumps(case_study_2, sort_keys=True)]
             retrieved_case_studies = [json.dumps(x, sort_keys=True) for x in context["case_studies"]]
             self.assertEqual(set(sent_case_studies), set(retrieved_case_studies))
+
+    def test_delete_case_study(self):
+        username = "user_delete"
+        password = "pass_delete"
+        self.create_account(username, password)
+        self.login(username, password)
+        case_study_1 = {
+            "title": "this is the title delete",
+            "description": "this is the description delete",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "this is an example text delete"
+                },
+                {
+                    "type": "chart",
+                    "chart_start": "2019-01-01",
+                    "chart_end": "2020-01-01",
+                    "chart_name": "inflation"
+                }
+            ]
+        }
+        response: str = json.loads(self.app.post("/create-study", json=case_study_1, follow_redirects=True).get_data(as_text=True))["redirect"]
+        # just get the id off of response redirect link
+        id = response.replace("view-study/", "")
+        self.app.delete("/delete-study/" + id)
+        # make sure when we get all case studies it doesn't exist
+        with captured_templates(app) as templates:
+            self.app.get("/view-studies")
+            template, context = templates[0]
+            self.assertEqual(template.name, "view-studies.html")
+
+            # username is added to returned_case_study when handled by /create-study
+            case_study_1["username"] = username
+
+            # do not check if you have _id field
+            for case in context["case_studies"]:
+                del case["_id"]
+
+            # to compare if the given case_study and the one returned are identical, jsonify both with order and compare
+            # create list of json string
+            sent_case_study = json.dumps(case_study_1, sort_keys=True)
+            retrieved_case_studies = [json.dumps(x, sort_keys=True) for x in context["case_studies"]]
+            self.assertTrue(sent_case_study not in retrieved_case_studies)
 
 
 if __name__ == "__main__":
