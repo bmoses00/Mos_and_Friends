@@ -85,7 +85,14 @@ def view_studies():
 
 @app.route("/view-study/<string:id>")
 def view_study(id: str):
+    if len(id) != 24:
+        # ObjectId must be 24 characters long
+        flash("Invalid study id")
+        return redirect(url_for("view_studies"))
     case_study = database_query.get_case_study(id)
+    if case_study is None:
+        flash("Case study does not exist")
+        return redirect(url_for("view_studies"))
     return render_template("view-study.html", case_study=case_study)
 
 
@@ -126,7 +133,10 @@ def create_study():
 
 @app.route("/delete-study/<string:id>", methods=["DELETE"])
 def delete_study(id: str):
-    if "username" in session and session["username"] == database_query.get_case_study(id)["username"]:
+    case_study = database_query.get_case_study(id)
+    if case_study is None:
+        return "Case study does not exist. Cannot delete", 400
+    elif "username" in session and session["username"] == case_study["username"]:
         database_query.delete_case_study(id)
         return "", 200
     else:
