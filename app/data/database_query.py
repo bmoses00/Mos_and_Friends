@@ -121,3 +121,12 @@ def get_all_case_studies() -> List[dict]:
     for case_study in case_studies:
         case_study["_id"] = str(case_study["_id"])
     return list(case_studies)
+
+
+def delete_case_study(id: str):
+    """
+    Deletes a case study
+    :param id:
+    :return:
+    """
+    print(case_study_collection.remove({"_id": ObjectId(id)}))

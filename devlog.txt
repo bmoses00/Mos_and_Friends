@@ -68,3 +68,6 @@ Alex Thompson -- 2020-04-27 11:59
 William Cao -- 2020-04-27 17:39
   - Fixed bug of being able to login "twice"
   - Added categories to flashes so we can use Bootstrap alerts
+
+William Cao -- 2020-04-28 13:50
+  - Added route for deleting case study and wrote tests. Updated design doc with documentation

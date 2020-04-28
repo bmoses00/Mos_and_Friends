@@ -124,6 +124,15 @@ def create_study():
         return render_template("create-study.html", data_sets=econ_data, data_sets_json = json.dumps(econ_data))
 
 
+@app.route("/delete-study/<string:id>", methods=["DELETE"])
+def delete_study(id: str):
+    if "username" in session and session["username"] == database_query.get_case_study(id)["username"]:
+        database_query.delete_case_study(id)
+        return "", 200
+    else:
+        return "No permission", 400
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
