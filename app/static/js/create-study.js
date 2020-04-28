@@ -8,22 +8,28 @@ var first_render = true;
 
 
 
-var deleteItem = function(r) {
+var deleteItem = function(r, type) {
   d3.selectAll("li")
     .each(function(d, i) {
-      if (i == r) {
+      if (i == r){
         this.remove();
       }
     });
+
+  var offset = 1;
+
   contentList.splice(r - 1, 1);
   idlist.splice(r - 1, 1);
   var i = r + 1;
   for (i; i < idlist.length + 2; i++){
     d3.select("#delete" + i)
-      .attr("onclick", "deleteItem(" + (parseInt(d3.select("#delete" + i).node().id[6]) - 1) + ")")
-      .attr("id", "delete" + (parseInt(d3.select("#delete" + i).node().id[6]) - 1));
+      .attr("onclick", "deleteItem(" + (parseInt(d3.select("#delete" + i).node().id[6]) - offset) + "," + ("'" + idlist[i - 2].charAt(0)) + "')")
+      .attr("id", "delete" + (parseInt(d3.select("#delete" + i).node().id[6]) - offset));
   }
   index -= 1;
+  if (type == "g" && first_render){
+    addSelectInput();
+  }
 }
 
 var addtextinput = function() {
@@ -54,123 +60,27 @@ var addtextinput = function() {
   listItem.className += "list-group-item";
   listItem.appendChild(text);
   listItem.innerHTML += "<br>";
-  //create a button to go back
-  var backbutton = document.createElement("button");
-  backbutton.className += "btn btn-secondary";
-  backbutton.setAttribute("onclick", "removeCurrent()");
-  backbutton.innerHTML = "Back";
-  backbutton.id = "backTextButton";
-  listItem.appendChild(backbutton);
-  //listItem.innerHTML += "&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;";
-  //create a button to finalize the text
-  var newbutton = document.createElement("button");
-  newbutton.className += "btn btn-secondary ml-5";
-  newbutton.setAttribute("onclick", "finalizeText()");
-  newbutton.innerHTML = "Finalize this text";
-  newbutton.id = "finalizeTextButton";
-  listItem.appendChild(newbutton);
+
   //add new list item to page
   var list = document.getElementById("masterlist");
   list.appendChild(listItem);
-}
-
-var removeCurrent = function() {
-  //remove old
-  d3.selectAll("li")
-    .each(function(d, i) {
-      if (i == index) {
-        this.remove();
-      }
-    });
-  idlist.pop();
-  //create new list item
-  var listItem = document.createElement("li");
-  listItem.className += "list-group-item";
-  //listItem.innerHTML += "<br>";
-  //Create add text button
-  var textbutton = document.createElement("button");
-  textbutton.innerHTML = " Add Text ";
-  textbutton.className += "btn btn-secondary";
-  textbutton.setAttribute("onclick", "addtextinput()");
-  textbutton.id = "textbutton";
-  //add add text button
-  listItem.appendChild(textbutton);
-  listItem.innerHTML += "&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;";
-  //Create add graph button
-  var graphbutton = document.createElement("button");
-  graphbutton.innerHTML = " Add Graph ";
-  graphbutton.className += "btn btn-secondary";
-  graphbutton.setAttribute("onclick", "addgraphinput()");
-  graphbutton.id = "graphbutton";
-  //add the button to the list
-  listItem.appendChild(graphbutton);
-  //add new list item to list
-  var list = document.getElementById("masterlist");
-  list.appendChild(listItem);
-}
-
-var removeGraphInput = function() {
-  //remove old
-  d3.selectAll("li")
-    .each(function(d, i) {
-      if (i == index || i == index + 1) {
-        this.remove();
-      }
-    });
-
-  console.log(index);
-  console.log(contentList);
-  if (!first_render && contentList[index - 1]["type"] == "chart") {
-    contentList.pop();
-    console.log(contentList);
-  }
-  idlist.pop();
-
-  first_render = true;
-  //create new list item
-  var listItem = document.createElement("li");
-  listItem.className += "list-group-item";
-  //listItem.innerHTML += "<br>";
-  //Create add text button
-  var textbutton = document.createElement("button");
-  textbutton.innerHTML = " Add Text ";
-  textbutton.className += "btn btn-secondary";
-  textbutton.setAttribute("onclick", "addtextinput()");
-  textbutton.id = "textbutton";
-  //add add text button
-  listItem.appendChild(textbutton);
-  listItem.innerHTML += "&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;";
-  //Create add graph button
-  var graphbutton = document.createElement("button");
-  graphbutton.innerHTML = " Add Graph ";
-  graphbutton.className += "btn btn-secondary";
-  graphbutton.setAttribute("onclick", "addgraphinput()");
-  graphbutton.id = "graphbutton";
-  //add the button to the list
-  listItem.appendChild(graphbutton);
-  //add new list item to list
-  var list = document.getElementById("masterlist");
-  list.appendChild(listItem);
-}
-
-var finalizeText = function() {
-
-  // //remove old
-  d3.select("#backTextButton").remove();
-  d3.select("#finalizeTextButton").remove();
-  //add delete button
+  //create a button to delete
   d3.select(d3.selectAll("li").nodes()[index])
     .append("button")
     .attr("class", "btn btn-secondary")
     .html("Delete")
     .attr("id", "delete" + index)
-    .attr("onclick", "deleteItem(" + index + ")");
+    .attr("onclick", "deleteItem(" + index + ",'t')");
 
-  index += 1;
+  addSelectInput();
+  index+=1;
+}
 
+var addSelectInput = function(){
   //create new list item
   var listItem = document.createElement("li");
   listItem.className += "list-group-item";
+  //listItem.innerHTML += "<br>";
   //Create add text button
   var textbutton = document.createElement("button");
   textbutton.innerHTML = " Add Text ";
@@ -191,13 +101,9 @@ var finalizeText = function() {
   //add new list item to list
   var list = document.getElementById("masterlist");
   list.appendChild(listItem);
-
-  var actualText = d3.select("#text" + (index - 1)).node().value;
-  contentList.push({
-    "type": "text",
-    "text": actualText
-  });
 }
+
+
 
 
 var addgraphinput = function() {
@@ -233,8 +139,8 @@ var addgraphinput = function() {
     .append("select")
     .attr("class", "custom-select")
     .attr("required", "true")
-    .attr("onchange", "updateDropdowns()")
-    .attr("id", "subjectdropdown");
+    .attr("onchange", "updateDropdowns(" + index + ")")
+    .attr("id", "subjectdropdown" + index);
 
   //add Options to dropdown
   //will be down with a for loop through list of subjects, but for now j adding samples
@@ -260,8 +166,8 @@ var addgraphinput = function() {
   var startYearDropdown = startRow
     .append("select")
     .attr("class", "custom-select w-50")
-    .attr("onchange", "renderGraph()")
-    .attr("id", "startyeardropdown");
+    .attr("onchange", "renderGraph(" + index  + ")")
+    .attr("id", "startyeardropdown" + index);
 
   //we will add specific years later
   var startyearOptions = startYearDropdown
@@ -280,8 +186,8 @@ var addgraphinput = function() {
   var endYearDropdown = endRow
     .append("select")
     .attr("class", "custom-select w-50")
-    .attr("onchange", "renderGraph()")
-    .attr("id", "endyeardropdown");
+    .attr("onchange", "renderGraph(" + index + ")")
+    .attr("id", "endyeardropdown" + index);
 
   //we will add specific years later
   var endyearOptions = endYearDropdown
@@ -293,47 +199,35 @@ var addgraphinput = function() {
   var i = 0;
 
   var finalCol = structure.append("div")
-    .attr("class", "col-2");
+    .attr("class", "col-2").node();
 
 
-  var backbutton = finalCol
-    .append("button")
-    .attr("class", "btn btn-secondary")
-    .attr("id", "backbutton")
-    .attr("onclick", "removeGraphInput()")
-    .html("Back");
-
-  finalCol.node().innerHTML += "<br><br>";
-
-  var finalizeButton = finalCol
-    .append("button")
-    .attr("class", "btn btn-secondary")
-    .attr("id", "finalizeGraph")
-    .attr("onclick", "finalizeGraph()")
-    .html("Finalize Graph");
+  d3.select(finalCol)
+      .append("button")
+      .attr("class", "btn btn-secondary center-block")
+      .html("Delete")
+      .attr("id", "delete" + index)
+      .attr("onclick", "deleteItem(" + index + ",'g')");
 
   structure.node().innerHTML += "<br><br>";
 
-  idlist.push("graph" + index);
+  // idlist.push("graph" + index);
+
+  index += 1;
 }
 
 
-function updateDropdowns(){
-  var title = d3.select("#subjectdropdown").node().value;
+function updateDropdowns(r){
+  var title = d3.select("#subjectdropdown" + r).node().value;
   //get vals
-  var year_start = d3.select("#startyeardropdown");
-  var year_end = d3.select("#endyeardropdown");
-  var month_start = d3.select("#startmonthdropdown");
-  var month_end = d3.select("#endmonthdropdown");
+  var year_start = d3.select("#startyeardropdown" + r);
+  var year_end = d3.select("#endyeardropdown" + r);
 
   //get dropdowns and clear them
-  var startmonth = d3.select("#startmonthdropdown");
-  startmonth.selectAll("option").remove();
-  var startyear = d3.select("#startyeardropdown");
+  var startyear = d3.select("#startyeardropdown" + r);
   startyear.selectAll("option").remove();
-  var endmonth = d3.select("#endmonthdropdown");
-  endmonth.selectAll("option").remove();
-  var endyear = d3.select("#endyeardropdown");
+
+  var endyear = d3.select("#endyeardropdown" + r);
   endyear.selectAll("option").remove();
 
   //get data index
@@ -368,12 +262,16 @@ function updateDropdowns(){
 
 
 
-function renderGraph() {
+function renderGraph(r) {
 
-  var title = d3.select("#subjectdropdown").node().value;
+  if (!idlist.includes("graph" + r)){
+    idlist.push("graph" + r);
+    first_render = true;
+  }
 
-  var year_start = d3.select("#startyeardropdown").node().value;
-  var year_end = d3.select("#endyeardropdown").node().value;
+  var title = d3.select("#subjectdropdown" + r).node().value;
+  var year_start = d3.select("#startyeardropdown" + r).node().value;
+  var year_end = d3.select("#endyeardropdown" + r).node().value;
 
   var dataset = "";
   var i = 0;
@@ -384,22 +282,28 @@ function renderGraph() {
       dataindex = i;
     }
   }
-  var list = d3.select("#masterlist");
+
+  var listitem = d3.select(d3.selectAll("li").nodes()[r]);
 
   if (first_render) {
-    list.append("li").attr("class", "list-group-item").append("h2").attr("class", "mb-5")
+    listitem.append("div").attr("class", "container pt-4 center-block").attr("style", "margin-left: 0px;")
+    .append("h2")
       .html(title + " From " + year_start + " To " + year_end)
-      .attr("id", "title" + index);
+      .attr("id", "title" + r);
+
+    listitem.append('div').attr("id", "graphcontainer" + r).attr("class", "container mt-5 text-center")
   }
 
-  var intitle = d3.select("#title" + index).html(title + " From " + year_start + " To " + year_end);
-  var graphcontainer = d3.select(d3.selectAll("li").nodes()[index + 1]).append("div").attr("class", "container-fluid");
+  var intitle = d3.select("#title" + r).html(title + " From " + year_start + " To " + year_end);
+  var graphcontainer = d3.select("#graphcontainer" + r);
 
+//  graphcontainer.node().innerHTML += "<br><br>";
 
 
   let width = 900;
   let height = 300;
   let margin = 50;
+
   const parseTime = d3.timeParse("%Y-%m-%d");
 
   const scaleX = d3.scaleTime().range([0, width - margin - 10])
@@ -412,19 +316,15 @@ function renderGraph() {
       .attr("width", width)
       .attr("height", height)
       .attr("style", "overflow: visible")
-      .attr("id", "svg" + index)
+      .attr("id", "svg" + r)
       .append("g")
       .attr("id", "group")
       .attr("transform", "translate(50, 0)");
-
   }
 
-  var svg = d3.select("#svg" + index);
+  var svg = d3.select("#svg" + r);
 
 
-  if (!first_render) {
-    contentList.pop();
-  }
 
   var contentitem = {}
   contentitem["type"] = "chart";
@@ -432,12 +332,10 @@ function renderGraph() {
   contentitem["chart_end"] = year_end + "-01-01";
   contentitem["chart_name"] = dataset;
 
-  console.log(dataset);
 
-  contentList.push(contentitem);
+  contentList[r - 1] = contentitem;
 
 
-  first_render = false;
 
   if (!(title == "" || year_start == "" || year_end == "")) {
 
@@ -448,7 +346,7 @@ function renderGraph() {
       const date = raw_data.columns[0];
       const value = raw_data.columns[1];
 
-      raw_data.forEach(function(d, index) {
+      raw_data.forEach(function(d, r) {
         const current_year = d[date].substring(0, 4)
 
         if (d[value] != "." && current_year >= year_start && current_year <= year_end) {
@@ -459,12 +357,12 @@ function renderGraph() {
       });
 
       if (!first_render) {
-        d3.select("#path" + index).remove();
-        d3.select("#x-axis" + index).remove();
-        d3.select("#y-axis" + index).remove();
+        d3.select("#path" + r).remove();
+        d3.select("#x-axis" + r).remove();
+        d3.select("#y-axis" + r).remove();
       }
 
-      first_render = false;
+
 
       scaleX.domain(d3.extent(data, function(d) {
         return d[date];
@@ -480,7 +378,7 @@ function renderGraph() {
       // draws line graph
       svg.append("path")
         .data([data])
-        .attr("id", "path" + index)
+        .attr("id", "path" + r)
         .attr("fill", "none")
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
@@ -488,67 +386,37 @@ function renderGraph() {
 
       // x and y axes
       svg.append("g")
-        .attr("id", "x-axis" + index)
+        .attr("id", "x-axis" + r)
         .attr("transform", "translate(0," + (height - margin) + ")")
         .call(d3.axisBottom(scaleX));
 
       svg.append("g")
-        .attr("id", "y-axis" + index)
+        .attr("id", "y-axis" + r)
         .call(d3.axisLeft(scaleY));
 
     });
+  }
+  if (first_render){
+    //index += 1;
+    addSelectInput();
+    first_render = false;
   }
 }
 
 
 
-var finalizeGraph = function() {
-  d3.selectAll("li")
-    .each(function(d, i) {
-      if (i == index) {
-        this.remove();
-      }
-    });
-  //add delete button
-  d3.select(d3.selectAll("li").nodes()[index])
-    .append("button")
-    .attr("class", "btn btn-secondary")
-    .html("Delete")
-    .attr("id", "delete" + index)
-    .attr("onclick", "deleteItem(" + index + ")");
-  index += 1;
-  first_render = true;
-  //create new list item
-  var listItem = document.createElement("li");
-  listItem.className += "list-group-item";
-  //Create add text button
-  var textbutton = document.createElement("button");
-  textbutton.innerHTML = " Add Text ";
-  textbutton.className += "btn btn-secondary";
-  textbutton.setAttribute("onclick", "addtextinput()");
-  textbutton.id = "textbutton";
-  //add add text button
-  listItem.appendChild(textbutton);
-  listItem.innerHTML += "&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;";
-  //Create add graph button
-  var graphbutton = document.createElement("button");
-  graphbutton.innerHTML = " Add Graph ";
-  graphbutton.className += "btn btn-secondary";
-  graphbutton.setAttribute("onclick", "addgraphinput()");
-  graphbutton.id = "graphbutton";
-  //add the button to the list
-  listItem.appendChild(graphbutton);
-  //add new list item to list
-  var list = document.getElementById("masterlist");
-  list.appendChild(listItem);
-}
 
 var finalizeStudy = function() {
+  console.log(contentList);
   var i = 0;
-  for (i = 0; i < contentList.length; i++) {
-    if (contentList[i]["type"] == "text") {
+  for (i = 0; i < idlist.length; i++) {
+    if (idlist[i].charAt(0) == "t") {
       var intext = d3.select("#" + idlist[i]).node().value;
-      contentList[i]["text"] = intext;
+      var textitem = {
+                        "type" : "text",
+                        "text" : intext
+                      }
+      contentList[i]= textitem;
     }
   }
   sendThis["title"] = d3.select("#bigTitle").node().value;
@@ -567,5 +435,4 @@ var finalizeStudy = function() {
     .then(data => {
     window.location = "/" + data.redirect;
     })
-  //window.location = "/home";
 }
