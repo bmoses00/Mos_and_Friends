@@ -131,14 +131,14 @@ def create_study():
         return render_template("create-study.html", data_sets=econ_data, data_sets_json = json.dumps(econ_data))
 
 
-@app.route("/delete-study/<string:id>", methods=["DELETE", "GET"])
+@app.route("/delete-study/<string:id>", methods=["DELETE"])
 def delete_study(id: str):
     case_study = database_query.get_case_study(id)
     if case_study is None:
         return "Case study does not exist. Cannot delete", 400
     elif "username" in session and session["username"] == case_study["username"]:
         database_query.delete_case_study(id)
-        return redirect(url_for("view_studies"))
+        return "", 200
     else:
         return "No permission", 400
 

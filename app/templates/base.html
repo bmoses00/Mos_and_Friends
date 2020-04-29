@@ -80,6 +80,17 @@
           <div class="container-fluid">
             <div id = "graph-container" class="card shadow" styke="height: 1000px">
               <div class="card-body p-5">
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class="alert alert-{{ category }}" role="alert">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+
                 {% block body %} {% endblock %}
               </div>
             </div>

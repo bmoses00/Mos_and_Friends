@@ -3,15 +3,7 @@
 {% block title %} Home {% endblock %}
 {% block body %}
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-      <div class="alert alert-{{ category }}" role="alert">
-        {{ message }}
-      </div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
+
 
 <a href = '/view-studies'> Go to view-studies </a> <br>
 <a href = '/create-study'> Go to create-study </a> <br>

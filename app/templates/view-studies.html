@@ -2,15 +2,7 @@
 {% block title %} View Data {% endblock %}
 {% block body %}
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-      <div class="alert alert-{{ category }}" role="alert">
-        {{ message }}
-      </div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
+
 
 Hello, {{session['username']}}!
 <hr>
@@ -27,10 +19,10 @@ Hello, {{session['username']}}!
   </div>
   <div class="col-8">
     <a href="/view-study/{{case['_id']}}"> {{case['title']}} </a> <br>
-      {{case['description']}}<br>
+    {{case['description']}}<br>
   </div>
   <div class="col-2">
-    <a class="btn btn-secondary" href="/delete-study/{{case['_id']}}"> Delete This Study </a>
+    <a class="btn btn-secondary" onclick="deleteStudy('{{case['_id']}}')"> Delete This Study </a>
   </div>
 </div>
 <hr>
@@ -46,5 +38,16 @@ Hello, {{session['username']}}!
 {% endif %}
 
 {% endfor %}
+
+<script>
+  var deleteStudy = function(id) {
+    fetch("/delete-study/" + id , {
+          method: "DELETE"
+        })
+      .then(() => {
+        window.location = "/view-studies";
+      });
+  }
+</script>
 
 {% endblock %}

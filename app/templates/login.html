@@ -3,21 +3,12 @@
 {% block body %}
 <form method="POST">
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-  {% for category, message in messages %}
-    <div class="alert alert-{{ category }}" role="alert">
-      {{ message }}
-    </div>
-  {% endfor %}
-{% endif %}
-{% endwith %}
 
-    Username <br>
-    <input type="text"  name="username" required> <br>
-    Password<br>
-    <input type="password"  name="password" required> <br>
-    <button type="Submit" value="submit">Login</button>
+  Username <br>
+  <input type="text" name="username" required> <br>
+  Password<br>
+  <input type="password" name="password" required> <br>
+  <button type="Submit" value="submit">Login</button>
 </form>
 <a href="/create-account">Create An Account</a>
 <script src="{{ url_for('static', filename='js/login.js') }}"></script>
