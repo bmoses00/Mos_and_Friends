@@ -81,3 +81,9 @@ Alex Thompson -- 2020-04-27 11:59
   - added flash capabilities to all routes
   - added navbar functionality
   - added deleteStudy functionality on frontend in /view-studies and /view-study
+
+Mos and Friends -- 2020-04-29 14:00
+  - DD suggestions offered by team TwoFortyNine
+  - we clarified what a 'case study' is for our project, as well as where the user can select datasets from
+  - for the additional time, we decided we will try to implement additional types of graphs besides line graphs,
+  and animations
