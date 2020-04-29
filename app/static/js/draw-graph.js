@@ -32,10 +32,27 @@ function draw_graph(element, dataset, year_start, year_end, first_render, r) {
      d3.select("#path" + r).remove();
      d3.select("#x-axis" + r).remove();
      d3.select("#y-axis" + r).remove();
+     d3.select("#x-label" + r).remove();
+     d3.select("#y-label" + r).remove();
+
    }
 
    scaleX.domain(d3.extent(data, function(d) { return d[date]; }));
-   scaleY.domain([0, d3.max(data, function(d) { return d[value]; })]);
+
+   let domain_lower;
+   let translate;
+
+   if (d3.min(data, function(d) { return d[value]; }) < 0) {
+     domain_lower = d3.min(data, function(d) { return d[value]; })
+      var highest = d3.max(data, function(d) { return d[value]; })
+      var total = d3.extent(data, function (d) {return d[value];})[1] - d3.extent(data, function (d) {return d[value];})[0]
+      translate = (height * highest / total) - margin + 1;
+   }
+   else {
+     domain_lower = 0;
+     translate = height - margin;
+   }
+   scaleY.domain([domain_lower, d3.max(data, function(d) { return d[value]; })]);
 
    let line = d3.line()
      .x(d => scaleX(d[date]))
@@ -50,15 +67,33 @@ function draw_graph(element, dataset, year_start, year_end, first_render, r) {
      .attr("stroke-width", 1.5)
      .attr("d", line);
 
+
+
    // x and y axes
    element.append("g")
      .attr("id", "x-axis" + r)
-     .attr("transform", "translate(0," + (height - margin) + ")")
+     .attr('transform', 'translate(0,' + translate + ')')
      .call(d3.axisBottom(scaleX));
+
+   element.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("id", "y-label" + r)
+      .attr("y", 0 - margin)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text(value);
 
    element.append("g")
      .attr("id", "y-axis" + r)
      .call(d3.axisLeft(scaleY));
+
+   element.append("text")
+      .attr("transform", "translate(" + (width/2 - margin)+ "," + height + ")")
+      // .attr('transform', 'translate(0,' + (height/2) + ')')
+      .attr("id", "x-label" + r)
+      .style("text-anchor", "middle")
+      .text("Year");
 
  });
 }
