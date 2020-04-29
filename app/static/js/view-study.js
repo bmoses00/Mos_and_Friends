@@ -21,6 +21,9 @@ content.forEach(function(element) {
       .append("g")
       .attr("transform", "translate(50, 0)");
 
-      draw_graph(svg, element['chart_name'], element['chart_start'], element['chart_end'], true);
+      console.log(element['chart_end'])
+      console.log((element['chart_end'].substring(0, 4) - 1) + element['chart_start'].substring(4))
+
+      draw_graph(svg, element['chart_name'], element['chart_start'].substring(0, 4), element['chart_end'].substring(0, 4), true);
   }
 });

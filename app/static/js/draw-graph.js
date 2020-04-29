@@ -1,5 +1,7 @@
 function draw_graph(element, dataset, year_start, year_end, first_render, r) {
 
+  console.log(year_start, year_end)
+  
   const width = .9 * d3.select("#graph-container").node().getBoundingClientRect().width;
   const height = 300;
   const margin = 50;
