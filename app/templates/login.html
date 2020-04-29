@@ -2,9 +2,17 @@
 {% block title %}Login{% endblock title %}
 {% block body %}
 <form method="POST">
-    {% with errors = get_flashed_messages() %}
-        <p class="text-danger">{{ errors[0] }}</p>
-    {% endwith %}
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+  {% for category, message in messages %}
+    <div class="alert alert-{{ category }}" role="alert">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+{% endwith %}
+
     Username <br>
     <input type="text"  name="username" required> <br>
     Password<br>

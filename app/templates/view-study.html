@@ -2,10 +2,15 @@
 {% block title %} View Data {% endblock %}
 {% block body %}
 
-{% with errors = get_flashed_messages() %}
-    <p class="text-danger">{{ errors[0] }}</p>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
 {% endwith %}
-
 
   <b> {{case_study['title']}},</b> by {{case_study['username']}} <br>
   <ul id = "case_study_container" class = "list-group">
