@@ -87,3 +87,6 @@ Mos and Friends -- 2020-04-29 14:00
   - we clarified what a 'case study' is for our project, as well as where the user can select datasets from
   - for the additional time, we decided we will try to implement additional types of graphs besides line graphs,
   and animations
+
+William Cao -- 2020-04-29 17:41
+  - Fixed bug of not redirecting to login when user tries to create an event when not logged in

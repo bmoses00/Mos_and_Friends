@@ -126,7 +126,7 @@ def create_study():
     elif request.method == "GET":
         if "username" not in session:
             flash("Login to create a case study", "danger")
-            return redirect(url_for("home"))
+            return redirect(url_for("login"))
         econ_data = database_query.get_all_econ_data_basic_info()
         return render_template("create-study.html", data_sets=econ_data, data_sets_json = json.dumps(econ_data))
 
