@@ -27,7 +27,7 @@ var deleteItem = function(r, type) {
       .attr("id", "delete" + (parseInt(d3.select("#delete" + i).node().id[6]) - offset));
   }
   index -= 1;
-  if (type == "g" && first_render){
+  if (type == "g" && !idlist.includes("graph" + r)){
     addSelectInput();
   }
 }
@@ -286,12 +286,16 @@ function renderGraph(r) {
   var listitem = d3.select(d3.selectAll("li").nodes()[r]);
 
   if (first_render) {
-    listitem.append("div").attr("class", "container pt-4 center-block").attr("style", "margin-left: 0px;")
-    .append("h2")
-      .html(title + " From " + year_start + " To " + year_end)
-      .attr("id", "title" + r);
+  //  listitem.append("div").attr("class", "container pt-4 center-block").attr("style", "margin-left: 0px;")
+    // .append("h2")
+    //   .html(title + " From " + year_start + " To " + year_end)
+    //   .attr("id", "title" + r);
 
     listitem.append('div').attr("id", "graphcontainer" + r).attr("class", "container mt-5 text-center")
+    .append("h2")
+      .attr("class", "pb-5")
+      .html(title + " From " + year_start + " To " + year_end)
+      .attr("id", "title" + r);
   }
 
   var intitle = d3.select("#title" + r).html(title + " From " + year_start + " To " + year_end);
