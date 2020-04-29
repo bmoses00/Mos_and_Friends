@@ -93,7 +93,7 @@ def view_study(id: str):
     if case_study is None:
         flash("Case study does not exist", "danger")
         return redirect(url_for("view_studies"))
-    return render_template("view-study.html", case_study=case_study)
+    return render_template("view-study.html", case_study=case_study, id = id)
 
 
 @app.route("/create-study", methods=["GET", "POST"])

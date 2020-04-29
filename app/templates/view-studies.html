@@ -2,29 +2,52 @@
 {% block title %} View Data {% endblock %}
 {% block body %}
 
-  Hello, {{session['username']}}! <hr>
-
-  <b> Your cases </b> <br>
 
 
-  {{case_studies}}
+Hello, {{session['username']}}!
+<hr>
 
-  {% for case in case_studies %}
-    {% if session['username'] == case['username'] %}
-    <a href = "/view-study/{{case['_id']}}"> {{case['title']}} </a> <br>
+<b> Your cases </b> <br>
+
+
+
+
+{% for case in case_studies %}
+{% if session['username'] == case['username'] %}
+<div class="row">
+  <div class="col-2">
+  </div>
+  <div class="col-8">
+    <a href="/view-study/{{case['_id']}}"> {{case['title']}} </a> <br>
     {{case['description']}}<br>
-    <hr>
-    {% endif %}
-  {% endfor %} <br>
+  </div>
+  <div class="col-2">
+    <a class="btn btn-secondary" onclick="deleteStudy('{{case['_id']}}')"> Delete This Study </a>
+  </div>
+</div>
+<hr>
+{% endif %}
+{% endfor %} <br>
 
-  <b> Public cases </b> <br>
-  {% for case in case_studies %}
-    {% if session['username'] != case['username'] %}
-    <a href = "/view-study/{{case['_id']}}"> {{case['title']}} </a> <br>
-    {{case['description']}}<br>
-    <hr>
-    {% endif %}
+<b> Public cases </b> <br>
+{% for case in case_studies %}
+{% if session['username'] != case['username'] %}
+<a href="/view-study/{{case['_id']}}"> {{case['title']}} </a> <br>
+{{case['description']}}<br>
+<hr>
+{% endif %}
 
-  {% endfor %}
+{% endfor %}
+
+<script>
+  var deleteStudy = function(id) {
+    fetch("/delete-study/" + id , {
+          method: "DELETE"
+        })
+      .then(() => {
+        window.location = "/view-studies";
+      });
+  }
+</script>
 
 {% endblock %}

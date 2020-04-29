@@ -9,6 +9,13 @@ var first_render = true;
 
 
 var deleteItem = function(r, type) {
+  if (type == "g" && (d3.select("#graphcontainer" + r).node() == null)) {
+    //console.log()
+    addSelectInput();
+  } else {
+    d3.select("#graphcontainer" + r).remove();
+  }
+
   d3.selectAll("li")
     .each(function(d, i) {
       if (i == r){
@@ -18,6 +25,9 @@ var deleteItem = function(r, type) {
 
   var offset = 1;
 
+
+
+
   contentList.splice(r - 1, 1);
   idlist.splice(r - 1, 1);
   var i = r + 1;
@@ -25,11 +35,21 @@ var deleteItem = function(r, type) {
     d3.select("#delete" + i)
       .attr("onclick", "deleteItem(" + (parseInt(d3.select("#delete" + i).node().id[6]) - offset) + "," + ("'" + idlist[i - 2].charAt(0)) + "')")
       .attr("id", "delete" + (parseInt(d3.select("#delete" + i).node().id[6]) - offset));
+    if (idlist[i - 2].charAt(0) == "g"){
+      d3.select("#graphcontainer" + i).attr("id", "graphcontainer" + (i - 1));
+      d3.select("#subjectdropdown" + i).attr("id", "subjectdropdown" + (i - 1)).attr("onchange", "updateDropdowns(" + (i - 1) + ")");
+      d3.select("#startyeardropdown" + i).attr("id", "startyeardropdown" + (i - 1)).attr("onchange", "renderGraph(" + (i - 1) + ")");
+      d3.select("#endyeardropdown" + i).attr("id", "endyeardropdown" + (i - 1)).attr("onchange", "renderGraph(" + (i - 1) + ")");
+      d3.select("#title" + i).attr("id", "title" + (i - 1));
+      d3.select("#svg" + i).attr("id", "svg" + (i - 1));
+      d3.select("#path" + i).attr("id", "path" + (i - 1));
+      d3.select("#x-axis" + i).attr("id", "x-axis" + (i - 1));
+      d3.select("#y-axis" + i).attr("id", "y-axis" + (i - 1));
+    }
   }
+
+
   index -= 1;
-  if (type == "g" && first_render){
-    addSelectInput();
-  }
 }
 
 var addtextinput = function() {
@@ -211,7 +231,7 @@ var addgraphinput = function() {
 
   structure.node().innerHTML += "<br><br>";
 
-  // idlist.push("graph" + index);
+  idlist.push("graph" + index);
 
   index += 1;
 }
@@ -264,10 +284,10 @@ function updateDropdowns(r){
 
 function renderGraph(r) {
 
-  if (!idlist.includes("graph" + r)){
-    idlist.push("graph" + r);
+  if (d3.select("#graphcontainer" + r).node() == null){
     first_render = true;
   }
+//  console.log(document.getElementById("graphcontainer" + r) == null);
 
   var title = d3.select("#subjectdropdown" + r).node().value;
   var year_start = d3.select("#startyeardropdown" + r).node().value;
@@ -286,12 +306,16 @@ function renderGraph(r) {
   var listitem = d3.select(d3.selectAll("li").nodes()[r]);
 
   if (first_render) {
-    listitem.append("div").attr("class", "container pt-4 center-block").attr("style", "margin-left: 0px;")
-    .append("h2")
-      .html(title + " From " + year_start + " To " + year_end)
-      .attr("id", "title" + r);
+  //  listitem.append("div").attr("class", "container pt-4 center-block").attr("style", "margin-left: 0px;")
+    // .append("h2")
+    //   .html(title + " From " + year_start + " To " + year_end)
+    //   .attr("id", "title" + r);
 
     listitem.append('div').attr("id", "graphcontainer" + r).attr("class", "container mt-5 text-center")
+    .append("h2")
+      .attr("class", "pb-5")
+      .html(title + " From " + year_start + " To " + year_end)
+      .attr("id", "title" + r);
   }
 
   var intitle = d3.select("#title" + r).html(title + " From " + year_start + " To " + year_end);
@@ -421,7 +445,7 @@ var finalizeStudy = function() {
   }
   sendThis["title"] = d3.select("#bigTitle").node().value;
   sendThis["content"] = contentList;
-  sendThis["description"] = "description";
+  sendThis["description"] = d3.select("#description").node().value;
 
   console.log(sendThis);
 

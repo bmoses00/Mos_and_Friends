@@ -3,11 +3,13 @@
 {% block body %}
 
 
+
   <b> {{case_study['title']}},</b> by {{case_study['username']}} <br>
   <ul id = "case_study_container" class = "list-group">
 
   </ul>
 
+  <a class="btn btn-secondary mt-3" onclick="deleteStudy('{{id}}')"> Delete This Study</a>
 
   <script>
     var content = {{case_study['content']|safe }};
@@ -15,5 +17,17 @@
 
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src = "../static/js/view-study.js"> </script>
+
+
+  <script>
+    var deleteStudy = function(id) {
+      fetch("/delete-study/" + id , {
+            method: "DELETE"
+          })
+        .then(() => {
+          window.location = "/view-studies";
+        });
+    }
+  </script>
 
 {% endblock %}
