@@ -3,6 +3,10 @@
 {% block title %} Home {% endblock %}
 {% block body %}
 
+{% with errors = get_flashed_messages() %}
+    <p class="text-danger">{{ errors[0] }}</p>
+{% endwith %}
+
 <a href = '/view-studies'> Go to view-studies </a> <br>
 <a href = '/create-study'> Go to create-study </a> <br>
 <a href = '/view-data'> Go to view data </a> <br>

@@ -421,7 +421,7 @@ var finalizeStudy = function() {
   }
   sendThis["title"] = d3.select("#bigTitle").node().value;
   sendThis["content"] = contentList;
-  sendThis["description"] = "description";
+  sendThis["description"] = d3.select("#description").node().value;
 
   console.log(sendThis);
 

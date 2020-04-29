@@ -2,6 +2,10 @@
 {% block title %} View Data {% endblock %}
 {% block body %}
 
+{% with errors = get_flashed_messages() %}
+    <p class="text-danger">{{ errors[0] }}</p>
+{% endwith %}
+
     <script>
         /*
          econData formatted as:
