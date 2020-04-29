@@ -68,14 +68,14 @@ function draw_graph(element, dataset, year_start, year_end, first_render, r) {
      .attr("stroke-width", 1.5)
      .attr("d", line);
 
-     var totalLength = line_path.node().getTotalLength();
+   let totalLength = line_path.node().getTotalLength();
 
-     line_path
-       .attr("stroke-dasharray", totalLength)
-       .attr("stroke-dashoffset", totalLength)
-       .transition()
-       .duration(2000)
-       .attr("stroke-dashoffset", 0);
+   line_path
+     .attr("stroke-dasharray", totalLength)
+     .attr("stroke-dashoffset", totalLength)
+     .transition()
+     .duration(2000)
+     .attr("stroke-dashoffset", 0);
 
 
 
