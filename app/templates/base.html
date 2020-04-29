@@ -65,9 +65,10 @@
           <br>
           <div class="collapse text-dark border-bottom border-dark" id="navbarToggleExternalContent">
             <nav class="breadcrumb text-dark bg-light rounded">
-              <a class="breadcrumb-item text-dark" href="#"> Home </a>
-              <a class="breadcrumb-item text-dark" href="#"> Create Case Study </a>
-              <a class="breadcrumb-item text-dark" href="#"> View Public Case Studies </a>
+              <a class="breadcrumb-item text-dark" href="/home"> Home </a>
+              <a class="breadcrumb-item text-dark" href="/create-study"> Create Case Study </a>
+              <a class="breadcrumb-item text-dark" href="/view-studies"> View Public Case Studies </a>
+              <a class="breadcrumb-item text-dark" href="/view-data"> View Our Data Sets </a>
             </nav>
           </div>
           <br>
@@ -80,6 +81,17 @@
           <div class="container-fluid">
             <div id = "graph-container" class="card shadow" styke="height: 1000px">
               <div class="card-body p-5">
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class="alert alert-{{ category }}" role="alert">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+
                 {% block body %} {% endblock %}
               </div>
             </div>

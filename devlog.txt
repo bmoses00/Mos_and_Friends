@@ -74,5 +74,18 @@ William Cao -- 2020-04-28 13:50
 William Cao -- 2020-04-28 14:32
   - Added mongo document layout to design doc
 
-Brian Moses and Mohidul Abedin -- 2020-04-28 16:15
-  - modularized draw-graph
+Alex Thompson -- 2020-04-27 11:59
+  - Finished Create Case Study JS work and merged into master (much cleaner now)
+  - consolidated JS for this route
+  - added flash capabilities to all routes
+  - added navbar functionality
+  - added deleteStudy functionality on frontend in /view-studies and /view-study
+
+Mos and Friends -- 2020-04-29 14:00
+  - DD suggestions offered by team TwoFortyNine
+  - we clarified what a 'case study' is for our project, as well as where the user can select datasets from
+  - for the additional time, we decided we will try to implement additional types of graphs besides line graphs,
+  and animations
+
+William Cao -- 2020-04-29 17:41
+  - Fixed bug of not redirecting to login when user tries to create an event when not logged in
