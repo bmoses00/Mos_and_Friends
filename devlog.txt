@@ -60,7 +60,6 @@ Mos and Friends -- 2020-04-26 15:45
   - merged changes from branches view-studies and create-studies
   - fixed resulting bugs
 
-
 Alex Thompson -- 2020-04-27 11:59
   - Added Graphs and case study list to be sent
   - started new branch to modify selecion process
