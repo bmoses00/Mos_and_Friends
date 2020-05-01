@@ -89,3 +89,6 @@ Mos and Friends -- 2020-04-29 14:00
 
 William Cao -- 2020-04-29 17:41
   - Fixed bug of not redirecting to login when user tries to create an event when not logged in
+
+William Cao -- 2020-05-01 15:12
+  - Made route to update case study fields. Updated design doc for what needs to be passed in POST request.

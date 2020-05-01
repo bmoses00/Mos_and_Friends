@@ -132,3 +132,23 @@ def delete_case_study(id: str):
     :return:
     """
     case_study_collection.remove({"_id": ObjectId(id)})
+
+
+def update_case_study(id: str, title: str, username: str, description: str, content: List[dict]):
+    """
+    Update the document of the selected case_study
+    :param id:
+    :param title:
+    :param username:
+    :param description:
+    :param content:
+    :return:
+    """
+    case_study_collection.update({
+        "_id": ObjectId(id)
+    }, {
+        "title": title,
+        "username": username,
+        "description": description,
+        "content": content
+    })
