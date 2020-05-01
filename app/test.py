@@ -80,7 +80,10 @@ class Test(unittest.TestCase):
                     "type": "chart",
                     "chart_start": "2019-01-01",
                     "chart_end": "2020-01-01",
-                    "chart_name": "inflation"
+                    "chart_name": "inflation",
+                    "chart_start_2": None,
+                    "chart_end_2": None,
+                    "chart_name_2": None,
                 }
             ]
         }
