@@ -74,11 +74,17 @@ def create_case_studies_collection():
         description: string,
         content: [
             {
-                type: string, // either "chart" or "text"
+                type: string, // either "chart" | "text"
                 // if type is "chart", these fields exist
                 chart_start: string,
                 chart_end: string,
-                chart_name: string, // routing name
+                chart_name: string, // csv file name without the .csv
+
+                // null values if second dataset is not selected. optional to fill out
+                chart_start_2: string,
+                chart_end_2: string,
+                chart_name_2: string, // csv file name without the .csv
+
                 // if type is "text", these fields exist
                 text: string
             },
