@@ -137,6 +137,42 @@ def create_study():
         return render_template("create-study.html", data_sets=econ_data, data_sets_json = json.dumps(econ_data))
 
 
+@app.route("/update-study/<string:id>", methods=["POST"])
+def update_study(id: str):
+    """
+    Send all the following:
+    {
+        title: “title”,
+        description: “random text”,
+        content: [
+            {
+                type: string, // either "chart" | "text"
+                // if type is "chart", these fields exist
+                chart_start: string,
+                chart_end: string,
+                chart_name: string, // csv file name without the .csv
+
+                // null values if second dataset is not selected. optional to fill out
+                chart_start_2: string,
+                chart_end_2: string,
+                chart_name_2: string, // csv file name without the .csv
+
+                // if type is "text", these fields exist
+                text: string
+            },
+            …
+        ]
+    }
+    :param id:
+    :return:
+    """
+    if database_query.get_case_study(id)["username"] != session["username"]:
+        return {"error": "no permission"}, 400
+    updated_case_study = request.get_json()
+    database_query.update_case_study(id, updated_case_study["title"], session["username"], updated_case_study["description"], updated_case_study["content"])
+    return {"success": "Successfully updated"}, 200
+
+
 @app.route("/delete-study/<string:id>", methods=["DELETE"])
 def delete_study(id: str):
     case_study = database_query.get_case_study(id)
