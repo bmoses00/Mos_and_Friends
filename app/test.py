@@ -80,7 +80,10 @@ class Test(unittest.TestCase):
                     "type": "chart",
                     "chart_start": "2019-01-01",
                     "chart_end": "2020-01-01",
-                    "chart_name": "inflation"
+                    "chart_name": "inflation",
+                    "chart_start_2": None,
+                    "chart_end_2": None,
+                    "chart_name_2": None,
                 }
             ]
         }
@@ -200,6 +203,44 @@ class Test(unittest.TestCase):
             sent_case_study = json.dumps(case_study_1, sort_keys=True)
             retrieved_case_studies = [json.dumps(x, sort_keys=True) for x in context["case_studies"]]
             self.assertTrue(sent_case_study not in retrieved_case_studies)
+
+
+    def test_update_case_study(self):
+        username = "user"
+        password = "pass"
+        self.create_account(username, password)
+        self.login(username, password)
+        case_study = {
+            "title": "this is the title to be updated",
+            "description": "this is the description to be updated",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "this is an example text to be updated"
+                },
+                {
+                    "type": "chart",
+                    "chart_start": "2019-01-01",
+                    "chart_end": "2020-01-01",
+                    "chart_name": "inflation"
+                }
+            ]
+        }
+        response = self.app.post("/create-study", json=case_study, follow_redirects=True)
+        redirect_to = json.loads(response.get_data(as_text=True))['redirect']
+        case_id = redirect_to.replace("view-study/", "")
+        # update the values
+        case_study["title"] = "updated title"
+        case_study["description"] = "updated description"
+        case_study["content"][0]["text"] = "updated text"
+        self.app.post("/update-study/" + case_id, json=case_study, follow_redirects=True)
+        # username is added when handled by /create-study
+        case_study["username"] = username
+        with captured_templates(app) as templates:
+            self.app.get("/" + redirect_to)
+            _, context = templates[0]
+            self.assertDictEqual(context["case_study"], case_study, "returned case study has unexpected values")
+
 
 
 if __name__ == "__main__":

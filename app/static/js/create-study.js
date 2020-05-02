@@ -77,16 +77,19 @@ var addtextinput = function() {
   idlist.push("text" + index);
   text.appendChild(actualinput);
   //create the new list item to be added to the page
-  var listItem = document.createElement("li");
-  listItem.className += "list-group-item";
-  listItem.appendChild(text);
+  var listItem = d3.select("#masterlist").append("li").attr("class", "list-group-item");
+
+  var structure = listItem.append("div").attr("class","row");
+  var firstCol = structure.append("div").attr("class", "col-10");
+
+  firstCol.node().appendChild(text);
+
   listItem.innerHTML += "<br>";
 
-  //add new list item to page
-  var list = document.getElementById("masterlist");
-  list.appendChild(listItem);
+  var deltCol = structure.append("div").attr("class", "col-2")
+
   //create a button to delete
-  d3.select(d3.selectAll("li").nodes()[index])
+  deltCol
     .append("button")
     .attr("class", "btn btn-secondary")
     .html("Delete")
