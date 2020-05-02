@@ -37,7 +37,8 @@ var deleteItem = function(r, type) {
       .attr("id", "delete" + (parseInt(d3.select("#delete" + i).node().id[6]) - offset));
     if (idlist[i - 2].charAt(0) == "g"){
       d3.select("#graphcontainer" + i).attr("id", "graphcontainer" + (i - 1));
-      d3.select("#subjectdropdown" + i).attr("id", "subjectdropdown" + (i - 1)).attr("onchange", "updateDropdowns(" + (i - 1) + ")");
+      d3.select("#subject1dropdown" + i).attr("id", "subject1dropdown" + (i - 1)).attr("onchange", "updateDropdowns(" + (i - 1) + ")");
+      d3.select("#subject2dropdown" + i).attr("id", "subject2dropdown" + (i - 1)).attr("onchange", "updateDropdowns(" + (i - 1) + ")");
       d3.select("#startyeardropdown" + i).attr("id", "startyeardropdown" + (i - 1)).attr("onchange", "renderGraph(" + (i - 1) + ")");
       d3.select("#endyeardropdown" + i).attr("id", "endyeardropdown" + (i - 1)).attr("onchange", "renderGraph(" + (i - 1) + ")");
       d3.select("#title" + i).attr("id", "title" + (i - 1));
@@ -152,25 +153,54 @@ var addgraphinput = function() {
   //create col/form for subject
   var subjectCol = structure
     .append("div")
-    .attr("class", "col-5 pr-5")
-    .html("Choose Subject:");
+    .attr("class", "col-5 pr-5");
 
-  subjectCol.node().innerHTML += "<br><br>";
+  //create row for subjecr 1
+  var sub1Row = subjectCol.append("div").attr("class", "row").html("Subject 1: ");
 
   //create select for subject dropdown menu
-  var subjectDropdown = subjectCol
+  var subjectDropdown1 = sub1Row
     .append("select")
-    .attr("class", "custom-select")
+    .attr("class", "custom-select ml-5 w-50")
     .attr("required", "true")
     .attr("onchange", "updateDropdowns(" + index + ")")
-    .attr("id", "subjectdropdown" + index);
+    .attr("id", "subject1dropdown" + index);
+
 
   //add Options to dropdown
   //will be down with a for loop through list of subjects, but for now j adding samples
-  subjectDropdown.append("option").html("");
+  subjectDropdown1.append("option").html("");
   for (i = 0; i < econData.length; i++) {
-    subjectDropdown.append("option").html(econData[i].title);
+    subjectDropdown1.append("option").html(econData[i].title);
+    //console.log(econData);
+    //console.log(subjectDropdown1.node());
   }
+
+    subjectCol.node().innerHTML += "<br><br>";
+
+
+  //create row for subjecr 2
+  var sub2Row = subjectCol.append("div").attr("class", "row").html("Subject 2: ");
+
+  //create select for subject dropdown menu
+  var subjectDropdown2 = sub2Row
+    .append("select")
+    .attr("class", "custom-select ml-5 w-50")
+    .attr("required", "true")
+    .attr("onchange", "updateDropdowns(" + index + ")")
+    .attr("id", "subject2dropdown" + index);
+
+  //  subjectCol.node().innerHTML += "<br><br>";
+
+  //add Options to dropdown
+  //will be down with a for loop through list of subjects, but for now j adding samples
+  subjectDropdown2.append("option").html("");
+  for (i = 0; i < econData.length; i++) {
+    subjectDropdown2.append("option").html(econData[i].title);
+  }
+
+
+
 
   //create col/form for dates
   var dateCol = structure
@@ -241,7 +271,8 @@ var addgraphinput = function() {
 
 
 function updateDropdowns(r){
-  var title = d3.select("#subjectdropdown" + r).node().value;
+  var title1 = d3.select("#subject1dropdown" + r).node().value;
+  var title2 = d3.select("#subject2dropdown" + r).node().value;
   //get vals
   var year_start = d3.select("#startyeardropdown" + r);
   var year_end = d3.select("#endyeardropdown" + r);
@@ -255,33 +286,68 @@ function updateDropdowns(r){
 
   //get data index
   var i = 0;
-  var dataindex = 0;
+  var dataset1 = "";
+  var dataset2= "";
+  var dataindex1 = 0;
+  var dataindex2 = 0;
+
   for (i = 0; i < econData.length; i++) {
-    if (econData[i].title == title) {
-      dataset = econData[i].name;
-      dataindex = i;
+    if (econData[i].title == title1) {
+      dataset1 = econData[i].name;
+      dataindex1 = i
+    }
+    if (econData[i].title == title2) {
+      dataset2 = econData[i].name;
+      dataindex2 = i
     }
   }
 
   //get data from dataset
-  var realStartYear = parseInt(econData[dataindex].start_date.slice(0, 4));
-  var realStartMonth = parseInt(econData[dataindex].start_date.slice(5, 7));
+  var realStartYear = get_true_start_yea(dataset1, dataset2);
 
-  var realEndYear = parseInt(econData[dataindex].end_date.slice(0, 4));
-  var realEndMonth = parseInt(econData[dataindex].end_date.slice(5, 7));
-
-  var maxMonth = Math.max(realEndMonth, realStartMonth);
-
-
+  var realEndYear = get_true_end_yea(dataset1, dataset2);
   //add options
-  startyear.append("option").html("");
-  endyear.append("option").html("");
-  for (i = 0; i < realEndYear - realStartYear; i++) {
+  startyear.append("option").html(realStartYear);
+  endyear.append("option").html(realEndYear);
+  for (i = 1; i <= realEndYear - realStartYear; i++) {
     startyear.append("option").html("" + (realStartYear + i));
-    endyear.append("option").html("" + (realStartYear + i));
+    endyear.append("option").html("" + (realEndYear - i));
   }
 
+
+  renderGraph(r);
 }
+
+function get_true_start_yea(dataset, dataset_2) {
+  let year_start_1, year_start_2;
+  econData.forEach(function(graph) {
+    if (graph['name'] == dataset  ) year_start_1 = graph['start_date'].substring(0, 4);
+    if (graph['name'] == dataset_2) year_start_2 = graph['start_date'].substring(0, 4);
+  });
+
+  if (year_start_1 == null) year_start_1 = "0001";
+  if (year_start_2 == null) year_start_2 = "0001";
+
+  return Math.max(year_start_1, year_start_2);
+}
+
+
+
+function get_true_end_yea(dataset, dataset_2) {
+
+  let year_end_1, year_end_2;
+  econData.forEach(function(graph) {
+    if (graph['name'] == dataset  ) year_end_1 = graph['end_date'].substring(0, 4);
+    if (graph['name'] == dataset_2) year_end_2 = graph['end_date'].substring(0, 4);
+  });
+
+  if (year_end_1 == null) year_end_1 = "9999"
+  if (year_end_2 == null) year_end_2 = "9999"
+
+  return Math.min(year_end_1, year_end_2);
+}
+
+
 
 
 
@@ -292,17 +358,33 @@ function renderGraph(r) {
   }
 //  console.log(document.getElementById("graphcontainer" + r) == null);
 
-  var title = d3.select("#subjectdropdown" + r).node().value;
+
+//  console.log(r);
+  var title1 = d3.select("#subject1dropdown" + r).node().value;
+  var title2 = "";
+
+  if (d3.select("#subject2dropdown" + r).node().value != null){
+    title2 = d3.select("#subject2dropdown" + r).node().value;
+  }
+
   var year_start = d3.select("#startyeardropdown" + r).node().value;
   var year_end = d3.select("#endyeardropdown" + r).node().value;
 
-  var dataset = "";
+  var dataset1 = "";
+  var dataset2 = "";
+
   var i = 0;
-  var dataindex = 0;
+  var dataindex1 = 0;
+  var dataindex2 = 0;
+
   for (i = 0; i < econData.length; i++) {
-    if (econData[i].title == title) {
-      dataset = econData[i].name;
-      dataindex = i;
+    if (econData[i].title == title1) {
+      dataset1 = econData[i].name;
+      dataindex1 = i;
+    }
+    if (econData[i].title == title2) {
+      dataset2 = econData[i].name;
+      dataindex2 = i;
     }
   }
 
@@ -317,11 +399,11 @@ function renderGraph(r) {
     listitem.append('div').attr("id", "graphcontainer" + r).attr("class", "container mt-5 text-center")
     .append("h2")
       .attr("class", "pb-5")
-      .html(title + " From " + year_start + " To " + year_end)
+      .html(title1 + " and " + title2 + " From " + year_start + " To " + year_end)
       .attr("id", "title" + r);
   }
 
-  var intitle = d3.select("#title" + r).html(title + " From " + year_start + " To " + year_end);
+  var intitle = d3.select("#title" + r).html(title1 + " and " + title2 + " From " + year_start + " To " + year_end);
   var graphcontainer = d3.select("#graphcontainer" + r);
 
 //  graphcontainer.node().innerHTML += "<br><br>";
@@ -349,15 +431,17 @@ function renderGraph(r) {
   contentitem["type"] = "chart";
   contentitem["chart_start"] = year_start + "-01-01";
   contentitem["chart_end"] = year_end + "-01-01";
-  contentitem["chart_name"] = dataset;
+  contentitem["chart_name"] = dataset1;
+  contentitem["chart_name_2"] = dataset2;
+
 
 
   contentList[r - 1] = contentitem;
 
 
 
-  if (!(title == "" || year_start == "" || year_end == "")) {
-    draw_graph(svg, dataset, year_start, year_end, first_render, r);
+  if (!(title1 == "" || year_start == "" || year_end == "")) {
+    draw_graph(svg, dataset1,dataset2, year_start, year_end, first_render, r);
   }
   if (first_render) {
     //index += 1;
