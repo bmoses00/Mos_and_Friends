@@ -306,7 +306,7 @@ function updateDropdowns(r){
   //add options
   startyear.append("option").html(realStartYear);
   endyear.append("option").html(realEndYear);
-  for (i = 1; i < realEndYear - realStartYear; i++) {
+  for (i = 1; i <= realEndYear - realStartYear; i++) {
     startyear.append("option").html("" + (realStartYear + i));
     endyear.append("option").html("" + (realEndYear - i));
   }
