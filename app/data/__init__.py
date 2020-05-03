@@ -35,5 +35,17 @@ econ_data_info = [
         "name": "unemployment",
         "title": "Unemployment Rate",
         "units": "unknown"
-    }
+    },
+    {
+        "file_name": "exchange_us_eu.csv",
+        "name": "exchange_us_eu",
+        "title": "US-EU Exchange Rate",
+        "units": "unknown"
+    },
+    {
+        "file_name": "gdp.csv",
+        "name": "gdp",
+        "title": "US GDP",
+        "units": "unknown"
+    },
 ]

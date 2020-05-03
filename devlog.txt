@@ -90,6 +90,10 @@ Mos and Friends -- 2020-04-29 14:00
 William Cao -- 2020-04-29 17:41
   - Fixed bug of not redirecting to login when user tries to create an event when not logged in
 
+Brian Moses and Mohidul Abedin -- 2020-04-29 18:00
+  - added line graph animations for view_data and view_study
+  - added two more csv's
+
 Brian Moses -- 2020-04-30 19:00
   - added ability to select two graphs to view-data
 

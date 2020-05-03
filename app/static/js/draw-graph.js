@@ -1,8 +1,5 @@
 function draw_graph(element, dataset, dataset_2, year_start, year_end, first_render, r) {
 
-  // year_start = get_true_start_year(year_start, dataset, dataset_2);
-  // year_end   = get_true_end_year  (year_end  , dataset, dataset_2);
-
   const width = .8 * d3.select("#graph-container").node().getBoundingClientRect().width;
   const height = 300;
   const margin = 50;
@@ -50,14 +47,24 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
      .x(d => scaleX(d[date]))
      .y(d => scaleY(d[value]));
 
+
    // draws line graph
-   element.append("path")
+   let line_path = element.append("path")
      .data([data])
      .attr("id", "path" + r)
      .attr("fill", "none")
      .attr("stroke", "steelblue")
      .attr("stroke-width", 1.5)
      .attr("d", line);
+
+   let totalLength = line_path.node().getTotalLength();
+
+   line_path
+     .attr("stroke-dasharray", totalLength)
+     .attr("stroke-dashoffset", totalLength)
+     .transition()
+     .duration(2000)
+     .attr("stroke-dashoffset", 0);
 
    // x and y axes
    element.append("g")
