@@ -44,13 +44,13 @@ if (editable = false){
       var subject1Dropdown = d3.select("#subject1dropdown" + (i + 1)).node();
       var subject1DropdownOptions = subject1Dropdown.options;
 
-      console.log(study['content'][i]['chart_name'].replace(/_/g, " "));
+      //console.log(study['content'][i]['chart_name'].replace(/_/g, " "));
       var j;
       var subject1 = "";
 
       for (j = 0; j < econData.length; j++){
-        if (study['content'][i]['chart_name'] == econData[i]['name']){
-          subject1 = econData[i]['title'];
+        if (study['content'][i]['chart_name'] == econData[j]['name']){
+          subject1 = econData[j]['title'];
         }
       }
 
@@ -65,12 +65,14 @@ if (editable = false){
       var subject2Dropdown = d3.select("#subject2dropdown" + (i + 1)).node();
       var subject2DropdownOptions = subject2Dropdown.options;
 
+
     //  console.log(study['content'][i]['chart_name'].replace(/_/g, " "));
       var subject2 = "";
 
       for (j = 0; j < econData.length; j++){
-        if (study['content'][i]['chart_name'] == econData[i]['name']){
-          subject2 = econData[i]['title'];
+        if (study['content'][i]['chart_name_2'] == econData[j]['name']){
+          subject2 = econData[j]['title'];
+          console.log(subject2);
         }
       }
 
@@ -79,6 +81,8 @@ if (editable = false){
           subject2Dropdown.selectedIndex = subject2DropdownOptions[j].index;
         }
       }
+
+          console.log(subject2Dropdown);
 
 
       updateDropdowns(i + 1)
@@ -127,11 +131,11 @@ var updateStudy = function() {
 
   console.log(sendThis);
 
-  // fetch("/update-study" + id, {
-  //     method: "POST",
-  //     headers: {
-  //         'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(sendThis)
-  // }).then(() => location.reload());
+  fetch("/update-study/" + id, {
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sendThis)
+  }).then(() => location.reload());
 }
