@@ -74,13 +74,8 @@ def logout():
 
 @app.route("/home")
 def home():
-    return render_template("home.html")
-
-
-@app.route("/view-studies")
-def view_studies():
     case_studies = database_query.get_all_case_studies()
-    return render_template("view-studies.html", case_studies=case_studies)
+    return render_template("home.html", case_studies=case_studies)
 
 
 @app.route("/view-study/<string:id>")
