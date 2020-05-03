@@ -112,3 +112,30 @@ function add_unselected_option_to_other() {
       .attr("value", option_2_removed['value'])
   }
 }
+
+function get_true_start_year(dataset, dataset_2) {
+  let year_start_1, year_start_2;
+  econ_data.forEach(function(graph) {
+    if (graph['name'] == dataset  ) year_start_1 = graph['start_date'].substring(0, 4);
+    if (graph['name'] == dataset_2) year_start_2 = graph['start_date'].substring(0, 4);
+  });
+
+  if (year_start_1 == null) year_start_1 = "0001";
+  if (year_start_2 == null) year_start_2 = "0001";
+
+  return Math.max(year_start_1, year_start_2);
+}
+
+function get_true_end_year(dataset, dataset_2) {
+
+  let year_end_1, year_end_2;
+  econ_data.forEach(function(graph) {
+    if (graph['name'] == dataset  ) year_end_1 = graph['end_date'].substring(0, 4);
+    if (graph['name'] == dataset_2) year_end_2 = graph['end_date'].substring(0, 4);
+  });
+
+  if (year_end_1 == null) year_end_1 = "9999";
+  if (year_end_2 == null) year_end_2 = "9999";
+
+  return Math.min(year_end_1, year_end_2);                                                                          
+}

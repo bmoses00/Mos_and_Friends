@@ -1,13 +1,16 @@
-function draw_graph(element, dataset, dataset_2, year_start, year_end, first_render, r) {
+function draw_graph(element, dataset, dataset_2, year_start, year_end, first_render, r = "") {
 
   const width = .8 * d3.select("#graph-container").node().getBoundingClientRect().width;
   const height = 300;
   const margin = 50;
+  const parseYear = d3.timeParse("%Y");
   const parseTime = d3.timeParse("%Y-%m-%d");
-  const scaleX = d3.scaleTime().range([0, width - (margin * 2) - 10])
+  year_start = parseYear(year_start);
+  year_end = parseYear(year_end);
+  const scaleX = d3.scaleTime()
+                  .range([0, width - (margin * 2) - 10])
+                  .domain([year_start, year_end]);
   const scaleY = d3.scaleLinear().range([height - margin, 0]);
-
-  if (r == null) r = ""; // todo: use default parameter
 
   if (dataset != null) {
     d3.csv("../static/csv/" + dataset + ".csv").then(function(raw_data) {
@@ -17,7 +20,7 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
      const value = raw_data.columns[1];
 
      raw_data.forEach(function(d, index) {
-       const current_year = d[date].substring(0, 4)
+       const current_year = parseTime(d[date]);
        if (d[value] != "." && current_year >= year_start && current_year <= year_end ) {
 
          d[value] = +d[value];
@@ -32,8 +35,6 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
        d3.select("#x-label" + r).remove();
        d3.select("#y-label" + r).remove();
      }
-
-     scaleX.domain(d3.extent(data, function(d) { return d[date]; }));
 
      let domain_lower;
      let translate;
@@ -91,7 +92,7 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
      const value = raw_data.columns[1];
 
      raw_data.forEach(function(d, index) {
-       const current_year = d[date].substring(0, 4)
+       const current_year = parseTime(d[date]);
        if (d[value] != "." && current_year >= year_start && current_year <= year_end ) {
 
          d[value] = +d[value];
@@ -105,8 +106,6 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
        d3.select("#y-axis2" + r).remove();
        d3.select("#y-label2" + r).remove();
      }
-
-     scaleX.domain(d3.extent(data, function(d) { return d[date]; }));
 
      let domain_lower;
      let translate;
@@ -169,31 +168,4 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
    .attr("id", "x-label" + r)
    .style("text-anchor", "middle")
    .text("Year");
-}
-
-function get_true_start_year(dataset, dataset_2) {
-  let year_start_1, year_start_2;
-  econ_data.forEach(function(graph) {
-    if (graph['name'] == dataset  ) year_start_1 = graph['start_date'].substring(0, 4);
-    if (graph['name'] == dataset_2) year_start_2 = graph['start_date'].substring(0, 4);
-  });
-
-  if (year_start_1 == null) year_start_1 = "0001";
-  if (year_start_2 == null) year_start_2 = "0001";
-
-  return Math.max(year_start_1, year_start_2);
-}
-
-function get_true_end_year(dataset, dataset_2) {
-
-  let year_end_1, year_end_2;
-  econ_data.forEach(function(graph) {
-    if (graph['name'] == dataset  ) year_end_1 = graph['end_date'].substring(0, 4);
-    if (graph['name'] == dataset_2) year_end_2 = graph['end_date'].substring(0, 4);
-  });
-
-  if (year_end_1 == null) year_end_1 = "9999"
-  if (year_end_2 == null) year_end_2 = "9999"
-
-  return Math.min(year_end_1, year_end_2);
 }
