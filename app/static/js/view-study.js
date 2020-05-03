@@ -24,6 +24,6 @@ content.forEach(function(element) {
       console.log(element['chart_end'])
       console.log((element['chart_end'].substring(0, 4) - 1) + element['chart_start'].substring(4))
 
-      draw_graph(svg, element['chart_name'], element['chart_start'].substring(0, 4), element['chart_end'].substring(0, 4), true);
+      draw_graph(svg, element['chart_name'], element['chart_name_2'], element['chart_start'].substring(0, 4), element['chart_end'].substring(0, 4), true);
   }
 });
