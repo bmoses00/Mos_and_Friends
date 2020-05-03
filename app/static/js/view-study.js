@@ -125,16 +125,13 @@ var updateStudy = function() {
   sendThis["content"] = contentList;
   sendThis["description"] = d3.select("#description").node().value;
 
-   console.log(sendThis);
+  console.log(sendThis);
 
-  fetch("/update-study" + id, {
-      method: "POST",
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(sendThis)
-  }).then(res => res.json())
-    .then(data => {
-    window.location = "/" + data.redirect;
-    })
+  // fetch("/update-study" + id, {
+  //     method: "POST",
+  //     headers: {
+  //         'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(sendThis)
+  // }).then(() => location.reload());
 }
