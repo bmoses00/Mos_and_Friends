@@ -1,29 +1,120 @@
-const case_study = d3.select("#case_study_container")
 
-let width = .8 * d3.select("#graph-container").node().getBoundingClientRect().width;
-let height = 300;
-let margin = 50;
 
-content.forEach(function(element) {
-  const entry = case_study
-                  .append("li")
-                  .classed("list-group-item", true)
+if (editable = false){
+  const case_study = d3.select("#case_study_container")
 
-  if (element.type == "text") {
-    entry.html(element.text)
+  let width = .8 * d3.select("#graph-container").node().getBoundingClientRect().width;
+  let height = 300;
+  let margin = 50;
+
+  content.forEach(function(element) {
+    const entry = case_study
+                    .append("li")
+                    .classed("list-group-item", true)
+
+    if (element.type == "text") {
+      entry.html(element.text)
+    }
+
+    else {
+      const svg = entry
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(50, 0)");
+
+        console.log(element['chart_end'])
+        console.log((element['chart_end'].substring(0, 4) - 1) + element['chart_start'].substring(4))
+
+        draw_graph(svg, element['chart_name'], element['chart_start'].substring(0, 4), element['chart_end'].substring(0, 4), true);
+    }
+  });
+} else {
+  var i;
+  for (i = 0; i < study["content"].length; i++){
+    if (study["content"][i]['type'] == "text"){
+      addtextinput();
+      d3.select("#text" + (i + 1)).html(study["content"][i]["text"]);
+    } else {
+      console.log(study['content'][i])
+      addgraphinput();
+
+
+      var subjectDropdown = d3.select("#subjectdropdown" + (i + 1)).node();
+      var subjectDropdownOptions = subjectDropdown.options;
+
+      console.log(study['content'][i]['chart_name'].replace(/_/g, " "));
+      var j;
+      var subject = "";
+
+      for (j = 0; j < econData.length; j++){
+        if (study['content'][i]['chart_name'] == econData[i]['name']){
+          subject = econData[i]['title'];
+        }
+      }
+
+      for (j = 0; j < subjectDropdownOptions.length; j ++){
+        if (subjectDropdownOptions[j].value == subject){
+          subjectDropdown.selectedIndex = subjectDropdownOptions[j].index;
+        }
+      }
+
+        console.log(subjectDropdown);
+      updateDropdowns(i + 1)
+      // d3.select("#subjectdropdown" + (i + 1)).property('selected', study['content'][i]['chart_name'].replace(/_/g, " ")).node();
+      //d3.select("#subject2dropdown" + (i + 1)).attr("value", study['content'][i]['chart_name_2']);
+      var start_year_dropdown = d3.select("#startyeardropdown" + (i + 1)).node();
+      var start_year_options = start_year_dropdown.options;
+      var given_start_year = study['content'][i]['chart_start'].slice(0, 4);
+
+      for (j = 0; j < start_year_options.length; j ++){
+        if (start_year_options[j].value == given_start_year){
+          start_year_dropdown.selectedIndex = start_year_options[j].index;
+        }
+      }
+
+      var end_year_dropdown = d3.select("#endyeardropdown" + (i + 1)).node();
+      var end_year_options = end_year_dropdown.options;
+      var given_end_year = study['content'][i]['chart_end'].slice(0, 4);
+
+      for (j = 0; j < end_year_options.length; j ++){
+        if (end_year_options[j].value == given_end_year){
+          end_year_dropdown.selectedIndex = end_year_options[j].index;
+        }
+      }
+      renderGraph(i + 1);
+    }
   }
+}
 
-  else {
-    const svg = entry
-      .append("svg")
-      .attr("width", width)
-      .attr("height", height)
-      .append("g")
-      .attr("transform", "translate(50, 0)");
-
-      console.log(element['chart_end'])
-      console.log((element['chart_end'].substring(0, 4) - 1) + element['chart_start'].substring(4))
-
-      draw_graph(svg, element['chart_name'], element['chart_start'].substring(0, 4), element['chart_end'].substring(0, 4), true);
+var updateStudy = function() {
+  // console.log(contentList);
+  var i = 0;
+  for (i = 0; i < idlist.length; i++) {
+    if (idlist[i].charAt(0) == "t") {
+      var intext = d3.select("#" + idlist[i]).node().value;
+      var textitem = {
+                        "type" : "text",
+                        "text" : intext
+                      }
+      contentList[i]= textitem;
+    }
   }
-});
+  sendThis["title"] = d3.select("#bigTitle").node().value;
+  sendThis["content"] = contentList;
+  sendThis["description"] = d3.select("#description").node().value;
+
+   console.log(sendThis);
+
+  fetch("/update-study" + id, {
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sendThis)
+  }).then(res => res.json())
+    .then(data => {
+    window.location = "/" + data.redirect;
+    })
+}

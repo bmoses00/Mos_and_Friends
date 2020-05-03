@@ -2,26 +2,45 @@
 {% block title %} View Data {% endblock %}
 {% block body %}
 
+{% if session["username"] == case_study["username"] %}
 
 
-  <b> {{case_study['title']}},</b> by {{case_study['username']}} <br>
-  <ul id = "case_study_container" class = "list-group">
+  <ul id="masterlist" class="list-group list-group-flush">
+    <li class="list-group-item">
+      <div class="input-group mb-4">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Title:</span>
+        </div>
+        <input id="bigTitle" type="text" class="form-control" placeholder="Enter a Title" aria-label="Title" aria-describedby="basic-addon1" value="{{case_study['title']}}">
+      </div>
 
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> Write a Description: </span>
+        </div>
+        <textarea id = "description" class="form-control"> {{case_study['description']}} </textarea>
+      </div>
+
+    </li>
+    <li id="item1" class="list-group-item">
+      <button id="textbutton" onclick="addtextinput()" class="btn btn-secondary"> Add Text </button>
+      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+      <button id="graphbutton" onclick="addgraphinput()" class="btn btn-secondary"> Add Graph </button>
+    </li>
   </ul>
 
-  <a class="btn btn-secondary mt-3" onclick="deleteStudy('{{id}}')"> Delete This Study</a>
+  <a class="btn btn-secondary mt-3 mr-3" onclick="updateStudy()"> Update Study </a>
 
-  <script>
-    var content = {{case_study['content']|safe }};
-  </script>
+  <a class="btn btn-secondary mt-3 ml-3" onclick="deleteStudy('{{id}}')"> Delete This Study </a>
 
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-
-  <script src = "../static/js/draw-graph.js"> </script>
-  <script src = "../static/js/view-study.js"> </script>
 
 
   <script>
+    var id = "{{id}}";
+    var econData = {{ econ_data |safe }};
+    var editable = true;
+    var study = {{case_study|safe }};
+
     var deleteStudy = function(id) {
       fetch("/delete-study/" + id , {
             method: "DELETE"
@@ -31,5 +50,32 @@
         });
     }
   </script>
+
+  {% else %}
+
+  <b> {{case_study['title']}},</b> by {{case_study['username']}} <br>
+
+
+
+  <ul id = "case_study_container" class = "list-group">
+
+  </ul>
+
+  <script>
+    var editable = false;
+    var content = {{case_study['content']|safe }};
+  </script>
+
+{% endif %}
+
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src = "../static/js/create-study.js"> </script>
+
+  <script src = "../static/js/draw-graph.js"> </script>
+  <script src = "../static/js/view-study.js"> </script>
+
+
+
 
 {% endblock %}
