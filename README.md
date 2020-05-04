@@ -13,12 +13,12 @@ publish their case studies on the site for others to use.
 ## Launch instructions
 Open your terminal and type in the following commands sequentially:
 
-git clone git@github.com:bmoses00/Mos_and_Friends.git
-cd Mos_and_Friends
-python3 -m venv superhero
-. superhero/bin/activate
-pip install -r doc/requirements.txt
-python3 app/initialize.py
-python3 \__init\__.py
+*git clone git@github.com:bmoses00/Mos_and_Friends.git
+*cd Mos_and_Friends
+*python3 -m venv superhero
+*. superhero/bin/activate
+*pip install -r doc/requirements.txt
+*python3 app/initialize.py
+*python3 \__init\__.py
 
 Then, navigate to 127.0.0.1:5000 in a web browser. 
