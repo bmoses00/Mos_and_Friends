@@ -91,7 +91,7 @@ var addtextinput = function() {
   //create a button to delete
   deltCol
     .append("button")
-    .attr("class", "btn btn-secondary")
+    .attr("class", "btn btn-outline-danger")
     .html("Delete")
     .attr("id", "delete" + index)
     .attr("onclick", "deleteItem(" + index + ",'t')");
@@ -108,7 +108,7 @@ var addSelectInput = function(){
   //Create add text button
   var textbutton = document.createElement("button");
   textbutton.innerHTML = " Add Text ";
-  textbutton.className += "btn btn-secondary";
+  textbutton.className += "btn btn-outline-primary";
   textbutton.setAttribute("onclick", "addtextinput()");
   textbutton.id = "textbutton";
   //add add text button
@@ -117,7 +117,7 @@ var addSelectInput = function(){
   //Create add graph button
   var graphbutton = document.createElement("button");
   graphbutton.innerHTML = " Add Graph ";
-  graphbutton.className += "btn btn-secondary";
+  graphbutton.className += "btn btn-outline-primary";
   graphbutton.setAttribute("onclick", "addgraphinput()");
   graphbutton.id = "graphbutton";
   //add the button to the list
@@ -257,7 +257,7 @@ var addgraphinput = function() {
 
   d3.select(finalCol)
       .append("button")
-      .attr("class", "btn btn-secondary center-block")
+      .attr("class", "btn btn-outline-danger center-block")
       .html("Delete")
       .attr("id", "delete" + index)
       .attr("onclick", "deleteItem(" + index + ",'g')");
