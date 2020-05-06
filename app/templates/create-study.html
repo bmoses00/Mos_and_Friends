@@ -21,13 +21,13 @@
 
   </li>
   <li id="item1" class="list-group-item">
-    <button id="textbutton" onclick="addtextinput()" class="btn btn-secondary"> Add Text </button>
+    <button id="textbutton" onclick="addtextinput()" class="btn btn-primary btn-outline-primary"> Add Text </button>
     &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
-    <button id="graphbutton" onclick="addgraphinput()" class="btn btn-secondary"> Add Graph </button>
+    <button id="graphbutton" onclick="addgraphinput()" class="btn btn-primary btn-outline-primary"> Add Graph </button>
   </li>
 </ul>
 <br>
-<button id="finalizeStudy" onclick="finalizeStudy()" class="btn btn-secondary"> Finalize Study </button>
+<button id="finalizeStudy" onclick="finalizeStudy()" class="btn btn-success"> Finalize Study </button>
 <script>
   var econData = JSON.parse('{{ data_sets_json|safe }}');
 </script>
