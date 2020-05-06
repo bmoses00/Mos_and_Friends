@@ -1,6 +1,6 @@
 
 
-if (editable = false){
+if (editable == false){
   const case_study = d3.select("#case_study_container")
 
   let width = .8 * d3.select("#graph-container").node().getBoundingClientRect().width;
