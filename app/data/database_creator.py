@@ -90,6 +90,14 @@ def create_case_studies_collection():
             },
             ...
         ]
+        // this will only exist if there is at least 1 comment added
+        comments: [
+            {
+                username: string, // backend will fill out
+                comment: string, // frontend gives this
+            },
+            ...
+        ]
     }
     ...
     :return:

@@ -152,3 +152,16 @@ def update_case_study(id: str, title: str, username: str, description: str, cont
         "description": description,
         "content": content
     })
+
+
+def add_comment(id: str, comment: str, username: str):
+    """
+    Adds a comment to a case study
+    :param id:
+    :param comment:
+    :param username:
+    :return:
+    """
+    case_study_collection.find_one_and_update(
+        {"_id": ObjectId(id)},
+        {"$push": {"comments": {"comment": comment, "username": username}}})
