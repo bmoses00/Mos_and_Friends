@@ -65,7 +65,6 @@ if (editable == false){
       var subject2Dropdown = d3.select("#subject2dropdown" + (i + 1)).node();
       var subject2DropdownOptions = subject2Dropdown.options;
 
-
     //  console.log(study['content'][i]['chart_name'].replace(/_/g, " "));
       var subject2 = "";
 
