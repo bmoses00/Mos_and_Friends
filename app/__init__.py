@@ -186,6 +186,29 @@ def delete_study(id: str):
         return "No permission", 400
 
 
+@app.route("/add-comment/<string:id>", methods=["POST"])
+def add_comment(id: str):
+    """
+    Post request should send formatted as:
+    {
+        comment: string
+    }
+    :param id:
+    :return:
+    """
+    if "username" not in session:
+        print("Not logged in, can't comment")
+        return {"error": "Not logged in"}
+    if len(id) != 24:
+        print("invalid id")
+        return {"error": "Invalid id"}
+
+    comment = request.get_json()["comment"]
+    database_query.add_comment(id, comment, session["username"])
+
+    return {"success": "success"}
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
