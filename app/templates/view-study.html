@@ -5,75 +5,112 @@
 {% if session["username"] == case_study["username"] %}
 
 
-  <ul id="masterlist" class="list-group list-group-flush">
-    <li class="list-group-item">
-      <div class="input-group mb-4">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">Title:</span>
-        </div>
-        <input id="bigTitle" type="text" class="form-control" placeholder="Enter a Title" aria-label="Title" aria-describedby="basic-addon1" value="{{case_study['title']}}">
+<ul id="masterlist" class="list-group list-group-flush">
+  <li class="list-group-item">
+    <div class="input-group mb-4">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Title:</span>
       </div>
+      <input id="bigTitle" type="text" class="form-control" placeholder="Enter a Title" aria-label="Title" aria-describedby="basic-addon1" value="{{case_study['title']}}">
+    </div>
 
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text"> Write a Description: </span>
-        </div>
-        <textarea id = "description" class="form-control"> {{case_study['description']}} </textarea>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"> Write a Description: </span>
       </div>
+      <textarea id="description" class="form-control"> {{case_study['description']}} </textarea>
+    </div>
 
-    </li>
-    <li id="item1" class="list-group-item">
-      <button id="textbutton" onclick="addtextinput()" class="btn btn-outline-primary"> Add Text </button>
-      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
-      <button id="graphbutton" onclick="addgraphinput()" class="btn btn-outline-primary"> Add Graph </button>
-    </li>
-  </ul>
+  </li>
+  <li id="item1" class="list-group-item">
+    <button id="textbutton" onclick="addtextinput()" class="btn btn-outline-primary"> Add Text </button>
+    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+    <button id="graphbutton" onclick="addgraphinput()" class="btn btn-outline-primary"> Add Graph </button>
+  </li>
+</ul>
 
-  <a class="btn btn-success mt-3 mr-2 text-light" onclick="updateStudy()"> Update Study </a>
+<a class="btn btn-success mt-3 mr-2 text-light" onclick="updateStudy()"> Update Study </a>
 
-  <a class="btn btn-danger mt-3 ml-5 text-light" onclick="deleteStudy('{{id}}')"> Delete This Study </a>
-
-
-
-  <script>
-    var id = "{{id}}";
-    var econData = {{ econ_data |safe }};
-    var editable = true;
-    var study = {{case_study|safe }};
-
-    var deleteStudy = function(id) {
-      fetch("/delete-study/" + id , {
-            method: "DELETE"
-          })
-        .then(() => {
-          window.location = "/view-studies";
-        });
-    }
-  </script>
-
-  {% else %}
-
-  <b> {{case_study['title']}},</b> by {{case_study['username']}} <br>
+<a class="btn btn-danger mt-3 ml-5 text-light" onclick="deleteStudy('{{id}}')"> Delete This Study </a>
 
 
 
-  <ul id = "case_study_container" class = "list-group">
+<script>
+  var id = "{{id}}";
+  var econData = {{econ_data | safe}};
+  var editable = true;
+  var study = {{case_study | safe}};
 
-  </ul>
+  var deleteStudy = function(id) {
+    fetch("/delete-study/" + id, {
+        method: "DELETE"
+      })
+      .then(() => {
+        window.location = "/view-studies";
+      });
+  }
+</script>
 
-  <script>
-    var editable = false;
-    var content = {{case_study['content']|safe }};
-  </script>
+{% else %}
+
+<b> {{case_study['title']}},</b> by {{case_study['username']}} <br>
+
+
+
+<ul id="case_study_container" class="list-group">
+
+</ul>
+
+<script>
+  var editable = false;
+  var content = {{case_study['content'] | safe}};
+  var id = "{{id}}";
+
+</script>
 
 {% endif %}
 
 
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <script src = "../static/js/create-study.js"> </script>
 
-  <script src = "../static/js/draw-graph.js"> </script>
-  <script src = "../static/js/view-study.js"> </script>
+
+<div class="list-group mt-5" id="comments">
+  <div class="list-item border-top border-bottom border-dark pt-3 pb-3">
+    <div class="row">
+      <div class="col-1">
+        <p> Add A Comment! </p>
+      </div>
+      <div class="col-9">
+        <textarea class="form-control" id="userComment" rows="1"></textarea>
+      </div>
+      <div class="col-2">
+        <button class="btn btn-outline-success" onclick="addComment()"> Add Comment </button>
+      </div>
+    </div>
+  </div>
+  {% if 'comments' in case_study %}
+  {% for comment in case_study['comments'] %}
+  <div class="list-item pt-3 pb-3 border-bottom border-dark">
+    <div class="row">
+      <div class="col-2 text-center">
+        <div class="input-group-prepend">
+          <div class="input-group-text text-primary">{{comment['username']}}</div>
+        </div>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="text" placeholder="{{comment['comment']}}" readonly>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="../static/js/create-study.js"> </script>
+
+<script src="../static/js/draw-graph.js"> </script>
+<script src="../static/js/view-study.js"> </script>
 
 
 

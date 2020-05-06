@@ -1,7 +1,7 @@
 
 
 if (editable == false){
-  const case_study = d3.select("#case_study_container")
+  const case_study = d3.select("#case_study_container");
 
   let width = .8 * d3.select("#graph-container").node().getBoundingClientRect().width;
   let height = 300;
@@ -27,7 +27,7 @@ if (editable == false){
         console.log(element['chart_end'])
         console.log((element['chart_end'].substring(0, 4) - 1) + element['chart_start'].substring(4))
 
-        draw_graph(svg, element['chart_name'], element['chart_start'].substring(0, 4), element['chart_end'].substring(0, 4), true);
+        draw_graph(svg, element['chart_name'], element['chart_name_2'], element['chart_start'].substring(0, 4), element['chart_end'].substring(0, 4), true);
     }
   });
 } else {
@@ -136,5 +136,17 @@ var updateStudy = function() {
           'Content-Type': 'application/json'
       },
       body: JSON.stringify(sendThis)
+  }).then(() => location.reload());
+}
+
+var addComment = function(){
+  var text = d3.select("#userComment").node().value;
+  var tosend = {"comment" : text};
+  fetch("/add-comment/" + id, {
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(tosend)
   }).then(() => location.reload());
 }
