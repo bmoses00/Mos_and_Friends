@@ -147,10 +147,13 @@ def update_case_study(id: str, title: str, username: str, description: str, cont
     case_study_collection.update({
         "_id": ObjectId(id)
     }, {
-        "title": title,
-        "username": username,
-        "description": description,
-        "content": content
+        # don't want to delete comments, so use run set
+        "$set": {
+            "title": title,
+            "username": username,
+            "description": description,
+            "content": content
+        }
     })
 
 
