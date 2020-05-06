@@ -432,6 +432,8 @@ function renderGraph(r) {
   contentitem["chart_start"] = year_start + "-01-01";
   contentitem["chart_end"] = year_end + "-01-01";
   contentitem["chart_name"] = dataset1;
+  contentitem["chart_start_2"] = year_start + "-01-01";
+  contentitem["chart_end_2"] = year_end + "-01-01";
   contentitem["chart_name_2"] = dataset2;
 
 
@@ -441,7 +443,7 @@ function renderGraph(r) {
 
 
   if (!(title1 == "" || year_start == "" || year_end == "")) {
-    draw_graph(svg, dataset1,dataset2, year_start, year_end, first_render, r);
+    draw_graph(svg, dataset1, dataset2, year_start, year_end, first_render, r);
   }
   if (first_render) {
     //index += 1;

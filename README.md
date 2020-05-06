@@ -10,4 +10,14 @@ Finally, we will allow users to create their own case studies by combining
 graphs of their choice with their own analysis. They will then be able to
 publish their case studies on the site for others to use.
 
-Note: Run __init__.py and initialize.py from root
+## Launch instructions
+Open your terminal and type in the following commands sequentially:
+
+* git clone git@github.com:bmoses00/Mos_and_Friends.git
+* cd Mos_and_Friends
+* python3 -m venv superhero
+* . superhero/bin/activate
+* pip install -r requirements.txt
+* make
+
+Then, navigate to 127.0.0.1:5000 in a web browser. 

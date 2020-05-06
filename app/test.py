@@ -241,7 +241,77 @@ class Test(unittest.TestCase):
             _, context = templates[0]
             self.assertDictEqual(context["case_study"], case_study, "returned case study has unexpected values")
 
+    def test_comments(self):
+        creator_username = "user"
+        password = "pass"
+        self.create_account(creator_username, password)
+        self.login(creator_username, password)
+        case_study = {
+            "title": "this is the title with comment",
+            "description": "this is the description with comment",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "some text"
+                },
+                {
+                    "type": "chart",
+                    "chart_start": "2019-01-01",
+                    "chart_end": "2020-01-01",
+                    "chart_name": "inflation"
+                }
+            ]
+        }
+        response = self.app.post("/create-study", json=case_study, follow_redirects=True)
+        redirect_to = json.loads(response.get_data(as_text=True))['redirect']
+        case_id = redirect_to.replace("view-study/", "")
+        # username will be added by flask
+        case_study["username"] = creator_username
+        self.logout()
+
+        username1 = "commenter1"
+        self.create_account(username1, password)
+        self.login(username1, password)
+        comment1 = {"comment": "very cool case study, 10/10"}
+        self.app.post("add-comment/" + case_id, json=comment1, follow_redirects=True)
+        self.logout()
+
+        username2 = "commenter2"
+        self.create_account(username2, password)
+        self.login(username2, password)
+        comment2 = {"comment": "bad case study, 3/10"}
+        self.app.post("add-comment/" + case_id, json=comment2, follow_redirects=True)
+        self.logout()
+
+        # comments should look like this:
+        comment1["username"] = username1
+        comment2["username"] = username2
+        comments = [comment1, comment2]
+        case_study["comments"] = comments
+
+        # test if we stored and retrieve all comments
+        with captured_templates(app) as templates:
+            self.app.get("/" + redirect_to)
+            _, context = templates[0]
+            self.assertDictEqual(context["case_study"], case_study)
+
+        # update the case study to make sure we didn't delete the comments
+        self.login(creator_username, password)
+        # temporarily remove comments and username since the client won't have this info when updating
+        del case_study["username"]
+        del case_study["comments"]
+        case_study["title"] = "updated title with comments"
+        self.app.post("/update-study/" + case_id, json=case_study, follow_redirects=True)
+        # add the username and comments back
+        case_study["username"] = creator_username
+        case_study["comments"] = comments
+
+        with captured_templates(app) as templates:
+            self.app.get("/" + redirect_to)
+            _, context = templates[0]
+            self.assertDictEqual(context["case_study"], case_study)
 
 
 if __name__ == "__main__":
     unittest.main()
+    database_creator.recreate_database()

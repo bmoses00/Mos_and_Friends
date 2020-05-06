@@ -3,6 +3,9 @@ let height = d3.select("#graph-container").node().getBoundingClientRect().height
 
 let first_render = true;
 
+let option_removed = {'text': null, 'value': null};
+let option_2_removed = {'text': null, 'value': null};
+
 const selector   = d3.select("#graph_selector"  )
 const selector_2 = d3.select("#graph_selector_2")
 
@@ -32,6 +35,11 @@ function plot_graph() {
     if (graph['name'] == selector_2.node().value) graph_selected_2 = graph;
   });
 
+  // re-add unselected option
+  add_unselected_option_to_other();
+  // removes option selected by one selector from the other selector
+  remove_selected_from_other();
+
   if (graph_selected == null) graph_selected = {'name' : null};
   if (graph_selected_2 == null) graph_selected_2 = {'name' : null};
 
@@ -44,17 +52,16 @@ function plot_graph() {
     year_start_selector
       .append("option")
       .attr("value", i)
-      .html(i)
+      .html(i);
     year_end_selector
       .append("option")
       .attr("value", i)
-      .html(i)
-  }
-  year_end_selector.node().selectedIndex = year_end_selector.node().options.length-1;
+      .html(i);
+  }year_end_selector.node().selectedIndex = year_end_selector.node().options.length-1;
 
   draw_graph(svg, selector.node().value, selector_2.node().value,
-              d3.select("#year_start").node().value,
-              d3.select("#year_end").node().value, first_render);
+             d3.select("#year_start").node().value,
+             d3.select("#year_end").node().value, first_render);
   first_render = false;
 }
 
@@ -70,3 +77,65 @@ selector.on('change', plot_graph);
 selector_2.on('change', plot_graph);
 year_start_selector.on('change', change_year);
 year_end_selector.on('change', change_year);
+
+function remove_selected_from_other() {
+  let options = selector.node().children;
+  let options_2 = selector_2.node().children;
+
+  if (selector.node().value != "none") {
+    for (let i = 0; i < options_2.length; i++) {
+      if (options_2[i].value == selector.node().value) {
+        option_2_removed['text'] = options_2[i].innerHTML;
+        option_2_removed['value'] = options_2[i].value;
+        options_2[i].remove();
+      }}}
+
+  if (selector_2.node().value != "none") {
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].value == selector_2.node().value) {
+        option_removed['text'] = options[i].innerHTML;
+        option_removed['value'] = options[i].value;
+        options[i].remove();
+      }}}
+}
+
+function add_unselected_option_to_other() {
+  if (option_removed['text'] != null) {
+    selector.append("option")
+      .html(option_removed['text'])
+      .attr("value", option_removed['value'])
+  }
+
+  if (option_2_removed['text'] != null) {
+    selector_2.append("option")
+      .html(option_2_removed['text'])
+      .attr("value", option_2_removed['value'])
+  }
+}
+
+function get_true_start_year(dataset, dataset_2) {
+  let year_start_1, year_start_2;
+  econ_data.forEach(function(graph) {
+    if (graph['name'] == dataset  ) year_start_1 = graph['start_date'].substring(0, 4);
+    if (graph['name'] == dataset_2) year_start_2 = graph['start_date'].substring(0, 4);
+  });
+
+  if (year_start_1 == null) year_start_1 = "0001";
+  if (year_start_2 == null) year_start_2 = "0001";
+
+  return Math.max(year_start_1, year_start_2);
+}
+
+function get_true_end_year(dataset, dataset_2) {
+
+  let year_end_1, year_end_2;
+  econ_data.forEach(function(graph) {
+    if (graph['name'] == dataset  ) year_end_1 = graph['end_date'].substring(0, 4);
+    if (graph['name'] == dataset_2) year_end_2 = graph['end_date'].substring(0, 4);
+  });
+
+  if (year_end_1 == null) year_end_1 = "9999";
+  if (year_end_2 == null) year_end_2 = "9999";
+
+  return Math.min(year_end_1, year_end_2);                                                                          
+}

@@ -102,3 +102,13 @@ William Cao -- 2020-05-01 15:12
 
 William Cao -- 2020-05-03 14:22
   - Backend: remove /view-studies. We are combining /home and /view-studies. Updated design doc.
+
+Brian Moses -- 2020-05-03 13:00
+  - if you select one dataset with one selector, that dataset is removed from the other selector
+  - both graphs are animated
+
+William Cao -- 2020-05-06 15:03
+  - Can add comments to case study in backend using /add-comment/<id> route. Updated design doc.
+  - Fixed bug of updating document in mongo replacing entire document rather than updating select fields (this would've
+  deleted comments on update
+

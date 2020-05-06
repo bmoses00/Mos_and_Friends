@@ -88,7 +88,8 @@ def view_study(id: str):
     if case_study is None:
         flash("Case study does not exist", "danger")
         return redirect(url_for("view_studies"))
-    return render_template("view-study.html", case_study=case_study, id = id)
+    econ_data = database_query.get_all_econ_data_basic_info()
+    return render_template("view-study.html", case_study=case_study, id = id, econ_data = econ_data)
 
 
 @app.route("/create-study", methods=["GET", "POST"])
@@ -178,6 +179,29 @@ def delete_study(id: str):
         return "", 200
     else:
         return "No permission", 400
+
+
+@app.route("/add-comment/<string:id>", methods=["POST"])
+def add_comment(id: str):
+    """
+    Post request should send formatted as:
+    {
+        comment: string
+    }
+    :param id:
+    :return:
+    """
+    if "username" not in session:
+        print("Not logged in, can't comment")
+        return {"error": "Not logged in"}
+    if len(id) != 24:
+        print("invalid id")
+        return {"error": "Invalid id"}
+
+    comment = request.get_json()["comment"]
+    database_query.add_comment(id, comment, session["username"])
+
+    return {"success": "success"}
 
 
 if __name__ == "__main__":
