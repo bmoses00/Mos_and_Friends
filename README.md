@@ -18,7 +18,6 @@ Open your terminal and type in the following commands sequentially:
 * python3 -m venv superhero
 * . superhero/bin/activate
 * pip install -r requirements.txt
-* python3 app/initialize.py
-* python3 app/\__init\__.py
+* make
 
 Then, navigate to 127.0.0.1:5000 in a web browser. 
