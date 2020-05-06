@@ -17,7 +17,7 @@ Open your terminal and type in the following commands sequentially:
 * cd Mos_and_Friends
 * python3 -m venv superhero
 * . superhero/bin/activate
-* pip install -r doc/requirements.txt
+* pip install -r requirements.txt
 * python3 app/initialize.py
 * python3 app/\__init\__.py
 
