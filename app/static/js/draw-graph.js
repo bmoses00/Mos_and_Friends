@@ -8,7 +8,7 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
   year_start = parseYear(year_start);
   year_end = parseYear(year_end);
   const scaleX = d3.scaleTime()
-                  .range([0, width - (margin * 2) - 10])
+                  .range([0, width - (margin * 2) - 20])
                   .domain([year_start, year_end]);
   const scaleY = d3.scaleLinear().range([height - margin, 0]);
 
@@ -75,7 +75,7 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
      element.append("text")
         .attr("transform", "rotate(-90)")
         .attr("id", "y-label" + r)
-        .attr("y", 0 - margin)
+        .attr("y", 0 - margin - 15)
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .attr("fill", "steelblue")

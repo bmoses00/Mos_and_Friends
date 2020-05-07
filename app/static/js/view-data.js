@@ -17,7 +17,7 @@ svg = d3.select("#graph")
   .attr("height", height)
   .append("g")
     .attr("id", "group")
-    .attr("transform", "translate(50, 0)");
+    .attr("transform", "translate(75, 0)");
 
 function plot_graph() {
   // if (selector.node().value == "none") {
@@ -137,5 +137,5 @@ function get_true_end_year(dataset, dataset_2) {
   if (year_end_1 == null) year_end_1 = "9999";
   if (year_end_2 == null) year_end_2 = "9999";
 
-  return Math.min(year_end_1, year_end_2);                                                                          
+  return Math.min(year_end_1, year_end_2);
 }
