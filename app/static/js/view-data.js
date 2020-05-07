@@ -16,6 +16,7 @@ svg = d3.select("#graph")
     .attr("transform", "translate(75, 0)");
 
 function plot_graph() {
+  console.log(option_removed, option_2_removed);
   add_unselected_option_to_other();
   remove_selected_from_other();
 
@@ -41,16 +42,12 @@ function plot_graph() {
 
   year_start_selector.selectAll("*").remove()
   year_end_selector.selectAll("*").remove()
+
   for (let i = year_start; i <= year_end; i++) {
-    year_start_selector
-      .append("option")
-      .attr("value", i)
-      .html(i);
-    year_end_selector
-      .append("option")
-      .attr("value", i)
-      .html(i);
-  }year_end_selector.node().selectedIndex = year_end_selector.node().options.length-1;
+    year_start_selector.append("option").attr("value", i).html(i);
+    year_end_selector.append("option").attr("value", i).html(i);
+  }
+  year_end_selector.node().selectedIndex = year_end_selector.node().options.length-1;
 
   draw_graph(svg,
     selector.node().value, selector_2.node().value,
@@ -100,6 +97,8 @@ function add_unselected_option_to_other() {
       .html(option_2_removed['text'])
       .attr("value", option_2_removed['value'])
   }
+  option_removed =   {'text': null, 'value': null};
+  option_2_removed = {'text': null, 'value': null};
 }
 
 function get_true_start_year(dataset, dataset_2) {
