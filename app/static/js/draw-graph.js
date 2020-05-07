@@ -1,16 +1,26 @@
-function draw_graph(element, dataset, dataset_2, year_start, year_end, first_render, r = "") {
+function draw_graph(element, dataset, dataset_2, year_start, year_end, first_render,r = "") {
 
   const width = .8 * d3.select("#graph-container").node().getBoundingClientRect().width;
   const height = 300;
-  const margin = 50;
+  const margin = 75;
   const parseYear = d3.timeParse("%Y");
   const parseTime = d3.timeParse("%Y-%m-%d");
   year_start = parseYear(year_start);
   year_end = parseYear(year_end);
   const scaleX = d3.scaleTime()
-                  .range([0, width - (margin * 2) - 20])
+                  .range([0, width - (margin * 2)])
                   .domain([year_start, year_end]);
   const scaleY = d3.scaleLinear().range([height - margin, 0]);
+
+  d3.select("#path" + r).remove();
+  d3.select("#path2" + r).remove();
+  d3.select("#y-axis" + r).remove();
+  d3.select("#y-axis2" + r).remove();
+  d3.select("#y-label" + r).remove();
+  d3.select("#y-label2" + r).remove();
+
+  d3.select("#x-axis" + r).remove();
+  d3.select("#x-label" + r).remove();
 
   if (dataset != 'none') {
     d3.csv("../static/csv/" + dataset + ".csv").then(function(raw_data) {
@@ -28,12 +38,6 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
          data.push(d);
        }
      });
-     if (!first_render) {
-       d3.select("#path" + r).remove();
-       d3.select("#y-axis" + r).remove();
-       d3.select("#x-label" + r).remove();
-       d3.select("#y-label" + r).remove();
-     }
 
      let domain_lower;
      let translate;
@@ -74,7 +78,7 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
      element.append("text")
         .attr("transform", "rotate(-90)")
         .attr("id", "y-label" + r)
-        .attr("y", 0 - margin - 15)
+        .attr("y", 0 - margin)
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .attr("fill", "steelblue")
@@ -99,12 +103,6 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
          data.push(d);
        }
      });
-     if (!first_render) {
-       d3.select("#path2" + r).remove();
-       d3.select("#y-axis2" + r).remove();
-       d3.select("#y-label2" + r).remove();
-     }
-
      let domain_lower;
      let translate;
      if (d3.min(data, function(d) { return d[value]; }) < 0)
@@ -140,8 +138,8 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
      element.append("text")
         .attr("transform", "rotate(-90)")
         .attr("id", "y-label2" + r)
-        .attr("y", width - (2 * margin) + 20)
-        .attr("x", -(height / 2))
+        .attr("y", width - margin - 20)
+        .attr("x", - (height / 2))
         .attr("dy", "1em")
         .attr("fill", "red")
         .style("text-anchor", "middle")
@@ -149,13 +147,10 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
 
      element.append("g")
        .attr("id", "y-axis2" + r)
-       .attr('transform', 'translate(' + (width - (2 * margin) - 10)+ ',0)')
+       .attr('transform', 'translate(' + (width - (2 * margin))+ ',0)')
        .call(d3.axisRight(scaleY));
    });
  }
-
- d3.select("#x-axis" + r).remove();
- d3.select("#x-label" + r).remove();
 
  element.append("g")
    .attr("id", "x-axis" + r)
