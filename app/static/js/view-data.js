@@ -20,14 +20,15 @@ svg = d3.select("#graph")
     .attr("transform", "translate(75, 0)");
 
 function plot_graph() {
-  // if (selector.node().value == "none") {
-  //   d3.select("path").selectAll("*").remove();
-  //   return;
-  // }
-  // if (selector_2.node().value == "none") {
-  //   d3.select("path2").selectAll("*").remove();
-  //   return;
-  // }
+  if (selector.node().value == "none") d3.select("#path").remove();
+  if (selector_2.node().value == "none") d3.select("#path2").remove();
+
+  if (selector.node().value == "none" && selector_2.node().value == "none") {
+    d3.select("#group").selectAll("*").remove();
+    year_start_selector.selectAll("*").remove()
+    year_end_selector.selectAll("*").remove()
+    return;
+  }
 
   let graph_selected, graph_selected_2;
   econ_data.forEach(function(graph) {
