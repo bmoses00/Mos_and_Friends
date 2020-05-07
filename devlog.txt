@@ -97,8 +97,16 @@ Brian Moses and Mohidul Abedin -- 2020-04-29 18:00
 Brian Moses -- 2020-04-30 19:00
   - added ability to select two graphs to view-data
 
+Alex Thompson -- 2020-04-30 13:55
+  - added ability to display two datasets on one graph in create-study
+
 William Cao -- 2020-05-01 15:12
   - Made route to update case study fields. Updated design doc for what needs to be passed in POST request.
+
+
+Alex Thompson -- 2020-05-02 14:30
+  - added ability to update case studies on frontend
+
 
 William Cao -- 2020-05-03 14:22
   - Backend: remove /view-studies. We are combining /home and /view-studies. Updated design doc.
@@ -112,3 +120,7 @@ William Cao -- 2020-05-06 15:03
   - Fixed bug of updating document in mongo replacing entire document rather than updating select fields (this would've
   deleted comments on update
 
+Alex Thompson -- 2020-05-01 14:30
+  - added frontend for commenting on case studies
+  - updated navbar to make it always visible in base.html
+  - made things more aesthetically pleasing (added colors to buttons etc)
