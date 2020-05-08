@@ -281,6 +281,11 @@ var addgraphinput = function() {
 function updateDropdowns(r){
   var title1 = d3.select("#subject1dropdown" + r).node().value;
   var title2 = d3.select("#subject2dropdown" + r).node().value;
+
+  if (title1 == "" && title2 != ""){
+    title1 = title2;
+    title2 = "";
+  }
   //get vals
   var year_start = d3.select("#startyeardropdown" + r);
   var year_end = d3.select("#endyeardropdown" + r);
@@ -375,6 +380,11 @@ function renderGraph(r) {
     title2 = d3.select("#subject2dropdown" + r).node().value;
   }
 
+  if (title1 == "" && title2 != ""){
+    title1 = title2;
+    title2 = "";
+  }
+
   var year_start = d3.select("#startyeardropdown" + r).node().value;
   var year_end = d3.select("#endyeardropdown" + r).node().value;
 
@@ -398,6 +408,15 @@ function renderGraph(r) {
 
   var listitem = d3.select(d3.selectAll("li").nodes()[r]);
 
+
+  var textForTitle = "";
+
+  if (title2 == ""){
+    textForTitle = title1 + " From " + year_start + " To " + year_end;
+  } else {
+    textForTitle = title1 + " and " + title2 + " From " + year_start + " To " + year_end;
+  }
+
   if (first_render) {
   //  listitem.append("div").attr("class", "container pt-4 center-block").attr("style", "margin-left: 0px;")
     // .append("h2")
@@ -407,11 +426,11 @@ function renderGraph(r) {
     listitem.append('div').attr("id", "graphcontainer" + r).attr("class", "container mt-5 text-center")
     .append("h2")
       .attr("class", "pb-5")
-      .html(title1 + " and " + title2 + " From " + year_start + " To " + year_end)
+      .html(textForTitle)
       .attr("id", "title" + r);
   }
 
-  var intitle = d3.select("#title" + r).html(title1 + " and " + title2 + " From " + year_start + " To " + year_end);
+  var intitle = d3.select("#title" + r).html(textForTitle);
   var graphcontainer = d3.select("#graphcontainer" + r);
 
 //  graphcontainer.node().innerHTML += "<br><br>";

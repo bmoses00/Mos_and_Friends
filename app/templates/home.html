@@ -7,7 +7,7 @@
   <p> Hello, {{session['username']}}!</p>
 <hr>
 
-<b> Your cases </b> <br>
+<b> Your cases </b> <br> <br>
 
 {% for case in case_studies %}
 {% if session['username'] == case['username'] %}
