@@ -17,7 +17,7 @@ Open your terminal and type in the following commands sequentially:
 * cd Mos_and_Friends
 * python3 -m venv superhero
 * . superhero/bin/activate
-* pip install -r requirements.txt
+* pip3 install -r requirements.txt
 * make
 
 Then, navigate to 127.0.0.1:5000 in a web browser. 
