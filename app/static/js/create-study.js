@@ -74,8 +74,10 @@ var addtextinput = function() {
   var actualinput = document.createElement("textarea");
   actualinput.className += "form-control";
   actualinput.id = "text" + index;
+  d3.select(actualinput).attr("oninput", 'auto_grow(this)');
   idlist.push("text" + index);
   text.appendChild(actualinput);
+  console.log(actualinput);
   //create the new list item to be added to the page
   var listItem = d3.select("#masterlist").append("li").attr("class", "list-group-item");
 
@@ -484,4 +486,9 @@ var finalizeStudy = function() {
     .then(data => {
     window.location = "/" + data.redirect;
     })
+}
+
+function auto_grow(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight)+"px";
 }

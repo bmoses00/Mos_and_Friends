@@ -1,5 +1,3 @@
-
-
 if (editable == false){
   const case_study = d3.select("#case_study_container");
 
@@ -24,13 +22,11 @@ if (editable == false){
         .append("g")
         .attr("transform", "translate(50, 0)");
 
-        console.log(element['chart_end'])
-        console.log((element['chart_end'].substring(0, 4) - 1) + element['chart_start'].substring(4))
-
         draw_graph(svg, element['chart_name'], element['chart_name_2'], element['chart_start'].substring(0, 4), element['chart_end'].substring(0, 4), true);
     }
   });
-} else {
+}
+else {
   var i;
   for (i = 0; i < study["content"].length; i++){
     if (study["content"][i]['type'] == "text"){
