@@ -126,5 +126,4 @@ Alex Thompson -- 2020-05-06 15:30
   - made things more aesthetically pleasing (added colors to buttons etc)
 
 William Cao -- 2020-05-07 22:20
-  - Wrote a sample case study that will always be available. Will ask Ms. Schweitzer to look at.
-  Brian helped me review this.
+  - Wrote a sample case study that will always be available.
