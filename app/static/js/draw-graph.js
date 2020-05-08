@@ -22,6 +22,16 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
   d3.select("#x-axis" + r).remove();
   d3.select("#x-label" + r).remove();
 
+  d3.select("#path" + r).remove();
+  d3.select("#path2" + r).remove();
+  d3.select("#y-axis" + r).remove();
+  d3.select("#y-axis2" + r).remove();
+  d3.select("#y-label" + r).remove();
+  d3.select("#y-label2" + r).remove();
+
+  d3.select("#x-axis" + r).remove();
+  d3.select("#x-label" + r).remove();
+
   if (dataset != 'none') {
     d3.csv("../static/csv/" + dataset + ".csv").then(function(raw_data) {
      data = []
