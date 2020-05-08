@@ -4,10 +4,11 @@
 
 
 {% if 'username' in session %}
-  <p> Hello, {{session['username']}}!</p>
+<p> Hello, {{session['username']}}!</p>
 <hr>
 
 <b> Your cases </b> <br> <br>
+
 
 {% for case in case_studies %}
 {% if session['username'] == case['username'] %}
@@ -15,34 +16,51 @@
   <div class="col-2">
   </div>
   <div class="col-8">
-    <a href="/view-study/{{case['_id']}}"> {{case['title']}} </a> <br>
-    {{case['description']}}<br>
+    <div class="card mb-3">
+      <a class="card-header" href="/view-study/{{case['_id']}}" style="font-size:20px"> {{case['title']}} </a> <br>
+      <p class="mb-2 card-text">{{case['description']}} </p>
+      <br>
+      <br>
+    </div>
   </div>
   <div class="col-2">
     <a class="btn btn-danger text-light" onclick="deleteStudy('{{case['_id']}}')"> Delete This Study </a>
   </div>
 </div>
+
+{% endif %}
+{% endfor %}
+
+
+{% endif %}
 <hr>
-{% endif %}
-{% endfor %} <br>
 
-{% endif %}
-
-<b> Public cases </b> <br>
+<b> Public cases </b> <br> <br>
 {% for case in case_studies %}
 {% if session['username'] != case['username'] %}
-<a href="/view-study/{{case['_id']}}"> {{case['title']}} </a> <br>
-{{case['description']}}<br>
-<hr>
+<div class="row">
+  <div class="col-2">
+  </div>
+  <div class="col-8">
+    <div class="card mb-3">
+      <a class="card-header" href="/view-study/{{case['_id']}}" style="font-size:20px"> {{case['title']}} </a> <br>
+      <p class="mb-2 card-text" style="font-size: 16px">{{case['description']}} </p>
+      <br>
+      <br>
+    </div>
+  </div>
+  <div class="col-2">
+  </div>
+</div>
 {% endif %}
 
 {% endfor %}
 
 <script>
   var deleteStudy = function(id) {
-    fetch("/delete-study/" + id , {
-          method: "DELETE"
-        })
+    fetch("/delete-study/" + id, {
+        method: "DELETE"
+      })
       .then(() => {
         window.location = "/home";
       });

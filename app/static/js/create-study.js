@@ -4,6 +4,8 @@ var contentList = [];
 var idlist = [];
 var sendThis = {};
 
+var errorFlashed = false;
+
 var first_render = true;
 
 
@@ -18,7 +20,7 @@ var deleteItem = function(r, type) {
 
   d3.selectAll("li")
     .each(function(d, i) {
-      if (i == r){
+      if (i == r) {
         this.remove();
       }
     });
@@ -31,11 +33,11 @@ var deleteItem = function(r, type) {
   contentList.splice(r - 1, 1);
   idlist.splice(r - 1, 1);
   var i = r + 1;
-  for (i; i < idlist.length + 2; i++){
+  for (i; i < idlist.length + 2; i++) {
     d3.select("#delete" + i)
       .attr("onclick", "deleteItem(" + (parseInt(d3.select("#delete" + i).node().id[6]) - offset) + "," + ("'" + idlist[i - 2].charAt(0)) + "')")
       .attr("id", "delete" + (parseInt(d3.select("#delete" + i).node().id[6]) - offset));
-    if (idlist[i - 2].charAt(0) == "g"){
+    if (idlist[i - 2].charAt(0) == "g") {
       d3.select("#graphcontainer" + i).attr("id", "graphcontainer" + (i - 1));
       d3.select("#subject1dropdown" + i).attr("id", "subject1dropdown" + (i - 1)).attr("onchange", "updateDropdowns(" + (i - 1) + ")");
       d3.select("#subject2dropdown" + i).attr("id", "subject2dropdown" + (i - 1)).attr("onchange", "updateDropdowns(" + (i - 1) + ")");
@@ -87,7 +89,7 @@ var addtextinput = function() {
   //create the new list item to be added to the page
   var listItem = d3.select("#masterlist").append("li").attr("class", "list-group-item");
 
-  var structure = listItem.append("div").attr("class","row");
+  var structure = listItem.append("div").attr("class", "row");
   var firstCol = structure.append("div").attr("class", "col-10");
 
   firstCol.node().appendChild(text);
@@ -105,10 +107,10 @@ var addtextinput = function() {
     .attr("onclick", "deleteItem(" + index + ",'t')");
 
   addSelectInput();
-  index+=1;
+  index += 1;
 }
 
-var addSelectInput = function(){
+var addSelectInput = function() {
   //create new list item
   var listItem = document.createElement("li");
   listItem.className += "list-group-item";
@@ -184,7 +186,7 @@ var addgraphinput = function() {
     //console.log(subjectDropdown1.node());
   }
 
-    subjectCol.node().innerHTML += "<br><br>";
+  subjectCol.node().innerHTML += "<br><br>";
 
 
   //create row for subjecr 2
@@ -227,7 +229,7 @@ var addgraphinput = function() {
   var startYearDropdown = startRow
     .append("select")
     .attr("class", "custom-select w-50")
-    .attr("onchange", "renderGraph(" + index  + ")")
+    .attr("onchange", "renderGraph(" + index + ")")
     .attr("id", "startyeardropdown" + index);
 
   //we will add specific years later
@@ -264,11 +266,11 @@ var addgraphinput = function() {
 
 
   d3.select(finalCol)
-      .append("button")
-      .attr("class", "btn btn-outline-danger center-block")
-      .html("Delete")
-      .attr("id", "delete" + index)
-      .attr("onclick", "deleteItem(" + index + ",'g')");
+    .append("button")
+    .attr("class", "btn btn-outline-danger center-block")
+    .html("Delete")
+    .attr("id", "delete" + index)
+    .attr("onclick", "deleteItem(" + index + ",'g')");
 
   structure.node().innerHTML += "<br><br>";
 
@@ -278,11 +280,11 @@ var addgraphinput = function() {
 }
 
 
-function updateDropdowns(r){
+function updateDropdowns(r) {
   var title1 = d3.select("#subject1dropdown" + r).node().value;
   var title2 = d3.select("#subject2dropdown" + r).node().value;
 
-  if (title1 == "" && title2 != ""){
+  if (title1 == "" && title2 != "") {
     title1 = title2;
     title2 = "";
   }
@@ -300,7 +302,7 @@ function updateDropdowns(r){
   //get data index
   var i = 0;
   var dataset1 = "";
-  var dataset2= "";
+  var dataset2 = "";
   var dataindex1 = 0;
   var dataindex2 = 0;
 
@@ -334,7 +336,7 @@ function updateDropdowns(r){
 function get_true_start_yea(dataset, dataset_2) {
   let year_start_1, year_start_2;
   econData.forEach(function(graph) {
-    if (graph['name'] == dataset  ) year_start_1 = graph['start_date'].substring(0, 4);
+    if (graph['name'] == dataset) year_start_1 = graph['start_date'].substring(0, 4);
     if (graph['name'] == dataset_2) year_start_2 = graph['start_date'].substring(0, 4);
   });
 
@@ -350,7 +352,7 @@ function get_true_end_yea(dataset, dataset_2) {
 
   let year_end_1, year_end_2;
   econData.forEach(function(graph) {
-    if (graph['name'] == dataset  ) year_end_1 = graph['end_date'].substring(0, 4);
+    if (graph['name'] == dataset) year_end_1 = graph['end_date'].substring(0, 4);
     if (graph['name'] == dataset_2) year_end_2 = graph['end_date'].substring(0, 4);
   });
 
@@ -366,21 +368,21 @@ function get_true_end_yea(dataset, dataset_2) {
 
 function renderGraph(r) {
 
-  if (d3.select("#graphcontainer" + r).node() == null){
+  if (d3.select("#graphcontainer" + r).node() == null) {
     first_render = true;
   }
-//  console.log(document.getElementById("graphcontainer" + r) == null);
+  //  console.log(document.getElementById("graphcontainer" + r) == null);
 
 
-//  console.log(r);
+  //  console.log(r);
   var title1 = d3.select("#subject1dropdown" + r).node().value;
   var title2 = "";
 
-  if (d3.select("#subject2dropdown" + r).node().value != null){
+  if (d3.select("#subject2dropdown" + r).node().value != null) {
     title2 = d3.select("#subject2dropdown" + r).node().value;
   }
 
-  if (title1 == "" && title2 != ""){
+  if (title1 == "" && title2 != "") {
     title1 = title2;
     title2 = "";
   }
@@ -411,20 +413,20 @@ function renderGraph(r) {
 
   var textForTitle = "";
 
-  if (title2 == ""){
+  if (title2 == "") {
     textForTitle = title1 + " From " + year_start + " To " + year_end;
   } else {
     textForTitle = title1 + " and " + title2 + " From " + year_start + " To " + year_end;
   }
 
   if (first_render) {
-  //  listitem.append("div").attr("class", "container pt-4 center-block").attr("style", "margin-left: 0px;")
+    //  listitem.append("div").attr("class", "container pt-4 center-block").attr("style", "margin-left: 0px;")
     // .append("h2")
     //   .html(title + " From " + year_start + " To " + year_end)
     //   .attr("id", "title" + r);
 
     listitem.append('div').attr("id", "graphcontainer" + r).attr("class", "container mt-5 text-center")
-    .append("h2")
+      .append("h2")
       .attr("class", "pb-5")
       .html(textForTitle)
       .attr("id", "title" + r);
@@ -433,7 +435,7 @@ function renderGraph(r) {
   var intitle = d3.select("#title" + r).html(textForTitle);
   var graphcontainer = d3.select("#graphcontainer" + r);
 
-//  graphcontainer.node().innerHTML += "<br><br>";
+  //  graphcontainer.node().innerHTML += "<br><br>";
 
 
   let width = 900;
@@ -489,31 +491,39 @@ var finalizeStudy = function() {
     if (idlist[i].charAt(0) == "t") {
       var intext = d3.select("#" + idlist[i]).node().value;
       var textitem = {
-                        "type" : "text",
-                        "text" : intext
-                      }
-      contentList[i]= textitem;
+        "type": "text",
+        "text": intext
+      }
+      contentList[i] = textitem;
     }
   }
   sendThis["title"] = d3.select("#bigTitle").node().value;
   sendThis["content"] = contentList;
   sendThis["description"] = d3.select("#description").node().value;
 
-  // console.log(sendThis);
+  if (sendThis['title'] == "") {
+    if (!errorFlashed) {
+      var firstChild = d3.select("#flashable").attr("class", "alert alert-danger").html("You Must Enter A Title!");
+      errorFlashed = true;
+    }
+  } else {
 
-  fetch("/create-study", {
-      method: "POST",
-      headers: {
+    // console.log(sendThis);
+
+    fetch("/create-study", {
+        method: "POST",
+        headers: {
           'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(sendThis)
-  }).then(res => res.json())
-    .then(data => {
-    window.location = "/" + data.redirect;
-    })
+        },
+        body: JSON.stringify(sendThis)
+      }).then(res => res.json())
+      .then(data => {
+        window.location = "/" + data.redirect;
+      })
+  }
 }
 
 function auto_grow(element) {
-    element.style.height = "5px";
-    element.style.height = (element.scrollHeight)+"px";
+  element.style.height = "5px";
+  element.style.height = (element.scrollHeight) + "px";
 }
