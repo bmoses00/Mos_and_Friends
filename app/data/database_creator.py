@@ -115,7 +115,7 @@ def create_case_studies_collection():
         ]
     })
     """
-    # enter in a default case study
+    pass
 
 
 def recreate_database():
@@ -129,7 +129,10 @@ def recreate_database():
     create_case_studies_collection()
 
 
-if __name__ == "__main__":
-    recreate_database()
+def insert_sample_case_study():
     with open("sample-case-study.json") as sample:
         database[CASE_STUDIES_COLLECTION].insert_one(json.load(sample))
+
+
+if __name__ == "__main__":
+    recreate_database()
