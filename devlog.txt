@@ -128,3 +128,6 @@ Alex Thompson -- 2020-05-06 15:30
   - updated navbar to make it always visible in base.html
   - made things more aesthetically pleasing (added colors to buttons etc)
 
+William Cao -- 2020-05-07 23:19
+  - Wrote sample case study.
+  - Fixed test.py still using old /view-studies route causing it to crash

@@ -1,0 +1,59 @@
+{
+  "username": "admin",
+  "title": "Learning Econ Vocab through the 2008 Housing Crisis",
+  "description": "The 2008 Housing Crisis was the most recent recession. Although it occurred 12 years ago, the impacts are still very much relevant, and some argue we are still experiencing the negative effects to this day. We will use the 2008 housing collapse to go over some economic ideas!",
+  "content": [
+    {
+      "type": "chart",
+      "chart_start": "1947-01-01",
+      "chart_end": "2019-01-01",
+      "chart_name": "gdp",
+      "chart_start_2": "1947-01-01",
+      "chart_end_2": "2019-01-01",
+      "chart_name_2": ""
+    },
+    {
+      "type": "text",
+      "text": "When looking at this graph, you can see a dip at where 2008 is. GDP stands for Gross Domestic Product: the total market value of all final goods and services created within a country's border in a given year. GDP is not the sole indicator of the economic health, but it is used for the definition of a recession. The U.S. is in a recession when there are two consecutive quarters of GDP drop."
+    },
+    {
+      "type": "chart",
+      "chart_start": "2000-01-01",
+      "chart_end": "2020-01-01",
+      "chart_name": "unemployment",
+      "chart_start_2": "2000-01-01",
+      "chart_end_2": "2020-01-01",
+      "chart_name_2": ""
+    },
+    {
+      "type": "text",
+      "text": "During a recession, there is high unemployment rate. This is only the U3 unemployment (those who have been looking for a job in the past 4 weeks, but cannot find one). U3 is the most common one reported by government, but it doesn't provide the full picture (just like stock market doesn't tell the full picture of the economy). It does not include those who are working part time but would like to work full time and those who have given up looking for a job."
+    },
+    {
+      "type": "chart",
+      "chart_start": "2000-01-01",
+      "chart_end": "2019-01-01",
+      "chart_name": "inflation",
+      "chart_start_2": "2000-01-01",
+      "chart_end_2": "2019-01-01",
+      "chart_name_2": ""
+    },
+    {
+      "type": "text",
+      "text": "If we look at the inflation rate at 2010, it is very close to 0 (around -0.4). Inflation is calculated by looking at the Consumer Price Index (CPI), which is used to see how much more consumers need to pay on average compared to a previous year. A higher CPI means goods are more expensive. Inflation was very low during 2008 because the economy was experiencing a demand shock. Collapsing house value mean fewer people are spending, which mean the demand curve in the Aggregate Demand and Supply Model shifts to the left. Because the short run aggregate supply remains the same, price level drops, causing deflation."
+    },
+    {
+      "type": "chart",
+      "chart_start": "1970-01-01",
+      "chart_end": "2000-01-01",
+      "chart_name": "inflation",
+      "chart_start_2": "1970-01-01",
+      "chart_end_2": "2000-01-01",
+      "chart_name_2": ""
+    },
+    {
+      "type": "text",
+      "text": "Do recession always come with lower inflation rate? \nNo.\nDuring the recession in the 1970s due to rising oil prices, inflation actually went up. Oil is an input for many industries, so a rise in oil prices cause a rice in suppliers' costs. This shifts the short run aggregate supply to the left. There was also high unemployment, so consumers aren't buying. This is the worst case scenario since there aren't any effective fiscal (Congress actions) or monetary (Central bank) policies to this. High unemployment and high inflation is called a stagflation. "
+    }
+  ]
+}
