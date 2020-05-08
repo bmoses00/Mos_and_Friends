@@ -1,5 +1,6 @@
 from data import DATA_COLLECTION, mongo_client, LOGIN_COLLECTION, econ_data_info, DATA_COLLECTION, CASE_STUDIES_COLLECTION, DATABASE_NAME
 import csv
+import json
 
 database = mongo_client[DATABASE_NAME]
 
@@ -26,8 +27,6 @@ def load_econ_data_sets():
         }
     }
     """
-    print(econ_data_info)
-    print("_______________________________________________________________________________")
     for info in econ_data_info:
         with open(f"app/static/csv/{info['file_name']}") as csv_file:
             csv_data = list(csv.reader(csv_file))
@@ -116,7 +115,9 @@ def create_case_studies_collection():
         ]
     })
     """
-    pass
+    # enter in a default case study
+    with open("sample-case-study.json") as sample:
+        database[CASE_STUDIES_COLLECTION].insert_one(json.load(sample))
 
 
 def recreate_database():
