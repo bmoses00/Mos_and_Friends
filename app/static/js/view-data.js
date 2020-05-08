@@ -16,16 +16,14 @@ svg = d3.select("#graph")
     .attr("transform", "translate(75, 0)");
 
 function plot_graph() {
-  console.log(option_removed, option_2_removed);
-  add_unselected_option_to_other();
-  remove_selected_from_other();
-
-  if (selector.node().value == "none" && selector_2.node().value == "none") {
-    d3.select("#group").selectAll("*").remove();
-    year_start_selector.selectAll("*").remove();
-    year_end_selector.selectAll("*").remove();
-    return;
-  }
+  // if (selector.node().value == "none") {
+  //   d3.select("path").selectAll("*").remove();
+  //   return;
+  // }
+  // if (selector_2.node().value == "none") {
+  //   d3.select("path2").selectAll("*").remove();
+  //   return;
+  // }
 
   let graph_selected;
   let graph_selected_2;
