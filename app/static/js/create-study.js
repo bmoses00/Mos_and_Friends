@@ -46,6 +46,12 @@ var deleteItem = function(r, type) {
       d3.select("#path" + i).attr("id", "path" + (i - 1));
       d3.select("#x-axis" + i).attr("id", "x-axis" + (i - 1));
       d3.select("#y-axis" + i).attr("id", "y-axis" + (i - 1));
+      d3.select("#path2" + i).attr("id", "path2" + (i - 1));
+      d3.select("#x-axis2" + i).attr("id", "x-axis2" + (i - 1));
+      d3.select("#y-axis2" + i).attr("id", "y-axis2" + (i - 1));
+      d3.select("#x-label" + i).attr("id", "x-label" + (i - 1));
+      d3.select("#y-label" + i).attr("id", "y-label" + (i - 1));
+      d3.select("#y-label2" + i).attr("id", "y-label2" + (i - 1));
     }
   }
 
