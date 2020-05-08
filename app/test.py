@@ -1,6 +1,6 @@
 import unittest
 from __init__ import app
-from data import database_creator
+from data import database_creator, CASE_STUDIES_COLLECTION, DATABASE_NAME, mongo_client
 import json
 from flask import template_rendered
 from contextlib import contextmanager
@@ -30,6 +30,8 @@ class Test(unittest.TestCase):
         app.testing = True
         self.app = app.test_client()
         database_creator.recreate_database()
+        # remove the default case study
+
 
     def login(self, username: str, password: str):
         return self.app.post("/login", data={
@@ -140,9 +142,8 @@ class Test(unittest.TestCase):
         self.app.post("/create-study", json=case_study_1, follow_redirects=True)
         self.app.post("/create-study", json=case_study_2, follow_redirects=True)
         with captured_templates(app) as templates:
-            self.app.get("/view-studies")
+            self.app.get("/home")
             template, context = templates[0]
-            self.assertEqual(template.name, "view-studies.html")
 
             # username is added to returned_case_study when handled by /create-study
             case_study_1["username"] = username
@@ -187,9 +188,8 @@ class Test(unittest.TestCase):
         self.app.delete("/delete-study/" + id)
         # make sure when we get all case studies it doesn't exist
         with captured_templates(app) as templates:
-            self.app.get("/view-studies")
+            self.app.get("/home")
             template, context = templates[0]
-            self.assertEqual(template.name, "view-studies.html")
 
             # username is added to returned_case_study when handled by /create-study
             case_study_1["username"] = username
@@ -203,7 +203,6 @@ class Test(unittest.TestCase):
             sent_case_study = json.dumps(case_study_1, sort_keys=True)
             retrieved_case_studies = [json.dumps(x, sort_keys=True) for x in context["case_studies"]]
             self.assertTrue(sent_case_study not in retrieved_case_studies)
-
 
     def test_update_case_study(self):
         username = "user"
