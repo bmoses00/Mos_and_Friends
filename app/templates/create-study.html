@@ -16,7 +16,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"> Write a Description: </span>
       </div>
-      <textarea id = "description" class="form-control"></textarea>
+      <textarea id = "description" oninput="auto_grow(this)" class="form-control textarea-autosize"></textarea>
     </div>
 
   </li>
@@ -34,4 +34,12 @@
 
 <script src="../static/js/draw-graph.js"> </script>
 <script src="../static/js/create-study.js"> </script>
+<style>
+  textarea {
+    resize: none;
+    overflow: hidden;
+    min-height: 75px;
+    max-height: 200px;
+}
+</style>
 {% endblock %}
