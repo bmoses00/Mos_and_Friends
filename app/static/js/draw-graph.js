@@ -12,7 +12,20 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
                   .domain([year_start, year_end]);
   const scaleY = d3.scaleLinear().range([height - margin, 0]);
 
-  if (dataset != null) {
+
+  if (!first_render) {
+    d3.select("#path" + r).remove();
+    d3.select("#path2" + r).remove();
+    d3.select("#y-axis" + r).remove();
+    d3.select("#y-axis2" + r).remove();
+    d3.select("#y-label" + r).remove();
+    d3.select("#y-label2" + r).remove();
+
+    d3.select("#x-axis" + r).remove();
+    d3.select("#x-label" + r).remove();
+  }
+
+  if (dataset != 'none') {
     d3.csv("../static/csv/" + dataset + ".csv").then(function(raw_data) {
      data = []
 
@@ -28,13 +41,6 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
          data.push(d);
        }
      });
-     if (!first_render) {
-       d3.select("#path" + r).remove();
-       d3.select("#x-axis" + r).remove();
-       d3.select("#y-axis" + r).remove();
-       d3.select("#x-label" + r).remove();
-       d3.select("#y-label" + r).remove();
-     }
 
      let domain_lower;
      let translate;
@@ -84,7 +90,7 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
    });
  }
 
- if (dataset_2 != null) {
+ if (dataset_2 != 'none') {
    d3.csv("../static/csv/" + dataset_2 + ".csv").then(function(raw_data) {
      data = []
 
@@ -100,12 +106,6 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
          data.push(d);
        }
      });
-     if (!first_render) {
-       d3.select("#path2" + r).remove();
-       d3.select("#x-axis2" + r).remove();
-       d3.select("#y-axis2" + r).remove();
-       d3.select("#y-label2" + r).remove();
-     }
 
      let domain_lower;
      let translate;
@@ -155,10 +155,11 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
        .call(d3.axisRight(scaleY));
    });
  }
-
- d3.select("x-axis" + r).remove();
- d3.select("x-label" + r).remove();
-
+ // console.log('removing x axis');
+ // d3.select("#x-axis" + r).remove();
+ // d3.select("#x-label" + r).remove();
+ //
+ // console.log('adding x axis');
  element.append("g")
    .attr("id", "x-axis" + r)
    .attr('transform', 'translate(0,' + (height - margin) + ')')
