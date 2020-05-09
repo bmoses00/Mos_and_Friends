@@ -14,7 +14,7 @@ svg = d3.select("#graph")
   .attr("height", height)
   .append("g")
     .attr("id", "group")
-    .attr("transform", "translate(" + margin + ", 0)");
+    .attr("transform", "translate(75, 0)");
 
 function plot_graph() {
   if (selector.node().value == 'none' && selector_2.node().value == 'none') {
