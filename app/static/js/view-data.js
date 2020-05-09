@@ -2,6 +2,7 @@ let width  = d3.select("#graph-container").node().getBoundingClientRect().width*
 let height = d3.select("#graph-container").node().getBoundingClientRect().height;
 let option_removed =   {'text': null, 'value': null};
 let option_2_removed = {'text': null, 'value': null};
+let first_render = true;
 
 const selector            = d3.select("#graph_selector")
 const selector_2          = d3.select("#graph_selector_2")
@@ -49,14 +50,16 @@ function plot_graph() {
 
   draw_graph(svg,
     selector.node().value, selector_2.node().value,
-    d3.select("#year_start").node().value, d3.select("#year_end").node().value);
+    d3.select("#year_start").node().value, d3.select("#year_end").node().value, first_render);
+  first_render = false;
 }
 
 function change_year() {
   if (d3.select("#year_start").node().value > d3.select("#year_end").node().value) return;
   draw_graph(svg,
     selector.node().value, selector_2.node().value,
-    d3.select("#year_start").node().value, d3.select("#year_end").node().value);
+    d3.select("#year_start").node().value, d3.select("#year_end").node().value, first_render);
+  first_render = false;
 }
 
 selector.on('change', plot_graph);
