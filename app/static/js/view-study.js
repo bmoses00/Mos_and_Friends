@@ -1,9 +1,9 @@
 if (editable == false) {
   const case_study = d3.select("#case_study_container");
 
-  let width = .8 * d3.select("#graph-container").node().getBoundingClientRect().width;
+  let width = .9 * d3.select("#graph-container").node().getBoundingClientRect().width;
   let height = 300;
-  let margin = 50;
+  let margin = 75;
 
   content.forEach(function(element) {
     const entry = case_study
@@ -18,7 +18,7 @@ if (editable == false) {
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        .attr("transform", "translate(50, 0)");
+        .attr("transform", "translate(" + margin + ", 0)");
 
       draw_graph(svg, element['chart_name'], element['chart_name_2'], element['chart_start'].substring(0, 4), element['chart_end'].substring(0, 4), true);
     }

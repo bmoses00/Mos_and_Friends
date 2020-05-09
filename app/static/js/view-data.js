@@ -14,9 +14,17 @@ svg = d3.select("#graph")
   .attr("height", height)
   .append("g")
     .attr("id", "group")
-    .attr("transform", "translate(75, 0)");
+    .attr("transform", "translate(" + margin + ", 0)");
 
 function plot_graph() {
+  if (selector.node().value == 'none' && selector_2.node().value == 'none') {
+    d3.select("#group").selectAll("*").remove();
+    year_start_selector.selectAll("*").remove();
+    year_end_selector.selectAll("*").remove();
+
+    first_render = true;
+    return;
+  }
   // if (selector.node().value == "none") {
   //   d3.select("path").selectAll("*").remove();
   //   return;
