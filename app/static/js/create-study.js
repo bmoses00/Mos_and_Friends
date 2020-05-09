@@ -284,6 +284,10 @@ function updateDropdowns(r) {
   var title1 = d3.select("#subject1dropdown" + r).node().value;
   var title2 = d3.select("#subject2dropdown" + r).node().value;
 
+  if (title1 == '' && title2 == '') {
+    return;
+  }
+
   if (title1 == "" && title2 != "") {
     title1 = title2;
     title2 = "";
