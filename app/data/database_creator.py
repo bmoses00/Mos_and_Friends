@@ -130,8 +130,11 @@ def recreate_database():
 
 
 def insert_sample_case_study():
-    with open("sample-case-study.json") as sample:
+    with open("great-recession.json") as sample:
         database[CASE_STUDIES_COLLECTION].insert_one(json.load(sample))
+    with open("oil-crisis.json") as sample:
+        database[CASE_STUDIES_COLLECTION].insert_one(json.load(sample))
+
 
 
 if __name__ == "__main__":
