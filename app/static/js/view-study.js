@@ -31,7 +31,7 @@ if (editable == false) {
       d3.select("#text" + (i + 1)).html(study["content"][i]["text"]);
     } else {
       console.log(study['content'][i])
-      addgraphinput();
+      addgraphinput(false);
 
 
       var subject1Dropdown = d3.select("#subject1dropdown" + (i + 1)).node();
@@ -77,7 +77,7 @@ if (editable == false) {
       console.log(subject2Dropdown);
 
 
-      updateDropdowns(i + 1)
+      updateDropdowns(i + 1, false);
       // d3.select("#subjectdropdown" + (i + 1)).property('selected', study['content'][i]['chart_name'].replace(/_/g, " ")).node();
       //d3.select("#subject2dropdown" + (i + 1)).attr("value", study['content'][i]['chart_name_2']);
       var start_year_dropdown = d3.select("#startyeardropdown" + (i + 1)).node();

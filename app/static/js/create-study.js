@@ -39,8 +39,8 @@ var deleteItem = function(r, type) {
       .attr("id", "delete" + (parseInt(d3.select("#delete" + i).node().id[6]) - offset));
     if (idlist[i - 2].charAt(0) == "g") {
       d3.select("#graphcontainer" + i).attr("id", "graphcontainer" + (i - 1));
-      d3.select("#subject1dropdown" + i).attr("id", "subject1dropdown" + (i - 1)).attr("onchange", "updateDropdowns(" + (i - 1) + ")");
-      d3.select("#subject2dropdown" + i).attr("id", "subject2dropdown" + (i - 1)).attr("onchange", "updateDropdowns(" + (i - 1) + ")");
+      d3.select("#subject1dropdown" + i).attr("id", "subject1dropdown" + (i - 1)).attr("onchange", "updateDropdowns(" + (i - 1) + ", true)");
+      d3.select("#subject2dropdown" + i).attr("id", "subject2dropdown" + (i - 1)).attr("onchange", "updateDropdowns(" + (i - 1) + ", true)");
       d3.select("#startyeardropdown" + i).attr("id", "startyeardropdown" + (i - 1)).attr("onchange", "renderGraph(" + (i - 1) + ")");
       d3.select("#endyeardropdown" + i).attr("id", "endyeardropdown" + (i - 1)).attr("onchange", "renderGraph(" + (i - 1) + ")");
       d3.select("#title" + i).attr("id", "title" + (i - 1));
@@ -128,7 +128,7 @@ var addSelectInput = function() {
   var graphbutton = document.createElement("button");
   graphbutton.innerHTML = " Add Graph ";
   graphbutton.className += "btn btn-outline-primary";
-  graphbutton.setAttribute("onclick", "addgraphinput()");
+  graphbutton.setAttribute("onclick", "addgraphinput(true)");
   graphbutton.id = "graphbutton";
   //add the button to the list
   listItem.appendChild(graphbutton);
@@ -140,7 +140,7 @@ var addSelectInput = function() {
 
 
 
-var addgraphinput = function() {
+var addgraphinput = function(render) {
   //remove previous item in list
   d3.selectAll("li")
     .each(function(d, i) {
@@ -173,7 +173,7 @@ var addgraphinput = function() {
     .append("select")
     .attr("class", "custom-select ml-5 w-50")
     .attr("required", "true")
-    .attr("onchange", "updateDropdowns(" + index + ")")
+    .attr("onchange", "updateDropdowns(" + index + ", " + render + ")")
     .attr("id", "subject1dropdown" + index);
 
 
@@ -197,7 +197,7 @@ var addgraphinput = function() {
     .append("select")
     .attr("class", "custom-select ml-5 w-50")
     .attr("required", "true")
-    .attr("onchange", "updateDropdowns(" + index + ")")
+    .attr("onchange", "updateDropdowns(" + index + "," + render + ")")
     .attr("id", "subject2dropdown" + index);
 
   //  subjectCol.node().innerHTML += "<br><br>";
@@ -280,7 +280,7 @@ var addgraphinput = function() {
 }
 
 
-function updateDropdowns(r) {
+function updateDropdowns(r, render) {
   var title1 = d3.select("#subject1dropdown" + r).node().value;
   var title2 = d3.select("#subject2dropdown" + r).node().value;
 
@@ -333,10 +333,13 @@ function updateDropdowns(r) {
     endyear.append("option").html("" + (realEndYear - i));
   }
 
-  if (!(d3.select("#graphcontainer" + r).node() == null)){
+  if (render){
     renderGraph(r);
   }
+  console.log(render);
 }
+
+
 
 function get_true_start_yea(dataset, dataset_2) {
   let year_start_1, year_start_2;
