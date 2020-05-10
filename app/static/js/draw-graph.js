@@ -1,5 +1,7 @@
 function draw_graph(element, dataset, dataset_2, year_start, year_end, first_render,r = "") {
-  console.log('hi')
+
+  colors = ["red", "orange", "#CCCC00", "green", "blue", "violet"];
+
   const width = .8 * d3.select("#graph-container").node().getBoundingClientRect().width;
   const height = 300;
   const margin = 75;
@@ -55,13 +57,13 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
        .x(d => scaleX(d[date]))
        .y(d => scaleY(d[value]));
 
-
+     color_1 = colors[Math.floor(Math.random()*3)];
      // draws line graph
      let line_path = element.append("path")
        .data([data])
        .attr("id", "path" + r)
        .attr("fill", "none")
-       .attr("stroke", "steelblue")
+       .attr("stroke", color_1)
        .attr("stroke-width", 1.5)
        .attr("d", line);
 
@@ -84,7 +86,7 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
         .attr("y", 0 - margin)
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
-        .attr("fill", "steelblue")
+        .attr("fill", color_1)
         .style("text-anchor", "middle")
         .text(value);
    });
@@ -120,12 +122,13 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
        .x(d => scaleX(d[date]))
        .y(d => scaleY(d[value]));
 
+     color_2 = colors[3 + Math.floor(Math.random()*3)];
      // draws line graph
      let line_path_2 = element.append("path")
        .data([data])
        .attr("id", "path2" + r)
        .attr("fill", "none")
-       .attr("stroke", "red")
+       .attr("stroke", color_2)
        .attr("stroke-width", 1.5)
        .attr("d", line);
 
@@ -145,7 +148,7 @@ function draw_graph(element, dataset, dataset_2, year_start, year_end, first_ren
         .attr("y", width - margin - 20)
         .attr("x", - (height / 2))
         .attr("dy", "1em")
-        .attr("fill", "red")
+        .attr("fill", color_2)
         .style("text-anchor", "middle")
         .text(value);
 

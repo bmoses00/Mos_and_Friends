@@ -48,4 +48,16 @@ econ_data_info = [
         "title": "US GDP",
         "units": "unknown"
     },
+    {
+        "file_name": "oil_prices.csv",
+        "name": "oil_prices",
+        "title": "Oil Prices",
+        "units": "unknown"
+    },
+    {
+        "file_name": "gdp_change.csv",
+        "name": "gdp_change",
+        "title": "GDP Growth",
+        "units": "unknown"
+    }
 ]
