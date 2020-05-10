@@ -35,9 +35,31 @@
 {% endif %}
 <hr>
 
+<b> Our Sample Cases </b> <br> <br>
+{% for case in case_studies %}
+{% if case['username'] == 'admin'%}
+<div class="row">
+  <div class="col-2">
+  </div>
+  <div class="col-8">
+    <div class="card mb-3">
+      <a class="card-header" href="/view-study/{{case['_id']}}" style="font-size:20px"> {{case['title']}} </a> <br>
+      <p class="mb-2 card-text" style="font-size: 16px">{{case['description']}} </p>
+      <br>
+      <br>
+    </div>
+  </div>
+  <div class="col-2">
+  </div>
+</div>
+{% endif %}
+
+{% endfor %}
+
+
 <b> Public cases </b> <br> <br>
 {% for case in case_studies %}
-{% if session['username'] != case['username'] %}
+{% if session['username'] != case['username'] and case['username'] != 'admin'%}
 <div class="row">
   <div class="col-2">
   </div>
