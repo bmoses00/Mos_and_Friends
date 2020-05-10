@@ -131,3 +131,9 @@ Alex Thompson -- 2020-05-06 15:30
 William Cao -- 2020-05-07 23:19
   - Wrote sample case study.
   - Fixed test.py still using old /view-studies route causing it to crash
+
+Brian Moses -- 2020-05-09 9:00
+  - fixed remaining bugs in view-data and create-study
+
+Brian Moses -- 2020-05-10 12:45
+  - added new case studies
