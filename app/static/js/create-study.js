@@ -179,7 +179,7 @@ var addgraphinput = function(render) {
 
   //add Options to dropdown
   //will be down with a for loop through list of subjects, but for now j adding samples
-  subjectDropdown1.append("option").html("");
+  subjectDropdown1.append("option").html("None selected");
   for (i = 0; i < econData.length; i++) {
     subjectDropdown1.append("option").html(econData[i].title);
     //console.log(econData);
@@ -204,7 +204,7 @@ var addgraphinput = function(render) {
 
   //add Options to dropdown
   //will be down with a for loop through list of subjects, but for now j adding samples
-  subjectDropdown2.append("option").html("");
+  subjectDropdown2.append("option").html("None selected");
   for (i = 0; i < econData.length; i++) {
     subjectDropdown2.append("option").html(econData[i].title);
   }
@@ -284,13 +284,13 @@ function updateDropdowns(r, render) {
   var title1 = d3.select("#subject1dropdown" + r).node().value;
   var title2 = d3.select("#subject2dropdown" + r).node().value;
 
-  if (title1 == '' && title2 == '') {
+  if (title1 == 'None selected' && title2 == 'None selected') {
     return;
   }
 
-  if (title1 == "" && title2 != "") {
+  if (title1 == "None selected" && title2 != "None selected") {
     title1 = title2;
-    title2 = "";
+    title2 = "None selected";
   }
   //get vals
   var year_start = d3.select("#startyeardropdown" + r);
@@ -384,15 +384,15 @@ function renderGraph(r) {
 
   //  console.log(r);
   var title1 = d3.select("#subject1dropdown" + r).node().value;
-  var title2 = "";
+  var title2 = "None selected";
 
   if (d3.select("#subject2dropdown" + r).node().value != null) {
     title2 = d3.select("#subject2dropdown" + r).node().value;
   }
 
-  if (title1 == "" && title2 != "") {
+  if (title1 == "None selected" && title2 != "None selected") {
     title1 = title2;
-    title2 = "";
+    title2 = "None selected";
   }
 
   var year_start = d3.select("#startyeardropdown" + r).node().value;
