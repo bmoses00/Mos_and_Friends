@@ -333,8 +333,9 @@ function updateDropdowns(r) {
     endyear.append("option").html("" + (realEndYear - i));
   }
 
-
-  renderGraph(r);
+  if (!(d3.select("#graphcontainer" + r).node() == null)){
+    renderGraph(r);
+  }
 }
 
 function get_true_start_yea(dataset, dataset_2) {
