@@ -1,0 +1,46 @@
+{
+  "username": "admin",
+  "title": "Exploring the Great Recession",
+  "description": "Before the Coronavirus Recession, the 2008 Great Recession was the worst economic downturn most Americans had ever experienced. Let's try to understand its causes and its impact.",
+  "content": [
+    {
+      "type": "chart",
+      "chart_start": "2000-01-01",
+      "chart_end": "2019-01-01",
+      "chart_name": "gdp_change",
+      "chart_start_2": "2000-01-01",
+      "chart_end_2": "2019-01-01",
+      "chart_name_2": ""
+    },
+    {
+      "type": "text",
+      "text": "Here, you can see that GDP contracted by almost 10 percent in 2008. What effect did that have on other economic metrics, like inflation and unempolyment?"
+    },
+    {
+      "type": "chart",
+      "chart_start": "2000-01-01",
+      "chart_end": "2020-01-01",
+      "chart_name": "unemployment",
+      "chart_start_2": "2000-01-01",
+      "chart_end_2": "2020-01-01",
+      "chart_name_2": "inflation"
+    },
+    {
+      "type": "text",
+      "text": "Around 2008, inflation became negative (deflation). There are a few reasons for this. Consumers, scared about the economy, started to save more. And laid off workers had less money to spend. Unemployment soared to some of the highest levels in history spelling economic disaster for many, especially African Americans and younger workers, who tend to have less job security."
+    },
+    {
+      "type": "chart",
+      "chart_start": "1970-01-01",
+      "chart_end": "2000-01-01",
+      "chart_name": "unemployment",
+      "chart_start_2": "1970-01-01",
+      "chart_end_2": "2000-01-01",
+      "chart_name_2": "inflation"
+    },
+    {
+      "type": "text",
+      "text": "Do recessions always cause high unemployment and low inflation? No. As you'll see during the 1973 oil crisis, unemployment and inflation actually both increased. We'll explore why this happened in our next case study."
+    }
+  ]
+}

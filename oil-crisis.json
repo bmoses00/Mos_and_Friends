@@ -1,0 +1,45 @@
+{
+  "username": "admin",
+  "title": "The 1973 Middle East Crisis",
+  "description": "In 1973 a coalition of Arab nations invaded Israel in the Yom Kippur war. As retaliation for US support for Israel, the nations of OPEC imposed an oil embargo on the US and several other nations. What impact did that have on the US economy?",
+  "content": [
+    {
+      "type": "chart",
+      "chart_start": "1970-01-01",
+      "chart_end": "2000-01-01",
+      "chart_name": "oil_prices",
+      "chart_start_2": "1970-01-01",
+      "chart_end_2": "2000-01-01",
+      "chart_name_2": ""
+    },
+    {
+      "type": "text",
+      "text": "US dependance on foreign oil had been rising in the years leading up to the war, and as you can see, domestic oil prices spiked as a result of the embargo"
+    },
+    {
+      "chart_start": "1970-01-01",
+      "chart_end": "2000-01-01",
+      "chart_name": "inflation",
+      "chart_start_2": "1970-01-01",
+      "chart_end_2": "2000-01-01",
+      "chart_name_2": ""
+    },
+    {
+      "type": "text",
+      "text": "The spike in oil prices caused what is known as 'cost-push' inflation. Higher prices for oil meant that US companies simply couldn't produce as much as they could previously. However, US consumers' demand for goods remained high. The same amount of money was trying to buy fewer goods, and inflation resulted"
+    },
+    {
+      "chart_start": "1970-01-01",
+      "chart_end": "2000-01-01",
+      "chart_name": "unemployment",
+      "chart_start_2": "1970-01-01",
+      "chart_end_2": "2000-01-01",
+      "chart_name_2": ""
+    },
+    {
+      "type": "text",
+      "text": "But the increased prices also caused higher unemployment. Because US companies were producing less, they did not need as many workers, increasing unemployment. The 1973 Oil Crisis is generally recognized as the end of America's post-WWII economic boom."
+    }
+
+  ]
+}
