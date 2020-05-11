@@ -1,3 +1,5 @@
+var renderred = false;
+
 if (editable == false) {
   const case_study = d3.select("#case_study_container");
 
@@ -100,6 +102,9 @@ if (editable == false) {
         }
       }
       renderGraph(i + 1);
+    }
+    if (i == study['content'].length - 1){
+      renderred = true;
     }
   }
 }
