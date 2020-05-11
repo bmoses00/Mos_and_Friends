@@ -5,6 +5,19 @@
   "content": [
     {
       "type": "chart",
+      "chart_start": "1990-01-01",
+      "chart_end": "2019-01-01",
+      "chart_name": "gdp",
+      "chart_start_2": "1990-01-01",
+      "chart_end_2": "2019-01-01",
+      "chart_name_2": "house_prices"
+    },
+    {
+      "type": "text",
+      "text": "In the graph of America's GDP (a measurement of total economic output) above, you can see a dip at 2008 coinciding with the bursting of the US housing bubble. Let's take a look at the yearly percentage change in GDP to get a more accurate picture of what happened. "
+    },
+    {
+      "type": "chart",
       "chart_start": "2000-01-01",
       "chart_end": "2019-01-01",
       "chart_name": "gdp_change",
@@ -27,7 +40,7 @@
     },
     {
       "type": "text",
-      "text": "Around 2008, inflation became negative (deflation). There are a few reasons for this. Consumers, scared about the economy, started to save more. And laid off workers had less money to spend. Unemployment soared to some of the highest levels in history spelling economic disaster for many, especially African Americans and younger workers, who tend to have less job security."
+      "text": "Around 2008, inflation became negative (deflation). There are a few reasons for this. Consumers, scared about the economy, started to save more. And laid off workers had less money to spend. Because demand for goods collapsed, deflation resulted. That crash in demand also caused some of the highest unemployment levels in history spelling economic disaster for many, especially African Americans and younger workers, who tend to have less job security."
     },
     {
       "type": "chart",

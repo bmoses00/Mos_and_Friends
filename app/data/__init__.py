@@ -59,5 +59,11 @@ econ_data_info = [
         "name": "gdp_change",
         "title": "GDP Growth",
         "units": "unknown"
+    },
+    {
+        "file_name": "house_prices.csv",
+        "name": "house_prices",
+        "title": "US House Prices",
+        "units": "unknown"
     }
 ]
