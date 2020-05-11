@@ -146,3 +146,6 @@ Brian Moses -- 2020-05-10 12:45
 Alex Thompson -- 2020-05-10 22:00
   - fixed final bugs
   - everything should be working smoothly
+
+William Cao -- 2020-05-10 23:00
+  - Updated readme instructions and details along with roster, team name. Removed unused package from requirements.txt that broke installation.
