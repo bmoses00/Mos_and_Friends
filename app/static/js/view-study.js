@@ -31,9 +31,9 @@ if (editable == false) {
 
       var title = "";
       if (title2 == ""){
-        title = title1 + " From " + element["chart_start"] + " To " + element['chart_end'];
+        title = title1 + " From " + element["chart_start"].slice(0, 4) + " To " + element['chart_end'].slice(0, 4);
       } else {
-        title = title1 + " and " + title2 + " From " + element["chart_start"] + " To " + element['chart_end'];
+        title = title1 + " and " + title2 + " From " + element["chart_start"].slice(0, 4) + " To " + element['chart_end'].slice(0, 4);
       }
 
       entry.append("h4").text(title).attr("class", "mb-5");
