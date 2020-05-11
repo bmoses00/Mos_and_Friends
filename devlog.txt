@@ -132,8 +132,17 @@ William Cao -- 2020-05-07 23:19
   - Wrote sample case study.
   - Fixed test.py still using old /view-studies route causing it to crash
 
+Alex Thompson -- 2020-05-08 18:29
+  - fixed some bugs in create study
+  - fixed delete
+  - fixed delete graph in create study
+
 Brian Moses -- 2020-05-09 9:00
   - fixed remaining bugs in view-data and create-study
 
 Brian Moses -- 2020-05-10 12:45
   - added new case studies
+
+Alex Thompson -- 2020-05-10 22:00
+  - fixed final bugs
+  - everything should be working smoothly
