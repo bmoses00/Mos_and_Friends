@@ -4,12 +4,13 @@
 <form method="POST">
 
 
-  Username <br>
-  <input type="text" name="username" required> <br>
-  Password<br>
-  <input type="password" name="password" required> <br>
-  <button type="Submit" value="submit">Login</button>
+<label class="form-check-label" for="username">  Username: </label>
+  <input id = "username" class="input-group w-25 rounded" type="text" name="username" required> <br> <br>
+<label class="form-check-label" for="password">  Password: </label>
+  <input id = "password" class="input-group w-25 rounded" type="password" name="password" required> <br>
+  <button class = "btn btn-outline-success" type="Submit" value="submit">Login</button>
 </form>
-<a href="/create-account">Create An Account</a>
+<br>
+<a class = "btn btn-outline-primary" href="/create-account">Create An Account</a>
 <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 {% endblock body %}

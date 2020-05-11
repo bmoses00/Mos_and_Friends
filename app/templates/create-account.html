@@ -4,14 +4,15 @@
 
 
 <form method="POST">
-  Username <br>
-  <input type="text" name="username" required> <br>
-  Password<br>
-  <input type="password" name="password" required> <br>
-  Confirm Password <br>
-  <input type="password" name="password_repeat" required> <br>
+  <label class="form-check-label" for="username">  Username: </label>
+    <input id = "username" class="input-group w-25 rounded" type="text" name="username" required> <br> <br>
+  <label class="form-check-label" for="password">  Password: </label>
+    <input id = "password" class="input-group w-25 rounded" type="password" name="password" required> <br>
+    <label class="form-check-label" for="cpassword"> Confirm Password: </label>
+    <input id = "cpassword" class="input-group w-25 rounded" type="password" name="password" required> <br>
 
-  <button type="Submit" value="submit">Register</button>
+  <button class = "btn btn-outline-success" type="Submit" value="submit">Register</button>
 </form>
-<a href="/login">Already have an account?</a>
+<br>
+<a class="btn btn-outline-primary" href="/login">Already have an account?</a>
 {% endblock body %}
