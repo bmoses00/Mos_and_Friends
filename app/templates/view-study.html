@@ -55,7 +55,7 @@
 
 {% else %}
 
-<b> {{case_study['title']}},</b> by {{case_study['username']}} <br> <br>
+<b><h3> {{case_study['title']}},</b></h3> by {{case_study['username']}} <br> <br>
 
 
 
@@ -64,6 +64,7 @@
 </ul>
 
 <script>
+  var econData = {{econ_data | safe}};
   var editable = false;
   var content = {{case_study['content'] | safe}};
   var id = "{{id}}";

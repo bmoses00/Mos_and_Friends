@@ -15,12 +15,37 @@ if (editable == false) {
     if (element.type == "text") {
       entry.html(element.text)
     } else {
+      var routing1 = element['chart_name'];
+      var routing2 = element['chart_name_2'];
+      var title1 = "";
+      var title2 = "";
+      var i = 0;
+      for (i = 0; i < econData.length; i++){
+        if (econData[i].name == routing1){
+          title1 = econData[i].title;
+        }
+        if (econData[i].name == routing2){
+          title2 = econData[i].title;
+        }
+      }
+
+      var title = "";
+      if (title2 == ""){
+        title = title1 + " From " + element["chart_start"].slice(0, 4) + " To " + element['chart_end'].slice(0, 4);
+      } else {
+        title = title1 + " and " + title2 + " From " + element["chart_start"].slice(0, 4) + " To " + element['chart_end'].slice(0, 4);
+      }
+
+      entry.append("h4").text(title).attr("class", "mb-5");
+
+
       const svg = entry
         .append("svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
         .attr("transform", "translate(" + margin + ", 0)");
+
 
       draw_graph(svg, element['chart_name'], element['chart_name_2'], element['chart_start'].substring(0, 4), element['chart_end'].substring(0, 4), true);
     }
