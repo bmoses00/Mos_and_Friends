@@ -15,6 +15,9 @@ one of our case studies explores the 1973 recession. We walked through
 the impact of the spike in oil prices on inflation and unemployment. Users may
 optionally comment on case studies.
 
+# Demo
+[video demo here] (https://youtu.be/ZAm-lUxHDHk)
+
 # Launch instructions
 We are assuming you have python3 and pip3 installed and working.
 
